@@ -1,0 +1,49 @@
+{
+  "name": "endvoyant.ts",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/ScobbleQ/Endvoyant.TS#readme",
+  "bugs": {
+    "url": "https://github.com/ScobbleQ/Endvoyant.TS/issues"
+  },
+  "license": "ISC",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ScobbleQ/Endvoyant.TS.git"
+  },
+  "type": "module",
+  "main": "index.js",
+  "imports": {
+    "#/*": "./dist/*"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "build": "tsc && cp -r src/assets dist/assets && cp -r src/i18n/locales dist/i18n/locales",
+    "start": "node dist/index.js",
+    "dev": "tsc && concurrently \"tsc -w\" \"node dist/index.js\" \"vitest\"",
+    "deploy": "node src/deploy.ts",
+    "db:pull": "drizzle-kit pull",
+    "fmt": "oxfmt",
+    "lint": "oxlint -f=stylish"
+  },
+  "dependencies": {
+    "cron": "^4.4.0",
+    "discord.js": "^14.26.3",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^1.0.0-beta.22",
+    "p-limit": "^7.3.0",
+    "postgres": "^3.4.9"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "concurrently": "^9.2.1",
+    "drizzle-kit": "^1.0.0-beta.22",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
+    "oxlint-tsgolint": "^0.21.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.4"
+  }
+}

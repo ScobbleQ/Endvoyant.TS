@@ -1,5 +1,5 @@
-export { EndfieldSDK } from "./sdk.js";
+export { EndfieldSDK } from "./sdk.ts";
 
-export { Language, type Locale } from "./constants/index.js";
+export { Language, type Locale } from "./constants/index.ts";
 
-export { MemoryCache, FileCache } from "./cache/index.js";
+export { MemoryCache, FileCache } from "./cache/index.ts";

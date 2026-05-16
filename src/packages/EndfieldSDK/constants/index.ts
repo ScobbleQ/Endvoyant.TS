@@ -1,1 +1,1 @@
-export { Language, type Locale } from "./locales.js";
+export { Language, type Locale } from "./locales.ts";

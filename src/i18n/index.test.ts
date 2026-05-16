@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { Language } from "#/types/locale.js";
-import { t } from "./index.js";
+import { Language } from "#/types/locale.ts";
+import { t } from "./index.ts";
 
 describe("i18n", () => {
   it("should get a locale", () => {

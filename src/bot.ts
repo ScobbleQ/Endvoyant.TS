@@ -1,7 +1,7 @@
 import { readdirSync } from "fs";
 import { join } from "path";
 import { Client, Collection, GatewayIntentBits } from "discord.js";
-import { config } from "#/config.js";
+import { config } from "#/config.ts";
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
@@ -16,7 +16,7 @@ const commandFolders = readdirSync(foldersPath);
 for (const folder of commandFolders) {
   if (folder.startsWith("_")) continue;
   const commandPath = join(foldersPath, folder);
-  const commandFiles = readdirSync(commandPath).filter((file) => file.endsWith(".js"));
+  const commandFiles = readdirSync(commandPath).filter((file) => file.endsWith(".ts"));
   for (const file of commandFiles) {
     const filePath = join(commandPath, file);
     const command = (await import(filePath)).default;
@@ -29,7 +29,7 @@ for (const folder of commandFolders) {
 }
 
 const eventsPath = join(import.meta.dirname, "events");
-const eventFiles = readdirSync(eventsPath).filter((file) => file.endsWith(".js"));
+const eventFiles = readdirSync(eventsPath).filter((file) => file.endsWith(".ts"));
 
 for (const file of eventFiles) {
   const filePath = join(eventsPath, file);

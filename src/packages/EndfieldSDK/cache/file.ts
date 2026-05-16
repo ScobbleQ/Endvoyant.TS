@@ -1,6 +1,6 @@
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
-import type { CacheAdapter } from "./index.js";
+import type { CacheAdapter } from "./index.ts";
 
 export class FileCache implements CacheAdapter {
   private path: string;

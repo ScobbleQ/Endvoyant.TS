@@ -1,4 +1,4 @@
-import { db } from "../index.js";
+import { db } from "../index.ts";
 
 export class UsersDB {
   static async getByDcid(dcid: string) {

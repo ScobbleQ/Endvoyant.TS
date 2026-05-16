@@ -1,7 +1,6 @@
-import { MessageFlags, SlashCommandBuilder } from "discord.js";
-import type { ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import JSZip from "jszip";
-import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.js";
+import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
 
 export default {
   cooldown: 86400,

@@ -1,5 +1,5 @@
-import { MemoryCache, type CacheAdapter } from "./cache/index.js";
-import { Language, type Locale } from "./constants/index.js";
+import { MemoryCache, type CacheAdapter } from "./cache/index.ts";
+import { Language, type Locale } from "./constants/index.ts";
 
 /**
  * The Endfield SDK is a library for interacting with the Endfield API.

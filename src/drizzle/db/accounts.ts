@@ -1,6 +1,6 @@
 import { eq, sql } from "drizzle-orm";
-import { db } from "../index.js";
-import { accounts } from "../schema.js";
+import { db } from "../index.ts";
+import { accounts } from "../schema.ts";
 
 export class AccountsDB {
   static async create(dcid: string, data: Omit<typeof accounts.$inferInsert, "dcid" | "shortId">) {

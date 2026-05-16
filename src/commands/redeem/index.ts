@@ -1,5 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
-import type { ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
 
 export default {
   cooldown: 30,

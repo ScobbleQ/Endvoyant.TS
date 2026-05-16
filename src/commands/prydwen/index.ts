@@ -1,14 +1,16 @@
 import { SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
 
 export default {
-  cooldown: 30,
+  cooldown: 0,
   data: new SlashCommandBuilder()
-    .setName("add")
-    .setDescription("Add an account to your Discord")
+    .setName("prydwen")
+    .setDescription("prydwen")
     .addSubcommand((subcommand) =>
-      subcommand.setName("account").setDescription("Add an account to your Discord"),
+      subcommand.setName("tierlist").setDescription("Show the current Prydwyn tier list"),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
-    await interaction.reply("About the bot!");
+    await interaction.reply({
+      content: "Prydwyn is coming soon!",
+    });
   },
 };

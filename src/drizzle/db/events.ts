@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { db } from "../index.js";
-import { events } from "../schema.js";
+import { db } from "../index.ts";
+import { events } from "../schema.ts";
 
 export class EventsDB {
   static async create(

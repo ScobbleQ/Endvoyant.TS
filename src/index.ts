@@ -1,8 +1,8 @@
 import { join } from "path";
 import { ShardingManager } from "discord.js";
-import { config } from "#/config.js";
+import { config } from "#/config.ts";
 
-const manager = new ShardingManager(join(import.meta.dirname, "bot.js"), {
+const manager = new ShardingManager(join(import.meta.dirname, "bot.ts"), {
   token: config.discord.token,
 });
 

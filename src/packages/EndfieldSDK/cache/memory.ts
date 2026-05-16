@@ -1,4 +1,4 @@
-import type { CacheAdapter } from "./index.js";
+import type { CacheAdapter } from "./index.ts";
 
 export class MemoryCache implements CacheAdapter {
   private maxEntries: number;

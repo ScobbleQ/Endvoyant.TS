@@ -1,10 +1,10 @@
 import { drizzle } from "drizzle-orm/postgres-js";
-import { config } from "#/config.js";
-import { relations } from "./relations.js";
-import * as schema from "./schema.js";
+import { config } from "#/config.ts";
+import { relations } from "./relations.ts";
+import * as schema from "./schema.ts";
 
 export const db = drizzle(config.database.url, { relations, schema });
 
-export * from "./db/accounts.js";
-export * from "./db/users.js";
-export * from "./db/events.js";
+export * from "./db/accounts.ts";
+export * from "./db/users.ts";
+export * from "./db/events.ts";

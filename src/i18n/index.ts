@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import { join } from "path";
-import type { Locale } from "#/types/locale.js";
+import type { Locale } from "#/types/locale.ts";
 
 type TemplateArgs = Record<string, string | number | boolean>;
 
@@ -11,7 +11,7 @@ const LOCALE_TOKEN_RE = /\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g;
 /**
  * Translate a dotted key for a locale and optionally replace `{{placeholders}}`.
  * @example
- * // locales/en-us.json -> { "test": { "1": "Test 1 {{name}}" } }
+ * // locales/en-us.tson -> { "test": { "1": "Test 1 {{name}}" } }
  * t(Language.EN_US, "test.1", { name: "BOB" }) // "Test 1 BOB"
  */
 export const t = (lang: Locale, key: string, args?: TemplateArgs): unknown => {

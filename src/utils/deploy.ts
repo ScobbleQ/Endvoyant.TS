@@ -1,11 +1,11 @@
 import { readdirSync } from "fs";
 import { join } from "path";
 import { ApplicationCommand, REST, Routes, type SlashCommandBuilder } from "discord.js";
-import { config } from "#/config.js";
+import { config } from "#/config.ts";
 
 const commands: SlashCommandBuilder[] = [];
 
-const foldersPath = join(import.meta.dirname, "commands");
+const foldersPath = join(import.meta.dirname, "..", "commands");
 const commandFolders = readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
@@ -25,7 +25,7 @@ for (const folder of commandFolders) {
 
 const rest = new REST().setToken(config.discord.token);
 
-(async () => {
+void (async () => {
   try {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
     const data = (await rest.put(Routes.applicationCommands(config.discord.clientId), {

@@ -1,4 +1,4 @@
 export interface CacheAdapter {}
 
-export { MemoryCache } from "./memory.js";
-export { FileCache } from "./file.js";
+export { MemoryCache } from "./memory.ts";
+export { FileCache } from "./file.ts";

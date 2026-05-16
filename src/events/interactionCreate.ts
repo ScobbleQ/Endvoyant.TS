@@ -1,4 +1,6 @@
+import { join } from "path";
 import { Collection, ContainerBuilder, Events, MessageFlags, type Interaction } from "discord.js";
+import { parseComponentId } from "#/utils/componentId.ts";
 
 export default {
   name: Events.InteractionCreate,
@@ -35,6 +37,46 @@ export default {
       } catch (error) {
         console.error(error);
         await interactionReply(interaction, `There was an error while executing this command!`);
+      }
+    } else if (interaction.isAutocomplete()) {
+      // temp
+    } else if (
+      interaction.isButton() ||
+      interaction.isModalSubmit() ||
+      interaction.isStringSelectMenu()
+    ) {
+      const parsed = parseComponentId(interaction.customId);
+      if (!parsed) {
+        await interactionReply(interaction, "Womp womp");
+        return;
+      }
+
+      let interactionType = "";
+      if (interaction.isButton()) interactionType = "buttons";
+      if (interaction.isModalSubmit()) interactionType = "modals";
+      if (interaction.isStringSelectMenu()) interactionType = "selectmenus";
+
+      const mod = await import(
+        join(
+          import.meta.dirname,
+          "..",
+          "commands",
+          parsed.commandName,
+          interactionType,
+          `${parsed.interactionName}.ts`,
+        )
+      );
+
+      if (!mod) {
+        // malformed
+        return;
+      }
+
+      try {
+        await mod.default.execute(interaction, parsed.args);
+      } catch (error) {
+        console.error(error); 
+        return;
       }
     }
   },

@@ -75,7 +75,7 @@ export default {
       try {
         await mod.default.execute(interaction, parsed.args);
       } catch (error) {
-        console.error(error); 
+        console.error(error);
         return;
       }
     }

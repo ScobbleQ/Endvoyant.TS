@@ -19,13 +19,14 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "test": "vitest run",
-    "dev": "node --watch-path=./src .",
-    "start": "node .",
     "deploy": "node src/utils/deploy.ts",
-    "db:pull": "drizzle-kit pull",
+    "start": "node .",
+    "test": "vitest run",
+    "dev": "npm run db:studio & node --watch-path=./src .",
     "fmt": "oxfmt",
-    "lint": "oxlint -f=stylish"
+    "lint": "oxlint -f=stylish",
+    "db:pull": "drizzle-kit pull",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "bufferutil": "^4.1.0",

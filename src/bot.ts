@@ -2,6 +2,7 @@ import { readdirSync } from "fs";
 import { join } from "path";
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import { config } from "#/config.ts";
+import { loadCommands } from "#/utils/loader.ts";
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
@@ -10,22 +11,8 @@ const client = new Client({
 client.commands = new Collection();
 client.cooldowns = new Collection();
 
-const foldersPath = join(import.meta.dirname, "commands");
-const commandFolders = readdirSync(foldersPath);
-
-for (const folder of commandFolders) {
-  if (folder.startsWith("_")) continue;
-  const commandPath = join(foldersPath, folder);
-  const commandFiles = readdirSync(commandPath).filter((file) => file.endsWith(".ts"));
-  for (const file of commandFiles) {
-    const filePath = join(commandPath, file);
-    const command = (await import(filePath)).default;
-    if ("data" in command && "execute" in command) {
-      client.commands.set(command.data.name, command);
-    } else {
-      console.warn(`Command at ${filePath} is missing a required property.`);
-    }
-  }
+for (const command of await loadCommands()) {
+  client.commands.set(command.data.name, command);
 }
 
 const eventsPath = join(import.meta.dirname, "events");

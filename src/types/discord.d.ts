@@ -1,13 +1,7 @@
-import type {
-  AutocompleteInteraction,
-  ButtonInteraction,
-  ChatInputCommandInteraction,
-  ContextMenuCommandInteraction,
-  ModalSubmitInteraction,
-  SelectMenuInteraction,
-} from "discord.js";
+import { Collection, type SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
 
-interface Command {
+export interface Command {
+  cooldown?: number;
   data: SlashCommandBuilder;
   execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 }

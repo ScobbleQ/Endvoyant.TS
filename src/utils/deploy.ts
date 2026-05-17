@@ -1,27 +1,8 @@
-import { readdirSync } from "fs";
-import { join } from "path";
-import { ApplicationCommand, REST, Routes, type SlashCommandBuilder } from "discord.js";
+import { ApplicationCommand, REST, Routes } from "discord.js";
 import { config } from "#/config.ts";
+import { loadCommands } from "#/utils/loader.ts";
 
-const commands: SlashCommandBuilder[] = [];
-
-const foldersPath = join(import.meta.dirname, "..", "commands");
-const commandFolders = readdirSync(foldersPath);
-
-for (const folder of commandFolders) {
-  if (folder.startsWith("_")) continue;
-  const commandPath = join(foldersPath, folder);
-  const commandFiles = readdirSync(commandPath).filter((file) => file.endsWith(".ts"));
-  for (const file of commandFiles) {
-    const filePath = join(commandPath, file);
-    const command = (await import(filePath)).default;
-    if ("data" in command && "execute" in command) {
-      commands.push(command.data.toJSON());
-    } else {
-      console.warn(`Command at ${filePath} is missing a required property.`);
-    }
-  }
-}
+const commands = (await loadCommands()).map((command) => command.data.toJSON());
 
 const rest = new REST().setToken(config.discord.token);
 

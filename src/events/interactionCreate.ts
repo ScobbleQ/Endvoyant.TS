@@ -5,21 +5,23 @@ import { parseComponentId } from "#/utils/componentId.ts";
 export default {
   name: Events.InteractionCreate,
   execute: async (interaction: Interaction) => {
-    if (interaction.isChatInputCommand() || interaction.isContextMenuCommand()) {
+    if (interaction.isChatInputCommand()) {
       const { commands, cooldowns } = interaction.client;
       const command = commands.get(interaction.commandName);
       if (!command || typeof command.execute !== "function") return;
 
-      if (!cooldowns.has(command.data.name)) {
-        cooldowns.set(command.data.name, new Collection());
+      let timestamps = cooldowns.get(command.data.name);
+      if (!timestamps) {
+        timestamps = new Collection();
+        cooldowns.set(command.data.name, timestamps);
       }
 
       const now = Date.now();
-      const timestamps = cooldowns.get(command.data.name);
       const cooldownAmount = (command.cooldown ?? 5) * 1000;
 
-      if (timestamps.has(interaction.user.id)) {
-        const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
+      const lastUsed = timestamps.get(interaction.user.id);
+      if (lastUsed !== undefined) {
+        const expirationTime = lastUsed + cooldownAmount;
         if (now < expirationTime) {
           const expiredTimestamp = Math.round(expirationTime / 1000);
           return interactionReply(

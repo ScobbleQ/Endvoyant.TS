@@ -14,8 +14,10 @@ export default {
     const user = await UsersDB.getByDcid(interaction.user.id);
     if (!user) return;
 
-    const accounts = await AccountsDB.getByDcid(interaction.user.id);
-    const events = await EventsDB.getUserEvents(interaction.user.id);
+    const [accounts, events] = await Promise.all([
+      AccountsDB.getByDcid(interaction.user.id),
+      EventsDB.getUserEvents(interaction.user.id),
+    ]);
 
     const zip = new JSZip();
     zip.file("user.json", JSON.stringify(user, null, 2));

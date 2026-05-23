@@ -20,7 +20,7 @@ export default {
       subcommand.setName("account").setDescription("Add an account to your Discord"),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
-    const user = await UsersDB.getByDcid(interaction.user.id);
+    const user = await UsersDB.findByDcid(interaction.user.id);
     if (!user) {
       await interaction.reply({
         embeds: [onboardingEmbed()],
@@ -31,7 +31,7 @@ export default {
     }
 
     if (config.env === "production") {
-      void EventsDB.create(user.dcid, {
+      void EventsDB.insert(user.dcid, {
         source: "slash",
         action: "add",
       });

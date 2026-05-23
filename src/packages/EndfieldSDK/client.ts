@@ -1,43 +1,51 @@
-import { Cache } from "./cache.ts";
 import type {
-  ErrorResponse,
-  TokenByEmailPasswordResponse,
-  OAuth2GrantResponse,
+  GryphlineErrorResponse,
+  EmailPasswordLoginResponse,
+  OAuth2GrantByKind,
+  CredentialsFromCodeResponse,
+  SkportZonaiErrorResponse,
+  PlayerBindingsResponse,
 } from "./types/auth.ts";
 import type { Language } from "./types/language.ts";
+import { computeSign } from "./utils/signing.ts";
 
 // as uses msg/status/type
 // zonai uses message/code/timestamp
 
+const SKPORT_APPCODES = {
+  "6eb76d4e13aa36e6": 0,
+  d9f6dbb6bbd6bb33: 0,
+  "973bd727dd11cbb6ead8": 0,
+  "3dacefa138426cfe": 1,
+} as const;
+
+type AppCode = keyof typeof SKPORT_APPCODES;
+
+type OAuth2GrantByAppCode = {
+  [K in AppCode]: OAuth2GrantByKind<(typeof SKPORT_APPCODES)[K]>;
+};
+
 export class EndfieldSDK {
-  private readonly tokenByEmailPasswordCache: Cache<Promise<TokenByEmailPasswordResponse>>;
-  private readonly oauthCache: Cache<Promise<OAuth2GrantResponse>>;
   private lang: Language = "en-us";
 
   constructor(options: { lang?: Language } = {}) {
     this.lang = options.lang || this.lang;
-    this.tokenByEmailPasswordCache = new Cache(5 * 60 * 1000); // 5 minutes
-    this.oauthCache = new Cache(5 * 60 * 1000); // 5 minutes
   }
 
   setLanguage(lang: Language) {
     this.lang = lang;
   }
 
-  clear() {
-    this.oauthCache.clear();
-  }
-
   /**
-   * Get token via email and password
+   * Authenticate with email and password (Gryphline AS).
    */
-  async tokenByEmailPassword({
+  async loginWithEmailPassword({
     email,
     password,
   }: {
     email: string;
     password: string;
-  }): Promise<ErrorResponse | TokenByEmailPasswordResponse> {
+  }): Promise<GryphlineErrorResponse | EmailPasswordLoginResponse> {
     const url = "https://as.gryphline.com/user/auth/v1/token_by_email_password";
     const body = JSON.stringify({ email, from: 1, password });
     const headers: RequestInit["headers"] = {
@@ -50,29 +58,27 @@ export class EndfieldSDK {
     };
 
     try {
-      return this.tokenByEmailPasswordCache.getOrSet(email, async () => {
-        const res = await fetch(url, {
-          method: "POST",
-          headers,
-          body,
-        });
-
-        if (!res.ok) {
-          throw new Error(res.statusText);
-        }
-
-        const data = await res.json();
-        return data as TokenByEmailPasswordResponse;
+      const res = await fetch(url, {
+        method: "POST",
+        headers,
+        body,
       });
+
+      if (!res.ok) {
+        throw new Error(res.statusText);
+      }
+
+      const data = await res.json();
+      return data as EmailPasswordLoginResponse;
     } catch (error) {
       throw new Error("INVALID_EMAIL_OR_PASSWORD", { cause: error });
     }
   }
 
   /**
-   * Get token via channel token
+   * Exchange a channel token for a Gryphline account token (U8).
    */
-  async tokenByChannelToken({
+  async authenticateWithChannelToken({
     channelId,
     channelToken,
   }: {
@@ -116,18 +122,18 @@ export class EndfieldSDK {
     }
   }
 
-  async oauth2Grant({
+  async grantOAuth2<T extends AppCode>({
     appCode,
     token,
   }: {
-    appCode: string;
+    appCode: T;
     token: string;
-  }): Promise<ErrorResponse | OAuth2GrantResponse> {
+  }): Promise<GryphlineErrorResponse | OAuth2GrantByAppCode[T]> {
     const url = "https://as.gryphline.com/user/oauth2/v2/grant";
     const body = JSON.stringify({
       appCode: appCode,
       token: token,
-      type: 0,
+      type: SKPORT_APPCODES[appCode],
     });
     const headers: RequestInit["headers"] = {
       Accept: "application/json",
@@ -135,26 +141,28 @@ export class EndfieldSDK {
     };
 
     try {
-      return this.oauthCache.getOrSet(token, async () => {
-        const res = await fetch(url, {
-          method: "POST",
-          headers,
-          body,
-        });
-
-        if (!res.ok) {
-          throw new Error(res.statusText);
-        }
-
-        const data = await res.json();
-        return data as OAuth2GrantResponse;
+      const res = await fetch(url, {
+        method: "POST",
+        headers,
+        body,
       });
+
+      if (!res.ok) {
+        throw new Error(res.statusText);
+      }
+
+      const data = await res.json();
+      return data as OAuth2GrantByAppCode[T];
     } catch (error) {
       throw new Error("INVALID_OAUTH2_GRANT", { cause: error });
     }
   }
 
-  async generateCredByCode({ code }: { code: string }) {
+  async createCredentialsFromCode({
+    code,
+  }: {
+    code: string;
+  }): Promise<SkportZonaiErrorResponse | CredentialsFromCodeResponse> {
     const url = "https://zonai.skport.com/web/v1/user/auth/generate_cred_by_code";
     const body = JSON.stringify({
       kind: 1,
@@ -181,9 +189,54 @@ export class EndfieldSDK {
       }
 
       const data = await res.json();
-      return data;
+      return data as CredentialsFromCodeResponse;
     } catch (error) {
       throw new Error("INVALID_GENERATED_CREDENTIALS", { cause: error });
+    }
+  }
+
+  async createSkportSession({ accountToken }: { accountToken: string }) {
+    const oauth = await this.grantOAuth2({ appCode: "6eb76d4e13aa36e6", token: accountToken });
+    if (oauth.status !== 0) return null;
+    const cred = await this.createCredentialsFromCode({ code: oauth.data.code });
+    if (cred.code !== 0) return null;
+    return { ...oauth.data, ...cred.data };
+  }
+
+  async fetchPlayerBindings({
+    cred,
+    token,
+  }: {
+    cred: string;
+    token: string;
+  }): Promise<SkportZonaiErrorResponse | PlayerBindingsResponse> {
+    const url = "https://zonai.skport.com/api/v1/game/player/binding?";
+    const ts = Math.floor(Date.now() / 1000).toString();
+    const headers: RequestInit["headers"] = {
+      cred,
+      Origin: "https://game.skport.com",
+      platform: "3",
+      Referer: "https://game.skport.com/",
+      "sk-language": "en",
+      vName: "1.0.0",
+      timestamp: ts,
+      sign: computeSign({ token, path: "/api/v1/game/player/binding", body: "", timestamp: ts }),
+    };
+
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers,
+      });
+
+      if (!res.ok) {
+        throw new Error();
+      }
+
+      const data = await res.json();
+      return data as PlayerBindingsResponse;
+    } catch (error) {
+      throw new Error("", { cause: error });
     }
   }
 }

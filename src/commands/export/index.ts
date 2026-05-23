@@ -11,12 +11,12 @@ export default {
       subcommand.setName("data").setDescription("Export your Endvoyant data"),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
-    const user = await UsersDB.getByDcid(interaction.user.id);
+    const user = await UsersDB.findByDcid(interaction.user.id);
     if (!user) return;
 
     const [accounts, events] = await Promise.all([
-      AccountsDB.getByDcid(interaction.user.id),
-      EventsDB.getUserEvents(interaction.user.id),
+      AccountsDB.listByDcid(interaction.user.id),
+      EventsDB.listByDcid(interaction.user.id),
     ]);
 
     const zip = new JSZip();

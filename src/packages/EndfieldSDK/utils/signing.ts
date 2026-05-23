@@ -4,7 +4,7 @@ type ComputeSignParams = {
   token: string;
   path: string;
   body: string;
-  timestamp: number;
+  timestamp: string;
 };
 
 export function computeSign({ token, path, body, timestamp }: ComputeSignParams) {

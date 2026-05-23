@@ -3,7 +3,7 @@ import { db } from "../index.ts";
 import { events } from "../schema.ts";
 
 export class EventsDB {
-  static async create(
+  static async insert(
     dcid: string,
     {
       source,
@@ -29,11 +29,11 @@ export class EventsDB {
       .returning({ id: events.id });
   }
 
-  static async update(eid: number) {
+  static async updateById(eid: number) {
     await db.update(events).set({}).where(eq(events.id, eid));
   }
 
-  static async getUserEvents(dcid: string, opt: { limit?: number; offset?: number } = {}) {
+  static async listByDcid(dcid: string, opt: { limit?: number; offset?: number } = {}) {
     return await db.query.events.findMany({
       where: {
         dcid,

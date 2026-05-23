@@ -10,7 +10,7 @@ export default {
     .setLabel("I Agree")
     .setStyle(ButtonStyle.Success),
   execute: async (interaction: ButtonInteraction) => {
-    await UsersDB.create(interaction.user.id);
+    await UsersDB.insert(interaction.user.id);
     await interaction.update({
       embeds: [onboardingSuccessEmbed()],
       components: [],

@@ -16,5 +16,5 @@ export function onboardingEmbed() {
 }
 
 export function onboardingSuccessEmbed() {
-  return new EmbedBuilder().setDescription("yes");
+  return new EmbedBuilder().setDescription("woo congrats etc etc + rmb to change language");
 }

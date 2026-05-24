@@ -1,4 +1,4 @@
-import { loadEnvFile } from "process";
+import { loadEnvFile } from "node:process";
 loadEnvFile();
 
 if (!process.env["DISCORD_TOKEN"]) {

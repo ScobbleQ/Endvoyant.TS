@@ -1,5 +1,5 @@
-import { readdirSync } from "fs";
-import { join } from "path";
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import { config } from "#/config.ts";
 import { loadCommands } from "#/utils/loader.ts";

@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join } from "node:path";
 import { Collection, ContainerBuilder, Events, MessageFlags, type Interaction } from "discord.js";
 import { parseComponentId } from "#/utils/componentId.ts";
 

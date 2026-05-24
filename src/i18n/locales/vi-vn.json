@@ -1,3 +1,8 @@
 {
-  "lang": "Tiếng Việt"
+  "lang": "Tiếng Việt",
+  "command": {
+    "about": {
+      "name": "gioi-thieu"
+    }
+  }
 }

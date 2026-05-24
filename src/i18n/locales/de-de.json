@@ -1,3 +1,8 @@
 {
-  "lang": "Deutsch"
+  "lang": "Deutsch",
+  "command": {
+    "about": {
+      "name": "über"
+    }
+  }
 }

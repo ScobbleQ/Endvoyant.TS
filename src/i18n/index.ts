@@ -1,10 +1,9 @@
-import { readFileSync } from "fs";
-import { join } from "path";
-import type { Locale } from "#/types/locale.ts";
+import type { LocalizationMap } from "discord.js";
+import { Language, type Locale } from "#/types/locale.ts";
+import { toDiscordLocale } from "./utils/discord.ts";
+import { loadLocale } from "./utils/load.ts";
 
 type TemplateArgs = Record<string, string | number | boolean>;
-
-const localeCache = new Map<Locale, unknown>();
 
 const LOCALE_TOKEN_RE = /\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g;
 
@@ -22,15 +21,20 @@ export const t = (lang: Locale, key: string, args?: TemplateArgs): unknown => {
 };
 
 /**
- * Load a locale from the filesystem.
+ * Returns an object containing localized versions of the given key for all supported languages.
+ * @example
+ * // locales/en-us.tson -> { "test": "Test" }
+ * // locales/zh-cn.tson -> { "test": "测试" }
+ * discordLocalization("test") // { "en-US": "Test", "zh-CN": "测试" }
  */
-const loadLocale = (lang: Locale): unknown => {
-  const cached = localeCache.get(lang);
-  if (cached !== undefined) return cached;
-  const path = join(import.meta.dirname, "locales", `${lang}.json`);
-  const data = JSON.parse(readFileSync(path, "utf8")) as unknown;
-  localeCache.set(lang, data);
-  return data;
+export const discordLocalization = (key: string, args?: TemplateArgs): LocalizationMap => {
+  const out: LocalizationMap = {};
+  for (const lang of Object.values(Language)) {
+    const value = t(lang, key, args);
+    if (typeof value !== "string" || !value) continue;
+    out[toDiscordLocale(lang)] = value;
+  }
+  return out;
 };
 
 /**

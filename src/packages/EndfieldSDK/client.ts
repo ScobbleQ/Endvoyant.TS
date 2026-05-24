@@ -5,6 +5,7 @@ import type {
   CredentialsFromCodeResponse,
   SkportZonaiErrorResponse,
   PlayerBindingsResponse,
+  RefreshAccountTokenResponse,
 } from "./types/auth.ts";
 import type { Language } from "./types/language.ts";
 import { computeSign } from "./utils/signing.ts";
@@ -192,6 +193,44 @@ export class EndfieldSDK {
       return data as CredentialsFromCodeResponse;
     } catch (error) {
       throw new Error("INVALID_GENERATED_CREDENTIALS", { cause: error });
+    }
+  }
+
+  async refreshAccountToken({
+    cred,
+    token,
+  }: {
+    cred: string;
+    token: string;
+  }): Promise<SkportZonaiErrorResponse | RefreshAccountTokenResponse> {
+    const url = "https://zonai.skport.com/web/v1/auth/refresh";
+    const ts = Math.floor(Date.now() / 1000).toString();
+    const headers: RequestInit["headers"] = {
+      "Content-Type": "application/json",
+      language: "en-us",
+      sign: computeSign({ token, path: "/web/v1/auth/refresh", body: "{}", timestamp: ts }),
+      timestamp: ts,
+      vCode: "100000018",
+      vName: "1.0.0",
+      cred,
+      platform: "3",
+      "sk-language": "en",
+    };
+
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers,
+      });
+
+      if (!res.ok) {
+        throw new Error(res.statusText);
+      }
+
+      const data = await res.json();
+      return data as RefreshAccountTokenResponse;
+    } catch (error) {
+      throw new Error("TOKEN_REFRESH_FAILED", { cause: error });
     }
   }
 

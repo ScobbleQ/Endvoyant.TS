@@ -69,6 +69,13 @@ export interface CredentialsFromCodeResponse extends SkportZonaiResponseBase {
   };
 }
 
+export interface RefreshAccountTokenResponse extends SkportZonaiResponseBase {
+  code: 0;
+  data: {
+    token: string;
+  };
+}
+
 export interface PlayerBindingsResponse extends SkportZonaiResponseBase {
   code: 0;
   data: {

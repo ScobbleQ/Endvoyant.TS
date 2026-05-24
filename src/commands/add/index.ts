@@ -5,6 +5,7 @@ import {
   SlashCommandBuilder,
   type ChatInputCommandInteraction,
 } from "discord.js";
+import { errorEmbed } from "#/components/embed.ts";
 import { config } from "#/config.ts";
 import { EventsDB, UsersDB } from "#/drizzle/index.ts";
 import AgreeButton from "./buttons/agree.ts";
@@ -38,7 +39,15 @@ export default {
     }
 
     if (user.isBanned) {
-      await interaction.reply({ content: "Idk how you got beamed", flags: MessageFlags.Ephemeral });
+      await interaction.reply({
+        embeds: [
+          errorEmbed({
+            title: "Banned",
+            description: "Please contact support for more information.",
+          }),
+        ],
+        flags: [MessageFlags.Ephemeral],
+      });
       return;
     }
 

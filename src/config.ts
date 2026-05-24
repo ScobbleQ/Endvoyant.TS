@@ -1,5 +1,5 @@
-import { config as loadEnv } from "dotenv";
-loadEnv({ debug: false });
+import { loadEnvFile } from "process";
+loadEnvFile();
 
 if (!process.env["DISCORD_TOKEN"]) {
   throw new Error("DISCORD_TOKEN is not set");

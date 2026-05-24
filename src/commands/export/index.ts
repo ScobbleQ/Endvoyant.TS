@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
-import JSZip from "jszip";
+import { zipSync, strToU8, type Zippable } from "fflate";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
 
 export default {
@@ -19,18 +19,21 @@ export default {
       EventsDB.listByDcid(interaction.user.id),
     ]);
 
-    const zip = new JSZip();
-    zip.file("user.json", JSON.stringify(user, null, 2));
+    const zip: Zippable = {
+      "user.json": strToU8(JSON.stringify(user, null, 2)),
+    };
 
     if (accounts && accounts.length > 0) {
-      zip.file("accounts.json", JSON.stringify(accounts, null, 2));
+      zip["accounts.json"] = strToU8(JSON.stringify(accounts, null, 2));
     }
 
     if (events && events.length > 0) {
-      zip.file("events.json", JSON.stringify(events, null, 2));
+      zip["events.json"] = strToU8(JSON.stringify(events, null, 2));
     }
 
-    const zipBuffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });
+    const { buffer, byteOffset, byteLength } = zipSync(zip, { level: 6 });
+    const zipBuffer = Buffer.from(buffer, byteOffset, byteLength);
+
     const fileName = `endvoyant-${interaction.user.id}.zip`;
 
     await interaction.reply({

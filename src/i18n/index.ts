@@ -10,7 +10,7 @@ const LOCALE_TOKEN_RE = /\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g;
 /**
  * Translate a dotted key for a locale and optionally replace `{{placeholders}}`.
  * @example
- * // locales/en-us.tson -> { "test": { "1": "Test 1 {{name}}" } }
+ * // locales/en-us.json -> { "test": { "1": "Test 1 {{name}}" } }
  * t(Language.EN_US, "test.1", { name: "BOB" }) // "Test 1 BOB"
  */
 export const t = (lang: Locale, key: string, args?: TemplateArgs): unknown => {
@@ -23,8 +23,8 @@ export const t = (lang: Locale, key: string, args?: TemplateArgs): unknown => {
 /**
  * Returns an object containing localized versions of the given key for all supported languages.
  * @example
- * // locales/en-us.tson -> { "test": "Test" }
- * // locales/zh-cn.tson -> { "test": "测试" }
+ * // locales/en-us.json -> { "test": "Test" }
+ * // locales/zh-cn.json -> { "test": "测试" }
  * discordLocalization("test") // { "en-US": "Test", "zh-CN": "测试" }
  */
 export const discordLocalization = (key: string, args?: TemplateArgs): LocalizationMap => {

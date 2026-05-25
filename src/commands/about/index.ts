@@ -6,7 +6,8 @@ export default {
   data: new SlashCommandBuilder()
     .setName("about")
     .setNameLocalizations(discordLocalization("command.about.name"))
-    .setDescription("About the bot"),
+    .setDescription("About the bot")
+    .setDescriptionLocalizations(discordLocalization("command.about.description")),
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.reply("About the bot!");
   },

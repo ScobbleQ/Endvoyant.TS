@@ -2,7 +2,90 @@
   "lang": "English",
   "command": {
     "about": {
-      "name": "about"
+      "name": "about",
+      "description": "About the bot"
+    },
+    "account": {
+      "name": "account",
+      "description": "Manage your linked accounts",
+      "subcommands": {
+        "manager": {
+          "name": "manager",
+          "description": "Manage your linked accounts"
+        }
+      }
+    },
+    "add": {
+      "name": "add",
+      "description": "Link an account to your Discord",
+      "subcommands": {
+        "account": {
+          "name": "account",
+          "description": "Link an account to your Discord"
+        }
+      }
+    },
+    "daily": {
+      "name": "daily",
+      "description": "Claim your daily in-game rewards",
+      "subcommands": {
+        "signin": {
+          "name": "signin",
+          "description": "Claim your daily in-game rewards"
+        }
+      }
+    },
+    "export": {
+      "name": "export",
+      "description": "Export your Endvoyant data",
+      "subcommands": {
+        "data": {
+          "name": "data",
+          "description": "Export your Endvoyant data"
+        }
+      }
+    },
+    "full": {
+      "name": "full",
+      "description": "View your complete player profile",
+      "subcommands": {
+        "profile": {
+          "name": "profile",
+          "description": "View your complete player profile"
+        }
+      }
+    },
+    "profile": {
+      "name": "profile",
+      "description": "View your profile"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Show Prydwen tier list",
+      "subcommands": {
+        "tierlist": {
+          "name": "tierlist",
+          "description": "Show Prydwen tier list"
+        }
+      }
+    },
+    "redeem": {
+      "name": "redeem",
+      "description": "Redeem a reward code"
+    },
+    "settings": {
+      "name": "settings",
+      "description": "Change your personal Endvoyant settings"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "temp",
+      "subcommands": {
+        "monument": {
+          "name": "monument",
+          "description": "temp"
+        }
+      }
     }
   }
 }

@@ -1,8 +1,13 @@
 import { SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
+import { discordLocalization } from "#/i18n/index.ts";
 
 export default {
   cooldown: 30,
-  data: new SlashCommandBuilder().setName("redeem").setDescription("Redeem a new item"),
+  data: new SlashCommandBuilder()
+    .setName("redeem")
+    .setNameLocalizations(discordLocalization("command.redeem.name"))
+    .setDescription("Redeem a reward code")
+    .setDescriptionLocalizations(discordLocalization("command.redeem.description")),
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.reply("About the bot!");
   },

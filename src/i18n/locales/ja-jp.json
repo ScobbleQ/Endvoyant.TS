@@ -2,7 +2,90 @@
   "lang": "日本語",
   "command": {
     "about": {
-      "name": "情報"
+      "name": "bot情報",
+      "description": "Botの情報を表示します"
+    },
+    "account": {
+      "name": "アカウント",
+      "description": "連携済みアカウントを管理します",
+      "subcommands": {
+        "manager": {
+          "name": "管理",
+          "description": "連携済みアカウントを管理します"
+        }
+      }
+    },
+    "add": {
+      "name": "追加",
+      "description": "アカウントをDiscordに連携します",
+      "subcommands": {
+        "account": {
+          "name": "アカウント",
+          "description": "アカウントをDiscordに連携します"
+        }
+      }
+    },
+    "daily": {
+      "name": "デイリー",
+      "description": "ゲーム内のデイリー報酬を受け取ります",
+      "subcommands": {
+        "signin": {
+          "name": "ログイン",
+          "description": "ゲーム内のデイリー報酬を受け取ります"
+        }
+      }
+    },
+    "export": {
+      "name": "エクスポート",
+      "description": "Endvoyantのデータを書き出します",
+      "subcommands": {
+        "data": {
+          "name": "データ",
+          "description": "Endvoyantのデータを書き出します"
+        }
+      }
+    },
+    "full": {
+      "name": "詳細",
+      "description": "あなたの詳細なプレイヤープロフィールを表示します",
+      "subcommands": {
+        "profile": {
+          "name": "プロフィール",
+          "description": "あなたの詳細なプレイヤープロフィールを表示します"
+        }
+      }
+    },
+    "profile": {
+      "name": "プロフィール",
+      "description": "あなたのプロフィールを表示します"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Prydwenのティアリストを表示します",
+      "subcommands": {
+        "tierlist": {
+          "name": "ティアリスト",
+          "description": "Prydwenのティアリストを表示します"
+        }
+      }
+    },
+    "redeem": {
+      "name": "交換",
+      "description": "報酬コードを交換します"
+    },
+    "settings": {
+      "name": "設定",
+      "description": "Endvoyantの個人設定を変更します"
+    },
+    "umbral": {
+      "name": "アンブラル",
+      "description": "仮設定",
+      "subcommands": {
+        "monument": {
+          "name": "モニュメント",
+          "description": "仮設定"
+        }
+      }
     }
   }
 }

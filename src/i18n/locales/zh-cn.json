@@ -2,7 +2,90 @@
   "lang": "简体中文",
   "command": {
     "about": {
-      "name": "关于"
+      "name": "关于",
+      "description": "查看机器人信息"
+    },
+    "account": {
+      "name": "账号",
+      "description": "管理已绑定的账号",
+      "subcommands": {
+        "manager": {
+          "name": "管理",
+          "description": "管理已绑定的账号"
+        }
+      }
+    },
+    "add": {
+      "name": "添加",
+      "description": "将账号绑定到你的 Discord",
+      "subcommands": {
+        "account": {
+          "name": "账号",
+          "description": "将账号绑定到你的 Discord"
+        }
+      }
+    },
+    "daily": {
+      "name": "每日",
+      "description": "领取游戏内每日奖励",
+      "subcommands": {
+        "signin": {
+          "name": "签到",
+          "description": "领取游戏内每日奖励"
+        }
+      }
+    },
+    "export": {
+      "name": "导出",
+      "description": "导出你的 Endvoyant 数据",
+      "subcommands": {
+        "data": {
+          "name": "数据",
+          "description": "导出你的 Endvoyant 数据"
+        }
+      }
+    },
+    "full": {
+      "name": "完整",
+      "description": "查看你的完整玩家档案",
+      "subcommands": {
+        "profile": {
+          "name": "档案",
+          "description": "查看你的完整玩家档案"
+        }
+      }
+    },
+    "profile": {
+      "name": "档案",
+      "description": "查看你的档案"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "查看 Prydwen 强度榜",
+      "subcommands": {
+        "tierlist": {
+          "name": "强度榜",
+          "description": "查看 Prydwen 强度榜"
+        }
+      }
+    },
+    "redeem": {
+      "name": "兑换",
+      "description": "兑换奖励码"
+    },
+    "settings": {
+      "name": "设置",
+      "description": "更改你的 Endvoyant 个人设置"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "临时",
+      "subcommands": {
+        "monument": {
+          "name": "丰碑",
+          "description": "临时"
+        }
+      }
     }
   }
 }

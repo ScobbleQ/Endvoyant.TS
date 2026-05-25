@@ -2,7 +2,90 @@
   "lang": "Tiếng Việt",
   "command": {
     "about": {
-      "name": "gioi-thieu"
+      "name": "giới-thiệu",
+      "description": "Thông tin về bot"
+    },
+    "account": {
+      "name": "tài-khoản",
+      "description": "Quản lý các tài khoản đã liên kết",
+      "subcommands": {
+        "manager": {
+          "name": "quản-lý",
+          "description": "Quản lý các tài khoản đã liên kết"
+        }
+      }
+    },
+    "add": {
+      "name": "thêm",
+      "description": "Liên kết tài khoản với Discord của bạn",
+      "subcommands": {
+        "account": {
+          "name": "tài-khoản",
+          "description": "Liên kết tài khoản với Discord của bạn"
+        }
+      }
+    },
+    "daily": {
+      "name": "hằng-ngày",
+      "description": "Nhận thưởng hằng ngày trong game",
+      "subcommands": {
+        "signin": {
+          "name": "điểm-danh",
+          "description": "Nhận thưởng hằng ngày trong game"
+        }
+      }
+    },
+    "export": {
+      "name": "xuất",
+      "description": "Xuất dữ liệu Endvoyant của bạn",
+      "subcommands": {
+        "data": {
+          "name": "dữ-liệu",
+          "description": "Xuất dữ liệu Endvoyant của bạn"
+        }
+      }
+    },
+    "full": {
+      "name": "đầy-đủ",
+      "description": "Xem hồ sơ người chơi đầy đủ của bạn",
+      "subcommands": {
+        "profile": {
+          "name": "hồ-sơ",
+          "description": "Xem hồ sơ người chơi đầy đủ của bạn"
+        }
+      }
+    },
+    "profile": {
+      "name": "hồ-sơ",
+      "description": "Xem hồ sơ của bạn"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Hiển thị tier list Prydwen",
+      "subcommands": {
+        "tierlist": {
+          "name": "xếp-hạng",
+          "description": "Hiển thị tier list Prydwen"
+        }
+      }
+    },
+    "redeem": {
+      "name": "đổi",
+      "description": "Đổi mã phần thưởng"
+    },
+    "settings": {
+      "name": "cài-đặt",
+      "description": "Thay đổi cài đặt Endvoyant cá nhân của bạn"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "Tạm thời",
+      "subcommands": {
+        "monument": {
+          "name": "tượng-đài",
+          "description": "Tạm thời"
+        }
+      }
     }
   }
 }

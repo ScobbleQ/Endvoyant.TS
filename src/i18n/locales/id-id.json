@@ -2,7 +2,90 @@
   "lang": "Bahasa Indonesia",
   "command": {
     "about": {
-      "name": "tentang"
+      "name": "tentang",
+      "description": "Info tentang bot"
+    },
+    "account": {
+      "name": "akun",
+      "description": "Kelola akun yang tertaut",
+      "subcommands": {
+        "manager": {
+          "name": "kelola",
+          "description": "Kelola akun yang tertaut"
+        }
+      }
+    },
+    "add": {
+      "name": "tambah",
+      "description": "Tautkan akun ke Discord",
+      "subcommands": {
+        "account": {
+          "name": "akun",
+          "description": "Tautkan akun ke Discord"
+        }
+      }
+    },
+    "daily": {
+      "name": "harian",
+      "description": "Klaim hadiah harian dalam game",
+      "subcommands": {
+        "signin": {
+          "name": "absen",
+          "description": "Klaim hadiah harian dalam game"
+        }
+      }
+    },
+    "export": {
+      "name": "ekspor",
+      "description": "Ekspor data Endvoyant milikmu",
+      "subcommands": {
+        "data": {
+          "name": "data",
+          "description": "Ekspor data Endvoyant milikmu"
+        }
+      }
+    },
+    "full": {
+      "name": "lengkap",
+      "description": "Lihat profil pemain lengkapmu",
+      "subcommands": {
+        "profile": {
+          "name": "profil",
+          "description": "Lihat profil pemain lengkapmu"
+        }
+      }
+    },
+    "profile": {
+      "name": "profil",
+      "description": "Lihat profilmu"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Tampilkan tier list Prydwen",
+      "subcommands": {
+        "tierlist": {
+          "name": "peringkat",
+          "description": "Tampilkan tier list Prydwen"
+        }
+      }
+    },
+    "redeem": {
+      "name": "tebus",
+      "description": "Tebus kode hadiah"
+    },
+    "settings": {
+      "name": "pengaturan",
+      "description": "Ubah pengaturan Endvoyant pribadimu"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "Sementara",
+      "subcommands": {
+        "monument": {
+          "name": "monumen",
+          "description": "Sementara"
+        }
+      }
     }
   }
 }

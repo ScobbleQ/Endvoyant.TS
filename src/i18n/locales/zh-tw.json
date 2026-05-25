@@ -2,7 +2,90 @@
   "lang": "繁體中文",
   "command": {
     "about": {
-      "name": "關於"
+      "name": "關於",
+      "description": "查看機器人資訊"
+    },
+    "account": {
+      "name": "帳號",
+      "description": "管理已綁定的帳號",
+      "subcommands": {
+        "manager": {
+          "name": "管理",
+          "description": "管理已綁定的帳號"
+        }
+      }
+    },
+    "add": {
+      "name": "新增",
+      "description": "將帳號綁定到你的 Discord",
+      "subcommands": {
+        "account": {
+          "name": "帳號",
+          "description": "將帳號綁定到你的 Discord"
+        }
+      }
+    },
+    "daily": {
+      "name": "每日",
+      "description": "領取遊戲內每日獎勵",
+      "subcommands": {
+        "signin": {
+          "name": "簽到",
+          "description": "領取遊戲內每日獎勵"
+        }
+      }
+    },
+    "export": {
+      "name": "匯出",
+      "description": "匯出你的 Endvoyant 資料",
+      "subcommands": {
+        "data": {
+          "name": "資料",
+          "description": "匯出你的 Endvoyant 資料"
+        }
+      }
+    },
+    "full": {
+      "name": "完整",
+      "description": "查看你的完整玩家檔案",
+      "subcommands": {
+        "profile": {
+          "name": "檔案",
+          "description": "查看你的完整玩家檔案"
+        }
+      }
+    },
+    "profile": {
+      "name": "檔案",
+      "description": "查看你的檔案"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "查看 Prydwen 強度榜",
+      "subcommands": {
+        "tierlist": {
+          "name": "強度榜",
+          "description": "查看 Prydwen 強度榜"
+        }
+      }
+    },
+    "redeem": {
+      "name": "兌換",
+      "description": "兌換獎勵碼"
+    },
+    "settings": {
+      "name": "設定",
+      "description": "變更你的 Endvoyant 個人設定"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "暫時",
+      "subcommands": {
+        "monument": {
+          "name": "豐碑",
+          "description": "暫時"
+        }
+      }
     }
   }
 }

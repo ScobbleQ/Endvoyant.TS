@@ -1,14 +1,23 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import { zipSync, strToU8, type Zippable } from "fflate";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
+import { discordLocalization } from "#/i18n/index.ts";
 
 export default {
   cooldown: 86400,
   data: new SlashCommandBuilder()
     .setName("export")
+    .setNameLocalizations(discordLocalization("command.export.name"))
     .setDescription("Export your Endvoyant data")
+    .setDescriptionLocalizations(discordLocalization("command.export.description"))
     .addSubcommand((subcommand) =>
-      subcommand.setName("data").setDescription("Export your Endvoyant data"),
+      subcommand
+        .setName("data")
+        .setNameLocalizations(discordLocalization("command.export.subcommands.data.name"))
+        .setDescription("Export your Endvoyant data")
+        .setDescriptionLocalizations(
+          discordLocalization("command.export.subcommands.data.description"),
+        ),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     const user = await UsersDB.findByDcid(interaction.user.id);

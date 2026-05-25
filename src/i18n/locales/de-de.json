@@ -2,7 +2,90 @@
   "lang": "Deutsch",
   "command": {
     "about": {
-      "name": "über"
+      "name": "info",
+      "description": "Informationen zum Bot"
+    },
+    "account": {
+      "name": "konto",
+      "description": "Verwalte deine verknüpften Konten",
+      "subcommands": {
+        "manager": {
+          "name": "verwaltung",
+          "description": "Verwalte deine verknüpften Konten"
+        }
+      }
+    },
+    "add": {
+      "name": "hinzufügen",
+      "description": "Verknüpfe ein Konto mit Discord",
+      "subcommands": {
+        "account": {
+          "name": "konto",
+          "description": "Verknüpfe ein Konto mit Discord"
+        }
+      }
+    },
+    "daily": {
+      "name": "täglich",
+      "description": "Hole deine täglichen Belohnungen im Spiel ab",
+      "subcommands": {
+        "signin": {
+          "name": "einchecken",
+          "description": "Hole deine täglichen Belohnungen im Spiel ab"
+        }
+      }
+    },
+    "export": {
+      "name": "export",
+      "description": "Exportiere deine Endvoyant-Daten",
+      "subcommands": {
+        "data": {
+          "name": "daten",
+          "description": "Exportiere deine Endvoyant-Daten"
+        }
+      }
+    },
+    "full": {
+      "name": "vollständig",
+      "description": "Zeige dein vollständiges Spielerprofil an",
+      "subcommands": {
+        "profile": {
+          "name": "profil",
+          "description": "Zeige dein vollständiges Spielerprofil an"
+        }
+      }
+    },
+    "profile": {
+      "name": "profil",
+      "description": "Zeige dein Profil an"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Zeige die Prydwen-Rangliste an",
+      "subcommands": {
+        "tierlist": {
+          "name": "rangliste",
+          "description": "Zeige die Prydwen-Rangliste an"
+        }
+      }
+    },
+    "redeem": {
+      "name": "einlösen",
+      "description": "Löse einen Belohnungscode ein"
+    },
+    "settings": {
+      "name": "einstellungen",
+      "description": "Ändere deine persönlichen Endvoyant-Einstellungen"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "Temporär",
+      "subcommands": {
+        "monument": {
+          "name": "monument",
+          "description": "Temporär"
+        }
+      }
     }
   }
 }

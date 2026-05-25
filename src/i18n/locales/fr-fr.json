@@ -2,7 +2,90 @@
   "lang": "Français",
   "command": {
     "about": {
-      "name": "à-propos"
+      "name": "infos",
+      "description": "Informations sur le bot"
+    },
+    "account": {
+      "name": "compte",
+      "description": "Gère tes comptes liés",
+      "subcommands": {
+        "manager": {
+          "name": "gestion",
+          "description": "Gère tes comptes liés"
+        }
+      }
+    },
+    "add": {
+      "name": "ajouter",
+      "description": "Lie un compte à ton Discord",
+      "subcommands": {
+        "account": {
+          "name": "compte",
+          "description": "Lie un compte à ton Discord"
+        }
+      }
+    },
+    "daily": {
+      "name": "quotidien",
+      "description": "Récupère tes récompenses quotidiennes en jeu",
+      "subcommands": {
+        "signin": {
+          "name": "présence",
+          "description": "Récupère tes récompenses quotidiennes en jeu"
+        }
+      }
+    },
+    "export": {
+      "name": "exporter",
+      "description": "Exporte tes données Endvoyant",
+      "subcommands": {
+        "data": {
+          "name": "données",
+          "description": "Exporte tes données Endvoyant"
+        }
+      }
+    },
+    "full": {
+      "name": "complet",
+      "description": "Affiche ton profil de joueur complet",
+      "subcommands": {
+        "profile": {
+          "name": "profil",
+          "description": "Affiche ton profil de joueur complet"
+        }
+      }
+    },
+    "profile": {
+      "name": "profil",
+      "description": "Affiche ton profil"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Affiche la tier list Prydwen",
+      "subcommands": {
+        "tierlist": {
+          "name": "classement",
+          "description": "Affiche la tier list Prydwen"
+        }
+      }
+    },
+    "redeem": {
+      "name": "échanger",
+      "description": "Utilise un code de récompense"
+    },
+    "settings": {
+      "name": "réglages",
+      "description": "Modifie tes réglages personnels Endvoyant"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "Temporaire",
+      "subcommands": {
+        "monument": {
+          "name": "monument",
+          "description": "Temporaire"
+        }
+      }
     }
   }
 }

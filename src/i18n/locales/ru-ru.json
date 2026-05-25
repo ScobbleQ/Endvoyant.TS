@@ -2,7 +2,90 @@
   "lang": "Русский",
   "command": {
     "about": {
-      "name": "о"
+      "name": "инфо",
+      "description": "Информация о боте"
+    },
+    "account": {
+      "name": "аккаунт",
+      "description": "Управляйте привязанными аккаунтами",
+      "subcommands": {
+        "manager": {
+          "name": "управление",
+          "description": "Управляйте привязанными аккаунтами"
+        }
+      }
+    },
+    "add": {
+      "name": "добавить",
+      "description": "Привяжите аккаунт к Discord",
+      "subcommands": {
+        "account": {
+          "name": "аккаунт",
+          "description": "Привяжите аккаунт к Discord"
+        }
+      }
+    },
+    "daily": {
+      "name": "ежедневно",
+      "description": "Получите ежедневные игровые награды",
+      "subcommands": {
+        "signin": {
+          "name": "отметка",
+          "description": "Получите ежедневные игровые награды"
+        }
+      }
+    },
+    "export": {
+      "name": "экспорт",
+      "description": "Экспортируйте свои данные Endvoyant",
+      "subcommands": {
+        "data": {
+          "name": "данные",
+          "description": "Экспортируйте свои данные Endvoyant"
+        }
+      }
+    },
+    "full": {
+      "name": "полный",
+      "description": "Посмотрите свой полный профиль игрока",
+      "subcommands": {
+        "profile": {
+          "name": "профиль",
+          "description": "Посмотрите свой полный профиль игрока"
+        }
+      }
+    },
+    "profile": {
+      "name": "профиль",
+      "description": "Посмотрите свой профиль"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Показывает тирлист Prydwen",
+      "subcommands": {
+        "tierlist": {
+          "name": "тирлист",
+          "description": "Показывает тирлист Prydwen"
+        }
+      }
+    },
+    "redeem": {
+      "name": "активировать",
+      "description": "Активируйте код награды"
+    },
+    "settings": {
+      "name": "настройки",
+      "description": "Измените личные настройки Endvoyant"
+    },
+    "umbral": {
+      "name": "умбрал",
+      "description": "Временно",
+      "subcommands": {
+        "monument": {
+          "name": "монумент",
+          "description": "Временно"
+        }
+      }
     }
   }
 }

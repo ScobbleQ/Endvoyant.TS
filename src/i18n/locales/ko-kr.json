@@ -2,7 +2,90 @@
   "lang": "한국어",
   "command": {
     "about": {
-      "name": "정보"
+      "name": "봇정보",
+      "description": "봇 정보를 확인합니다"
+    },
+    "account": {
+      "name": "계정",
+      "description": "연결된 계정을 관리합니다",
+      "subcommands": {
+        "manager": {
+          "name": "관리",
+          "description": "연결된 계정을 관리합니다"
+        }
+      }
+    },
+    "add": {
+      "name": "추가",
+      "description": "계정을 Discord에 연결합니다",
+      "subcommands": {
+        "account": {
+          "name": "계정",
+          "description": "계정을 Discord에 연결합니다"
+        }
+      }
+    },
+    "daily": {
+      "name": "일일",
+      "description": "게임 일일 보상을 받습니다",
+      "subcommands": {
+        "signin": {
+          "name": "출석",
+          "description": "게임 일일 보상을 받습니다"
+        }
+      }
+    },
+    "export": {
+      "name": "내보내기",
+      "description": "Endvoyant 데이터를 내보냅니다",
+      "subcommands": {
+        "data": {
+          "name": "데이터",
+          "description": "Endvoyant 데이터를 내보냅니다"
+        }
+      }
+    },
+    "full": {
+      "name": "전체",
+      "description": "내 전체 플레이어 프로필을 봅니다",
+      "subcommands": {
+        "profile": {
+          "name": "프로필",
+          "description": "내 전체 플레이어 프로필을 봅니다"
+        }
+      }
+    },
+    "profile": {
+      "name": "프로필",
+      "description": "내 프로필을 봅니다"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Prydwen 티어표를 봅니다",
+      "subcommands": {
+        "tierlist": {
+          "name": "티어표",
+          "description": "Prydwen 티어표를 봅니다"
+        }
+      }
+    },
+    "redeem": {
+      "name": "교환",
+      "description": "보상 코드를 교환합니다"
+    },
+    "settings": {
+      "name": "설정",
+      "description": "내 Endvoyant 개인 설정을 변경합니다"
+    },
+    "umbral": {
+      "name": "엄브럴",
+      "description": "임시",
+      "subcommands": {
+        "monument": {
+          "name": "기념비",
+          "description": "임시"
+        }
+      }
     }
   }
 }

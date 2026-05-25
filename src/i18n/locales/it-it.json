@@ -2,7 +2,90 @@
   "lang": "Italiano",
   "command": {
     "about": {
-      "name": "info"
+      "name": "info",
+      "description": "Informazioni sul bot"
+    },
+    "account": {
+      "name": "account",
+      "description": "Gestisci gli account collegati",
+      "subcommands": {
+        "manager": {
+          "name": "gestisci",
+          "description": "Gestisci gli account collegati"
+        }
+      }
+    },
+    "add": {
+      "name": "aggiungi",
+      "description": "Collega un account a Discord",
+      "subcommands": {
+        "account": {
+          "name": "account",
+          "description": "Collega un account a Discord"
+        }
+      }
+    },
+    "daily": {
+      "name": "giornaliero",
+      "description": "Riscatta le ricompense giornaliere di gioco",
+      "subcommands": {
+        "signin": {
+          "name": "checkin",
+          "description": "Riscatta le ricompense giornaliere di gioco"
+        }
+      }
+    },
+    "export": {
+      "name": "esporta",
+      "description": "Esporta i tuoi dati Endvoyant",
+      "subcommands": {
+        "data": {
+          "name": "dati",
+          "description": "Esporta i tuoi dati Endvoyant"
+        }
+      }
+    },
+    "full": {
+      "name": "completo",
+      "description": "Visualizza il tuo profilo giocatore completo",
+      "subcommands": {
+        "profile": {
+          "name": "profilo",
+          "description": "Visualizza il tuo profilo giocatore completo"
+        }
+      }
+    },
+    "profile": {
+      "name": "profilo",
+      "description": "Visualizza il tuo profilo"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Mostra la tier list di Prydwen",
+      "subcommands": {
+        "tierlist": {
+          "name": "tierlist",
+          "description": "Mostra la tier list di Prydwen"
+        }
+      }
+    },
+    "redeem": {
+      "name": "riscatta",
+      "description": "Riscatta un codice ricompensa"
+    },
+    "settings": {
+      "name": "impostazioni",
+      "description": "Modifica le tue impostazioni personali di Endvoyant"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "Temporaneo",
+      "subcommands": {
+        "monument": {
+          "name": "monumento",
+          "description": "Temporaneo"
+        }
+      }
     }
   }
 }

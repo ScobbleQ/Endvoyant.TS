@@ -2,7 +2,90 @@
   "lang": "Português (Brasil)",
   "command": {
     "about": {
-      "name": "sobre"
+      "name": "sobre",
+      "description": "Informações sobre o bot"
+    },
+    "account": {
+      "name": "conta",
+      "description": "Gerencie suas contas vinculadas",
+      "subcommands": {
+        "manager": {
+          "name": "gerenciar",
+          "description": "Gerencie suas contas vinculadas"
+        }
+      }
+    },
+    "add": {
+      "name": "adicionar",
+      "description": "Vincule uma conta ao seu Discord",
+      "subcommands": {
+        "account": {
+          "name": "conta",
+          "description": "Vincule uma conta ao seu Discord"
+        }
+      }
+    },
+    "daily": {
+      "name": "diario",
+      "description": "Resgate suas recompensas diárias no jogo",
+      "subcommands": {
+        "signin": {
+          "name": "checkin",
+          "description": "Resgate suas recompensas diárias no jogo"
+        }
+      }
+    },
+    "export": {
+      "name": "exportar",
+      "description": "Exporte seus dados do Endvoyant",
+      "subcommands": {
+        "data": {
+          "name": "dados",
+          "description": "Exporte seus dados do Endvoyant"
+        }
+      }
+    },
+    "full": {
+      "name": "completo",
+      "description": "Veja seu perfil de jogador completo",
+      "subcommands": {
+        "profile": {
+          "name": "perfil",
+          "description": "Veja seu perfil de jogador completo"
+        }
+      }
+    },
+    "profile": {
+      "name": "perfil",
+      "description": "Veja seu perfil"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "Mostre a tier list da Prydwen",
+      "subcommands": {
+        "tierlist": {
+          "name": "ranking",
+          "description": "Mostre a tier list da Prydwen"
+        }
+      }
+    },
+    "redeem": {
+      "name": "resgatar",
+      "description": "Resgate um código de recompensa"
+    },
+    "settings": {
+      "name": "ajustes",
+      "description": "Altere suas configurações pessoais do Endvoyant"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "Temporário",
+      "subcommands": {
+        "monument": {
+          "name": "monumento",
+          "description": "Temporário"
+        }
+      }
     }
   }
 }

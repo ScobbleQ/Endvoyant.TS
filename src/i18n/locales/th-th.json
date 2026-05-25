@@ -2,7 +2,90 @@
   "lang": "ไทย",
   "command": {
     "about": {
-      "name": "เกี่ยวกับ"
+      "name": "ข้อมูล",
+      "description": "ดูข้อมูลของบอต"
+    },
+    "account": {
+      "name": "บัญชี",
+      "description": "จัดการบัญชีที่เชื่อมไว้",
+      "subcommands": {
+        "manager": {
+          "name": "จัดการ",
+          "description": "จัดการบัญชีที่เชื่อมไว้"
+        }
+      }
+    },
+    "add": {
+      "name": "เพิ่ม",
+      "description": "เชื่อมบัญชีกับ Discord ของคุณ",
+      "subcommands": {
+        "account": {
+          "name": "บัญชี",
+          "description": "เชื่อมบัญชีกับ Discord ของคุณ"
+        }
+      }
+    },
+    "daily": {
+      "name": "รายวัน",
+      "description": "รับรางวัลรายวันในเกม",
+      "subcommands": {
+        "signin": {
+          "name": "เช็กอิน",
+          "description": "รับรางวัลรายวันในเกม"
+        }
+      }
+    },
+    "export": {
+      "name": "ส่งออก",
+      "description": "ส่งออกข้อมูล Endvoyant ของคุณ",
+      "subcommands": {
+        "data": {
+          "name": "ข้อมูล",
+          "description": "ส่งออกข้อมูล Endvoyant ของคุณ"
+        }
+      }
+    },
+    "full": {
+      "name": "เต็ม",
+      "description": "ดูโปรไฟล์ผู้เล่นแบบเต็มของคุณ",
+      "subcommands": {
+        "profile": {
+          "name": "โปรไฟล์",
+          "description": "ดูโปรไฟล์ผู้เล่นแบบเต็มของคุณ"
+        }
+      }
+    },
+    "profile": {
+      "name": "โปรไฟล์",
+      "description": "ดูโปรไฟล์ของคุณ"
+    },
+    "prydwen": {
+      "name": "prydwen",
+      "description": "แสดงเทียร์ลิสต์ของ Prydwen",
+      "subcommands": {
+        "tierlist": {
+          "name": "เทียร์ลิสต์",
+          "description": "แสดงเทียร์ลิสต์ของ Prydwen"
+        }
+      }
+    },
+    "redeem": {
+      "name": "แลก",
+      "description": "แลกรหัสรางวัล"
+    },
+    "settings": {
+      "name": "ตั้งค่า",
+      "description": "เปลี่ยนการตั้งค่า Endvoyant ส่วนตัวของคุณ"
+    },
+    "umbral": {
+      "name": "umbral",
+      "description": "ชั่วคราว",
+      "subcommands": {
+        "monument": {
+          "name": "อนุสาวรีย์",
+          "description": "ชั่วคราว"
+        }
+      }
     }
   }
 }

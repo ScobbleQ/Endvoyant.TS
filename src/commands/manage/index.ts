@@ -6,17 +6,17 @@ import { discordLocalization } from "#/i18n/index.ts";
 export default {
   cooldown: 5,
   data: new SlashCommandBuilder()
-    .setName("account")
-    .setNameLocalizations(discordLocalization("command.account.name"))
+    .setName("manage")
+    .setNameLocalizations(discordLocalization("command.manage.name"))
     .setDescription("Manage your linked accounts")
-    .setDescriptionLocalizations(discordLocalization("command.account.description"))
+    .setDescriptionLocalizations(discordLocalization("command.manage.description"))
     .addSubcommand((subcommand) =>
       subcommand
-        .setName("manager")
-        .setNameLocalizations(discordLocalization("command.account.subcommands.manager.name"))
+        .setName("accounts")
+        .setNameLocalizations(discordLocalization("command.manage.subcommands.accounts.name"))
         .setDescription("Manage your linked accounts")
         .setDescriptionLocalizations(
-          discordLocalization("command.account.subcommands.manager.description"),
+          discordLocalization("command.manage.subcommands.accounts.description"),
         ),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {

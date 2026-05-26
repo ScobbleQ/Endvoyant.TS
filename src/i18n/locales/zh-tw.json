@@ -5,11 +5,11 @@
       "name": "關於",
       "description": "查看機器人資訊"
     },
-    "account": {
+    "manage": {
       "name": "帳號",
       "description": "管理已綁定的帳號",
       "subcommands": {
-        "manager": {
+        "accounts": {
           "name": "管理",
           "description": "管理已綁定的帳號"
         }

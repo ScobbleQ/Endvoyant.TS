@@ -5,11 +5,11 @@
       "name": "инфо",
       "description": "Информация о боте"
     },
-    "account": {
+    "manage": {
       "name": "аккаунт",
       "description": "Управляйте привязанными аккаунтами",
       "subcommands": {
-        "manager": {
+        "accounts": {
           "name": "управление",
           "description": "Управляйте привязанными аккаунтами"
         }

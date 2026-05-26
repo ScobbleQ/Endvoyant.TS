@@ -5,11 +5,11 @@
       "name": "关于",
       "description": "查看机器人信息"
     },
-    "account": {
+    "manage": {
       "name": "账号",
       "description": "管理已绑定的账号",
       "subcommands": {
-        "manager": {
+        "accounts": {
           "name": "管理",
           "description": "管理已绑定的账号"
         }

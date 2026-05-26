@@ -5,11 +5,11 @@
       "name": "bot情報",
       "description": "Botの情報を表示します"
     },
-    "account": {
+    "manage": {
       "name": "アカウント",
       "description": "連携済みアカウントを管理します",
       "subcommands": {
-        "manager": {
+        "accounts": {
           "name": "管理",
           "description": "連携済みアカウントを管理します"
         }

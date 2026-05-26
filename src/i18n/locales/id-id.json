@@ -5,11 +5,11 @@
       "name": "tentang",
       "description": "Info tentang bot"
     },
-    "account": {
+    "manage": {
       "name": "akun",
       "description": "Kelola akun yang tertaut",
       "subcommands": {
-        "manager": {
+        "accounts": {
           "name": "kelola",
           "description": "Kelola akun yang tertaut"
         }

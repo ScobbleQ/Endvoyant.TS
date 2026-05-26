@@ -5,11 +5,11 @@
       "name": "giới-thiệu",
       "description": "Thông tin về bot"
     },
-    "account": {
+    "manage": {
       "name": "tài-khoản",
       "description": "Quản lý các tài khoản đã liên kết",
       "subcommands": {
-        "manager": {
+        "accounts": {
           "name": "quản-lý",
           "description": "Quản lý các tài khoản đã liên kết"
         }

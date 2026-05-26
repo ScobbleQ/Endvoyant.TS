@@ -5,11 +5,11 @@
       "name": "봇정보",
       "description": "봇 정보를 확인합니다"
     },
-    "account": {
+    "manage": {
       "name": "계정",
       "description": "연결된 계정을 관리합니다",
       "subcommands": {
-        "manager": {
+        "accounts": {
           "name": "관리",
           "description": "연결된 계정을 관리합니다"
         }

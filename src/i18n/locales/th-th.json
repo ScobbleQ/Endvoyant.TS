@@ -5,11 +5,11 @@
       "name": "ข้อมูล",
       "description": "ดูข้อมูลของบอต"
     },
-    "account": {
+    "manage": {
       "name": "บัญชี",
       "description": "จัดการบัญชีที่เชื่อมไว้",
       "subcommands": {
-        "manager": {
+        "accounts": {
           "name": "จัดการ",
           "description": "จัดการบัญชีที่เชื่อมไว้"
         }

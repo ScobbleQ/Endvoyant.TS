@@ -5,11 +5,11 @@
       "name": "info",
       "description": "Informationen zum Bot"
     },
-    "account": {
+    "manage": {
       "name": "konto",
       "description": "Verwalte deine verknüpften Konten",
       "subcommands": {
-        "manager": {
+        "accounts": {
           "name": "verwaltung",
           "description": "Verwalte deine verknüpften Konten"
         }

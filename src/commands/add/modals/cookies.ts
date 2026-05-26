@@ -7,6 +7,7 @@ import {
   DiscordAPIError,
   MessageFlags,
 } from "discord.js";
+import { errorContainer, successContainer, warnContainer } from "#/components/container.ts";
 import { AccountsDB } from "#/drizzle/index.ts";
 import { EndfieldSDK } from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
@@ -44,7 +45,13 @@ export default {
 
     if (!cookies["ACCOUNT_TOKEN"] || !cookies["SK_OAUTH_CRED_KEY"] || !cookies["HG_INFO_KEY"]) {
       await interaction.editReply({
-        content: `Invalid cookies!`,
+        components: [
+          errorContainer({
+            title: "Invalid Cookies",
+            description: "Please ensure you have provided valid cookie tokens.",
+          }),
+        ],
+        flags: [MessageFlags.IsComponentsV2],
       });
       return;
     }
@@ -86,15 +93,29 @@ export default {
     if (existing.exists) {
       const isOwner = interaction.user.id === existing.dcid;
       await interaction.editReply({
-        content: isOwner ? "already linked" : `linked by ${existing.dcid}`,
+        components: [
+          errorContainer({
+            title: "Account Already Linked",
+            description: isOwner
+              ? "This account is already linked to your Discord."
+              : "This account is already linked to another Discord account.",
+          }),
+        ],
+        flags: [MessageFlags.IsComponentsV2],
       });
       return;
     }
 
     const amt = await AccountsDB.countByDcid(interaction.user.id);
-    if (amt > 5) {
+    if (amt > 6) {
       await interaction.editReply({
-        content: "already have max amount of accounts linked",
+        components: [
+          errorContainer({
+            title: "Maximum Accounts Linked",
+            description: "You have already linked the maximum number of accounts.",
+          }),
+        ],
+        flags: [MessageFlags.IsComponentsV2],
       });
       return;
     }
@@ -113,19 +134,34 @@ export default {
     });
 
     await interaction.editReply({
-      content: "done",
+      components: [
+        successContainer({
+          title: "Accounts Linked",
+          description: "Your accounts have been successfully linked.",
+        }),
+      ],
+      flags: [MessageFlags.IsComponentsV2],
     });
 
     try {
-      await interaction.user.send({
+      const msg = await interaction.user.send({
         content: "test",
       });
+
+      // Pin if possible
+      if (msg) await msg.pin();
     } catch (error) {
       if (!interaction.inGuild()) return; // theres nothing we can do
       if (error instanceof DiscordAPIError && error.code === 50007) {
         await interaction.followUp({
-          content: "yo you gotta enable perms for notifications",
-          flags: [MessageFlags.Ephemeral],
+          components: [
+            warnContainer({
+              title: "Unable to Send DM",
+              description:
+                "We were unable to send you a DM. Please enable permissions for notifications.",
+            }),
+          ],
+          flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
         });
       }
     }

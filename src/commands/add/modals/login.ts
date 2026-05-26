@@ -7,6 +7,12 @@ import {
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
+import {
+  errorContainer,
+  successContainer,
+  container,
+  warnContainer,
+} from "#/components/container.ts";
 import { AccountsDB } from "#/drizzle/index.ts";
 import { EndfieldSDK } from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
@@ -41,20 +47,28 @@ export default {
     const password = interaction.fields.getTextInputValue("password");
 
     await interaction.editReply({
-      content: `Logging in...`,
+      components: [container("Logging in...")],
+      flags: [MessageFlags.IsComponentsV2],
     });
 
     const sdk = new EndfieldSDK();
     const res = await sdk.loginWithEmailPassword({ email, password });
     if (res.status !== 0) {
       await interaction.editReply({
-        content: `Login failed: ${res.msg}`,
+        components: [errorContainer({ title: "Login Failed", description: res.msg })],
+        flags: [MessageFlags.IsComponentsV2],
       });
       return;
     }
 
     await interaction.editReply({
-      content: `Login successful! Fetching account data...`,
+      components: [
+        successContainer({
+          title: "Login Successful",
+          description: "Getting your account information...",
+        }),
+      ],
+      flags: [MessageFlags.IsComponentsV2],
     });
 
     const sesh = await sdk.createSkportSession({ accountToken: res.data.token });
@@ -77,59 +91,83 @@ export default {
       return;
     }
 
-    if (bind.defaultRole.isBanned) {
-      return;
-    }
+    for (const role of bind.roles) {
+      if (role.isBanned) return;
 
-    const existing = await AccountsDB.findBindingOwner(
-      res.data.hgId,
-      bind.defaultRole.roleId,
-      bind.defaultRole.serverId,
-    );
+      const existing = await AccountsDB.findBindingOwner(res.data.hgId, role.roleId, role.serverId);
+      if (existing.exists) {
+        const isOwner = interaction.user.id === existing.dcid;
+        await interaction.editReply({
+          components: [
+            errorContainer({
+              title: "Account Already Linked",
+              description: isOwner
+                ? "This account is already linked to your Discord."
+                : "This account is already linked to another Discord account.",
+            }),
+          ],
+          flags: [MessageFlags.IsComponentsV2],
+        });
+        return;
+      }
 
-    if (existing.exists) {
-      const isOwner = interaction.user.id === existing.dcid;
-      await interaction.editReply({
-        content: isOwner ? "already linked" : `linked by ${existing.dcid}`,
+      const amt = await AccountsDB.countByDcid(interaction.user.id);
+      if (amt > 6) {
+        await interaction.editReply({
+          components: [
+            errorContainer({
+              title: "Maximum Accounts Linked",
+              description: "You have already linked the maximum number of accounts.",
+            }),
+          ],
+          flags: [MessageFlags.IsComponentsV2],
+        });
+        return;
+      }
+
+      await AccountsDB.insert(interaction.user.id, {
+        nickname: role.nickname,
+        accountToken: res.data.token,
+        hgId: res.data.hgId,
+        userId: sesh.userId,
+        channelId: bind.channelMasterId,
+        serverType: role.serverType,
+        serverId: role.serverId,
+        serverName: role.serverName,
+        roleId: role.roleId,
+        isPrimary: amt === 0,
       });
-      return;
     }
-
-    const amt = await AccountsDB.countByDcid(interaction.user.id);
-    if (amt > 5) {
-      await interaction.editReply({
-        content: "already have max amount of accounts linked",
-      });
-      return;
-    }
-
-    await AccountsDB.insert(interaction.user.id, {
-      nickname: bind.defaultRole.nickname,
-      accountToken: res.data.token,
-      hgId: res.data.hgId,
-      userId: sesh.userId,
-      channelId: bind.channelMasterId,
-      serverType: bind.defaultRole.serverType,
-      serverId: bind.defaultRole.serverId,
-      serverName: bind.defaultRole.serverName,
-      roleId: bind.defaultRole.roleId,
-      isPrimary: amt === 0,
-    });
 
     await interaction.editReply({
-      content: "done",
+      components: [
+        successContainer({
+          title: "Accounts Linked",
+          description: "Your accounts have been successfully linked.",
+        }),
+      ],
+      flags: [MessageFlags.IsComponentsV2],
     });
 
     try {
-      await interaction.user.send({
+      const msg = await interaction.user.send({
         content: "test",
       });
+
+      // Pin if possible
+      if (msg) await msg.pin();
     } catch (error) {
       if (!interaction.inGuild()) return; // theres nothing we can do
       if (error instanceof DiscordAPIError && error.code === 50007) {
         await interaction.followUp({
-          content: "yo you gotta enable perms for notifications",
-          flags: [MessageFlags.Ephemeral],
+          components: [
+            warnContainer({
+              title: "Unable to Send DM",
+              description:
+                "We were unable to send you a DM. Please enable permissions for notifications.",
+            }),
+          ],
+          flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
         });
       }
     }

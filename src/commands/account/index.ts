@@ -1,4 +1,6 @@
-import { SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
+import { config } from "#/config.ts";
+import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
 import { discordLocalization } from "#/i18n/index.ts";
 
 export default {
@@ -18,6 +20,29 @@ export default {
         ),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
-    await interaction.reply("About the bot!");
+    const user = await UsersDB.findByDcid(interaction.user.id);
+    if (!user) {
+      await interaction.reply({
+        content: "You don't have any linked accounts. Use /add to link an account.",
+        flags: [MessageFlags.Ephemeral],
+      });
+      return;
+    }
+
+    if (config.env === "production") {
+      void EventsDB.insert(user.dcid, {
+        source: "slash",
+        action: "account manager",
+      });
+    }
+
+    const accounts = await AccountsDB.listByDcid(interaction.user.id);
+    if (accounts.length === 0) {
+      await interaction.reply({
+        content: "You don't have any linked accounts. Use /add to link an account.",
+        flags: [MessageFlags.Ephemeral],
+      });
+      return;
+    }
   },
 };

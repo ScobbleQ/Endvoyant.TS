@@ -1,3 +1,5 @@
+import { EndfieldSDK } from "./client.ts";
+
 export { Cache } from "./cache.ts";
 export { EndfieldSDK } from "./client.ts";
 export type {
@@ -12,3 +14,5 @@ export type {
   PlayerBindingsResponse,
   SkportZonaiErrorResponse,
 } from "./types/auth.ts";
+
+export const sdk = new EndfieldSDK();

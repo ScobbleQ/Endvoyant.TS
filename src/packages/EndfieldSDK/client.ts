@@ -27,26 +27,20 @@ type OAuth2GrantByAppCode = {
 };
 
 export class EndfieldSDK {
-  private lang: Language = "en-us";
+  private readonly defaultLang: Language = "en-us";
 
-  constructor(options: { lang?: Language } = {}) {
-    this.lang = options.lang || this.lang;
-  }
-
-  setLanguage(lang: Language) {
-    this.lang = lang;
+  constructor(options: { defaultLang?: Language } = {}) {
+    this.defaultLang = options.defaultLang || this.defaultLang;
   }
 
   /**
    * Authenticate with email and password (Gryphline AS).
    */
-  async loginWithEmailPassword({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }): Promise<GryphlineErrorResponse | EmailPasswordLoginResponse> {
+  async loginWithEmailPassword(
+    email: string,
+    password: string,
+    options: { lang?: Language } = {},
+  ): Promise<GryphlineErrorResponse | EmailPasswordLoginResponse> {
     const url = "https://as.gryphline.com/user/auth/v1/token_by_email_password";
     const body = JSON.stringify({ email, from: 1, password });
     const headers: RequestInit["headers"] = {
@@ -55,7 +49,7 @@ export class EndfieldSDK {
       Host: "as.gryphline.com",
       "User-Agent": "skport-ios/100000018 CFNetwork/3860.300.31 Darwin/25.2.0",
       "X-Captcha-Version": "4.0",
-      "X-Language": this.lang,
+      "X-Language": options.lang || this.defaultLang,
     };
 
     try {

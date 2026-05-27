@@ -52,7 +52,7 @@ export default {
     });
 
     const sdk = new EndfieldSDK();
-    const res = await sdk.loginWithEmailPassword({ email, password });
+    const res = await sdk.loginWithEmailPassword(email, password);
     if (res.status !== 0) {
       await interaction.editReply({
         components: [errorContainer({ title: "Login Failed", description: res.msg })],

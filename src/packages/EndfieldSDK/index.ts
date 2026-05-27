@@ -15,4 +15,5 @@ export type {
   SkportZonaiErrorResponse,
 } from "./types/auth.ts";
 
-export const sdk = new EndfieldSDK();
+const sdk = new EndfieldSDK();
+export default sdk;

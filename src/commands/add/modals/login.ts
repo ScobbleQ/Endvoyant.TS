@@ -14,7 +14,7 @@ import {
   warnContainer,
 } from "#/components/container.ts";
 import { AccountsDB } from "#/drizzle/index.ts";
-import { EndfieldSDK } from "#/packages/EndfieldSDK/index.ts";
+import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 
 export default {
@@ -51,8 +51,7 @@ export default {
       flags: [MessageFlags.IsComponentsV2],
     });
 
-    const sdk = new EndfieldSDK();
-    const res = await sdk.loginWithEmailPassword(email, password);
+    const res = await EndfieldSDK.loginWithEmailPassword(email, password);
     if (res.status !== 0) {
       await interaction.editReply({
         components: [errorContainer({ title: "Login Failed", description: res.msg })],
@@ -71,12 +70,12 @@ export default {
       flags: [MessageFlags.IsComponentsV2],
     });
 
-    const sesh = await sdk.createSkportSession({ accountToken: res.data.token });
+    const sesh = await EndfieldSDK.createSkportSession({ accountToken: res.data.token });
     if (!sesh) {
       return;
     }
 
-    const bindings = await sdk.fetchPlayerBindings({ cred: sesh.cred, token: sesh.token });
+    const bindings = await EndfieldSDK.fetchPlayerBindings({ cred: sesh.cred, token: sesh.token });
     if (bindings.code !== 0) {
       return;
     }

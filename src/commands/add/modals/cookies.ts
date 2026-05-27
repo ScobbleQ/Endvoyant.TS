@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { errorContainer, successContainer, warnContainer } from "#/components/container.ts";
 import { AccountsDB } from "#/drizzle/index.ts";
-import { EndfieldSDK } from "#/packages/EndfieldSDK/index.ts";
+import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 
 export default {
@@ -58,14 +58,12 @@ export default {
 
     const { hgId } = JSON.parse(cookies["HG_INFO_KEY"]);
 
-    const sdk = new EndfieldSDK();
-
-    const sesh = await sdk.createSkportSession({ accountToken: cookies["ACCOUNT_TOKEN"] });
+    const sesh = await EndfieldSDK.createSkportSession({ accountToken: cookies["ACCOUNT_TOKEN"] });
     if (!sesh) {
       return;
     }
 
-    const bindings = await sdk.fetchPlayerBindings({ cred: sesh.cred, token: sesh.token });
+    const bindings = await EndfieldSDK.fetchPlayerBindings({ cred: sesh.cred, token: sesh.token });
     if (bindings.code !== 0) {
       return;
     }

@@ -7,6 +7,7 @@ import type {
   SkportZonaiErrorResponse,
   PlayerBindingsResponse,
   RefreshAccountTokenResponse,
+  ChannelTokenAuthResponse,
 } from "./types/auth.ts";
 import type { Language } from "./types/language.ts";
 import { computeSign } from "./utils/signing.ts";
@@ -57,6 +58,7 @@ export class EndfieldSDK {
       });
 
       if (statusCode !== 200) {
+        await body.dump();
         throw new Error(statusText);
       }
 
@@ -76,39 +78,33 @@ export class EndfieldSDK {
   }: {
     channelId: string;
     channelToken: string;
-  }) {
+  }): Promise<GryphlineErrorResponse | ChannelTokenAuthResponse> {
     const url = "https://u8.gryphline.com/u8/user/auth/v2/token_by_channel_token";
-    const body = JSON.stringify({
-      appCode: "973bd727dd11cbb6ead8",
-      channelMasterId: channelId,
-      channelToken: {
-        type: 1,
-        isSuc: true,
-        code: channelToken,
-      },
-      platform: 0,
-      type: 0,
-    });
-    const headers: RequestInit["headers"] = {
-      "Accept-Encoding": "gzip, deflate, br",
-      "Content-Type": "application/json",
-      Host: "u8.gryphline.com",
-      "User-Agent": "Endfield/0 CFNetwork/3860.400.51 Darwin/25.3.0",
-    };
 
     try {
-      const res = await fetch(url, {
+      const { body, statusCode, statusText } = await request(url, {
         method: "POST",
-        headers,
-        body,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          appCode: "973bd727dd11cbb6ead8",
+          channelMasterId: channelId,
+          channelToken: {
+            type: 1,
+            isSuc: true,
+            code: channelToken,
+          },
+          platform: 0,
+          type: 0,
+        }),
       });
 
-      if (!res.ok) {
-        throw new Error(res.statusText);
+      if (statusCode !== 200) {
+        await body.dump();
+        throw new Error(statusText);
       }
 
-      const data = await res.json();
-      return data;
+      const data = await body.json();
+      return data as ChannelTokenAuthResponse;
     } catch (error) {
       throw new Error("INVALID_CHANNEL_TOKEN", { cause: error });
     }
@@ -131,6 +127,7 @@ export class EndfieldSDK {
       });
 
       if (statusCode !== 200) {
+        await body.dump();
         throw new Error(statusText);
       }
 
@@ -165,6 +162,7 @@ export class EndfieldSDK {
       });
 
       if (statusCode !== 200) {
+        await body.dump();
         throw new Error(statusText);
       }
 
@@ -202,6 +200,7 @@ export class EndfieldSDK {
       });
 
       if (statusCode !== 200) {
+        await body.dump();
         throw new Error(statusText);
       }
 
@@ -249,6 +248,7 @@ export class EndfieldSDK {
       });
 
       if (statusCode !== 200) {
+        await body.dump();
         throw new Error(statusText);
       }
 

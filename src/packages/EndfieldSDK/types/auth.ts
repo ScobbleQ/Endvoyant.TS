@@ -31,6 +31,15 @@ export interface GryphlineErrorResponse extends GryphlineResponseBase {
 // 1 = VerificationRequired
 // 104 = IncorrectEmailOrPassword
 
+export interface ChannelTokenAuthResponse extends GryphlineResponseBase {
+  status: 0;
+  data: {
+    token: string;
+    isNew: boolean;
+    uid: string;
+  };
+}
+
 /** OAuth2 grant mode: `0` = authorization code, `1` = token */
 export type OAuth2GrantKind = 0 | 1;
 

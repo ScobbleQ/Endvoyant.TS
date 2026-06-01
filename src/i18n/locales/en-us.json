@@ -55,6 +55,10 @@
         }
       }
     },
+    "premium": {
+      "name": "premium",
+      "description": "temp"
+    },
     "profile": {
       "name": "profile",
       "description": "View your profile"

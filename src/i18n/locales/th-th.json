@@ -55,6 +55,10 @@
         }
       }
     },
+    "premium": {
+      "name": "premium",
+      "description": "temp"
+    },
     "profile": {
       "name": "โปรไฟล์",
       "description": "ดูโปรไฟล์ของคุณ"

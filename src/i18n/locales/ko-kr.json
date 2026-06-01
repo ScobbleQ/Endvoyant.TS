@@ -55,6 +55,10 @@
         }
       }
     },
+    "premium": {
+      "name": "premium",
+      "description": "temp"
+    },
     "profile": {
       "name": "프로필",
       "description": "내 프로필을 봅니다"

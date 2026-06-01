@@ -55,6 +55,10 @@
         }
       }
     },
+    "premium": {
+      "name": "premium",
+      "description": "temp"
+    },
     "profile": {
       "name": "hồ-sơ",
       "description": "Xem hồ sơ của bạn"

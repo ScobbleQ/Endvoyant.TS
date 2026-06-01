@@ -22,6 +22,7 @@ export const config = {
     token: process.env["DISCORD_TOKEN"] || "",
     clientId: process.env["CLIENT_ID"] || "",
     clientSecret: process.env["CLIENT_SECRET"] || "",
+    premiumSkuId: process.env["PREMIUM_SKU_ID"] || "",
   },
   database: {
     url: process.env["DATABASE_URL"] || "",

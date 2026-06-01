@@ -2,9 +2,9 @@ import { sql } from "drizzle-orm";
 import {
   pgEnum,
   pgTable,
+  bigint,
   uuid,
   text,
-  bigint,
   timestamp,
   smallint,
   jsonb,
@@ -122,4 +122,5 @@ export const users = pgTable.withRLS("users", {
     .default(sql`now()`)
     .notNull(),
   lang: langEnum().default("en-us").notNull(),
+  isPremium: boolean().default(false).notNull(),
 });

@@ -7,6 +7,10 @@ export class UsersDB {
     await db.insert(users).values({ dcid });
   }
 
+  static async update(dcid: string, patch: Partial<typeof users.$inferInsert>) {
+    await db.update(users).set(patch).where(eq(users.dcid, dcid));
+  }
+
   static async delete(dcid: string) {
     await db.delete(users).where(eq(users.dcid, dcid));
   }

@@ -54,7 +54,7 @@ export default {
     }
 
     const linkedAmount = await AccountsDB.countByDcid(interaction.user.id);
-    if (linkedAmount >= 3) {
+    if (!user.isPremium && linkedAmount >= 3) {
       await interaction.reply({
         components: [maxAccountContainer()],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],

@@ -1,5 +1,6 @@
 import { CronJob } from "cron";
 import { Events, type Client } from "discord.js";
+import { dailySignin } from "#/jobs/dailySignin.ts";
 import { refreshTokens } from "#/jobs/refreshToken.ts";
 
 export default {
@@ -7,6 +8,16 @@ export default {
   once: true,
   execute: async (client: Client) => {
     console.log(`Logged in as ${client.user?.tag}`);
+
+    new CronJob(
+      "5 12 * * *",
+      () => dailySignin(client),
+      null,
+      true,
+      "America/New_York",
+      null,
+      false,
+    );
 
     new CronJob("0 0 * * *", () => refreshTokens(), null, true, "America/New_York", null, false);
   },

@@ -64,10 +64,11 @@ export type OAuth2GrantByKind<T extends OAuth2GrantKind> = T extends 0
   : OAuth2TokenGrantResponse;
 
 export interface SkportZonaiErrorResponse extends SkportZonaiResponseBase {
-  code: 10002;
+  code: 10002 | 10001;
 }
 
 // 10002 = ExpiredOAuthCode
+// 10001 = AlreadySignedIn
 
 export interface CredentialsFromCodeResponse extends SkportZonaiResponseBase {
   code: 0;
@@ -124,5 +125,15 @@ export interface PlayerBindingsResponse extends SkportZonaiResponseBase {
       }[];
     }[];
     serverDefaultBinding: {};
+  };
+}
+
+export interface SigninResponse extends SkportZonaiResponseBase {
+  code: 0;
+  data: {
+    id: string;
+    count: number;
+    name: string;
+    icon: string;
   };
 }

@@ -8,8 +8,10 @@ import type {
   PlayerBindingsResponse,
   RefreshAccountTokenResponse,
   ChannelTokenAuthResponse,
+  SigninResponse,
 } from "./types/auth.ts";
-import type { Language } from "./types/language.ts";
+import { type Locale } from "./types/language.ts";
+import { toWebLocale } from "./utils/convert.ts";
 import { computeSign } from "./utils/signing.ts";
 
 // as uses msg/status/type
@@ -29,9 +31,9 @@ type OAuth2GrantByAppCode = {
 };
 
 export class EndfieldSDK {
-  private readonly defaultLang: Language = "en-us";
+  private readonly defaultLang: Locale = "en-us";
 
-  constructor(options: { defaultLang?: Language } = {}) {
+  constructor(options: { defaultLang?: Locale } = {}) {
     this.defaultLang = options.defaultLang || this.defaultLang;
   }
 
@@ -41,7 +43,7 @@ export class EndfieldSDK {
   async loginWithEmailPassword(
     email: string,
     password: string,
-    options: { lang?: Language } = {},
+    options: { lang?: Locale } = {},
   ): Promise<GryphlineErrorResponse | EmailPasswordLoginResponse> {
     const url = "https://as.gryphline.com/user/auth/v1/token_by_email_password";
 
@@ -140,8 +142,10 @@ export class EndfieldSDK {
 
   async createCredentialsFromCode({
     code,
+    lang,
   }: {
     code: string;
+    lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | CredentialsFromCodeResponse> {
     const url = "https://zonai.skport.com/web/v1/user/auth/generate_cred_by_code";
 
@@ -151,7 +155,7 @@ export class EndfieldSDK {
         headers: {
           "Content-Type": "application/json",
           platform: "3",
-          "sk-language": "en",
+          "sk-language": toWebLocale(lang ?? this.defaultLang),
           timestamp: Math.floor(Date.now() / 1000).toString(),
           vName: "1.0.0",
         },
@@ -176,9 +180,11 @@ export class EndfieldSDK {
   async refreshAccountToken({
     cred,
     token,
+    lang,
   }: {
     cred: string;
     token: string;
+    lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | RefreshAccountTokenResponse> {
     const url = "https://zonai.skport.com/web/v1/auth/refresh";
     const ts = Math.floor(Date.now() / 1000).toString();
@@ -195,7 +201,7 @@ export class EndfieldSDK {
           vName: "1.0.0",
           cred,
           platform: "3",
-          "sk-language": "en",
+          "sk-language": toWebLocale(lang ?? this.defaultLang),
         },
       });
 
@@ -222,9 +228,11 @@ export class EndfieldSDK {
   async fetchPlayerBindings({
     cred,
     token,
+    lang,
   }: {
     cred: string;
     token: string;
+    lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | PlayerBindingsResponse> {
     const url = "https://zonai.skport.com/api/v1/game/player/binding?";
     const ts = Math.floor(Date.now() / 1000).toString();
@@ -235,7 +243,7 @@ export class EndfieldSDK {
         headers: {
           cred,
           platform: "3",
-          "sk-language": "en",
+          "sk-language": toWebLocale(lang ?? this.defaultLang),
           vName: "1.0.0",
           timestamp: ts,
           sign: computeSign({
@@ -254,6 +262,49 @@ export class EndfieldSDK {
 
       const data = await body.json();
       return data as PlayerBindingsResponse;
+    } catch (error) {
+      throw new Error("", { cause: error });
+    }
+  }
+
+  async completeSignIn({
+    cred,
+    token,
+    roleId,
+    serverId,
+    lang,
+  }: {
+    cred: string;
+    token: string;
+    roleId: string;
+    serverId: string;
+    lang?: Locale;
+  }): Promise<SigninResponse | SkportZonaiErrorResponse> {
+    const url = "https://zonai.skport.com/web/v1/game/endfield/attendance";
+    const ts = Math.floor(Date.now() / 1000).toString();
+
+    try {
+      const { body } = await request(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          cred: cred,
+          platform: "3",
+          "sk-game-role": `3_${roleId}_${serverId}`,
+          "sk-language": toWebLocale(lang ?? this.defaultLang),
+          vName: "1.0.0",
+          timestamp: ts,
+          sign: computeSign({
+            token: token,
+            path: "/web/v1/game/endfield/attendance",
+            body: "",
+            timestamp: ts,
+          }),
+        },
+      });
+
+      const data = await body.json();
+      return data as SigninResponse | SkportZonaiErrorResponse;
     } catch (error) {
       throw new Error("", { cause: error });
     }

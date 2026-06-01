@@ -1,6 +1,6 @@
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, desc, asc } from "drizzle-orm";
 import { db } from "../index.ts";
-import { accounts } from "../schema.ts";
+import { accounts, users } from "../schema.ts";
 
 type Account = typeof accounts.$inferSelect;
 type AccountColumn = keyof Account;
@@ -72,5 +72,36 @@ export class AccountsDB {
 
   static async countByDcid(dcid: string) {
     return await db.$count(accounts, eq(accounts.dcid, dcid));
+  }
+
+  static async withSigninEnabled() {
+    const rows = await db
+      .select({
+        dcid: users.dcid,
+        lang: users.lang,
+        enableNotif: users.enableNotif,
+        accountId: accounts.id,
+        accountToken: accounts.accountToken,
+        enableSignin: accounts.enableSignin,
+        roleId: accounts.roleId,
+        serverId: accounts.serverId,
+      })
+      .from(accounts)
+      .innerJoin(users, eq(accounts.dcid, users.dcid))
+      .where(eq(accounts.enableSignin, true))
+      .orderBy(desc(accounts.isPrimary), asc(accounts.addedOn));
+
+    return [...Map.groupBy(rows, (row) => row.dcid).values()].map((group) => ({
+      dcid: group[0]!.dcid,
+      lang: group[0]!.lang,
+      enableNotif: group[0]!.enableNotif,
+      accounts: group.map(({ accountId, accountToken, enableSignin, roleId, serverId }) => ({
+        accountId,
+        accountToken,
+        enableSignin,
+        roleId,
+        serverId,
+      })),
+    }));
   }
 }

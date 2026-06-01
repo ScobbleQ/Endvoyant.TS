@@ -1,9 +1,10 @@
 import { MessageFlags, SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
 import { errorContainer } from "#/components/container.ts";
 import { config } from "#/config.ts";
-import { EventsDB, UsersDB } from "#/drizzle/index.ts";
+import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
 import { discordLocalization } from "#/i18n/index.ts";
 import { addAccountContainer } from "./components/addAccount.ts";
+import { maxAccountContainer } from "./components/maxAccount.ts";
 import { onboardingContainer } from "./components/onboarding.ts";
 
 export default {
@@ -47,6 +48,15 @@ export default {
             description: "Please contact support for more information.",
           }),
         ],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
+      return;
+    }
+
+    const linkedAmount = await AccountsDB.countByDcid(interaction.user.id);
+    if (linkedAmount >= 3) {
+      await interaction.reply({
+        components: [maxAccountContainer()],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;

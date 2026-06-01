@@ -16,6 +16,7 @@ import {
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
+import { maxAccountContainer } from "../components/maxAccount.ts";
 
 export default {
   data: new ModalBuilder()
@@ -119,12 +120,7 @@ export default {
       const linkedAmount = await AccountsDB.countByDcid(interaction.user.id);
       if (!user.isPremium && linkedAmount >= 3) {
         await interaction.editReply({
-          components: [
-            errorContainer({
-              title: "Maximum Accounts Linked",
-              description: "You have already linked the maximum number of accounts.",
-            }),
-          ],
+          components: [maxAccountContainer()],
           flags: [MessageFlags.IsComponentsV2],
         });
         return;

@@ -1,4 +1,4 @@
-import { loadEnvFile } from "process";
+import { loadEnvFile } from "node:process";
 import { defineConfig } from "drizzle-kit";
 loadEnvFile();
 

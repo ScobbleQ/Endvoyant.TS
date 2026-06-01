@@ -8,7 +8,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { errorContainer, successContainer, warnContainer } from "#/components/container.ts";
-import { AccountsDB } from "#/drizzle/index.ts";
+import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 
@@ -31,6 +31,11 @@ export default {
   execute: async (interaction: ModalSubmitInteraction) => {
     await interaction.deferUpdate();
     const tokens = interaction.fields.getTextInputValue("token");
+
+    const user = await UsersDB.findByDcid(interaction.user.id);
+    if (!user) {
+      return;
+    }
 
     // Decode the tokens
     const decoded = decodeURIComponent(tokens);
@@ -104,8 +109,8 @@ export default {
       return;
     }
 
-    const amt = await AccountsDB.countByDcid(interaction.user.id);
-    if (amt > 6) {
+    const linkedAmount = await AccountsDB.countByDcid(interaction.user.id);
+    if (!user.isPremium && linkedAmount >= 3) {
       await interaction.editReply({
         components: [
           errorContainer({
@@ -128,7 +133,7 @@ export default {
       serverId: bind.defaultRole.serverId,
       serverName: bind.defaultRole.serverName,
       roleId: bind.defaultRole.roleId,
-      isPrimary: amt === 0,
+      isPrimary: linkedAmount === 0,
     });
 
     await interaction.editReply({

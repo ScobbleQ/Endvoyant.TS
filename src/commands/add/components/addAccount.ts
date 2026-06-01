@@ -13,7 +13,7 @@ export function addAccountContainer() {
             t.setContent(
               "Choose how to add your SKPort account to Discord. The source is on [GitHub](https://github.com/ScobbleQ/Endvoyant) if you want to review it.",
             ),
-          (t) => t.setContent("-# Note: Each Discord account can add up to **6** SKPORT accounts."),
+          (t) => t.setContent("-# Note: Each Discord account can add up to **3** SKPORT accounts."),
         )
         .setButtonAccessory(HelpButton.data),
     )

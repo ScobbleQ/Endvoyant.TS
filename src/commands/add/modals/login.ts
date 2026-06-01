@@ -13,7 +13,7 @@ import {
   container,
   warnContainer,
 } from "#/components/container.ts";
-import { AccountsDB } from "#/drizzle/index.ts";
+import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 
@@ -45,6 +45,11 @@ export default {
     await interaction.deferUpdate();
     const email = interaction.fields.getTextInputValue("email");
     const password = interaction.fields.getTextInputValue("password");
+
+    const user = await UsersDB.findByDcid(interaction.user.id);
+    if (!user) {
+      return;
+    }
 
     await interaction.editReply({
       components: [container("Logging in...")],
@@ -91,7 +96,7 @@ export default {
     }
 
     for (const role of bind.roles) {
-      if (role.isBanned) return;
+      if (role.isBanned) continue;
 
       const existing = await AccountsDB.findBindingOwner(res.data.hgId, role.roleId, role.serverId);
       if (existing.exists) {
@@ -110,8 +115,9 @@ export default {
         return;
       }
 
-      const amt = await AccountsDB.countByDcid(interaction.user.id);
-      if (amt > 6) {
+      // Premium users have no limit, non-premium users have max of 3
+      const linkedAmount = await AccountsDB.countByDcid(interaction.user.id);
+      if (!user.isPremium && linkedAmount >= 3) {
         await interaction.editReply({
           components: [
             errorContainer({
@@ -134,7 +140,7 @@ export default {
         serverId: role.serverId,
         serverName: role.serverName,
         roleId: role.roleId,
-        isPrimary: amt === 0,
+        isPrimary: linkedAmount === 0,
       });
     }
 

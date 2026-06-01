@@ -21,6 +21,11 @@ export class AccountsDB {
       .returning({ id: accounts.id });
   }
 
+  static async hasLinkedAccount(dcid: string) {
+    const count = await db.$count(accounts, eq(accounts.dcid, dcid));
+    return count > 0;
+  }
+
   static async listByDcid(dcid: string) {
     return await db.query.accounts.findMany({
       where: {

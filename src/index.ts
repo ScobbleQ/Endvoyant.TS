@@ -14,12 +14,12 @@ manager.spawn().catch((error) => {
   console.error(`Failed to spawn shards: ${error}`);
 });
 
-process.on("SIGINT", async () => {
-  await manager.broadcastEval((client) => client.destroy());
-  process.exit(0);
-});
+// process.on("SIGINT", async () => {
+//   await manager.broadcastEval((client) => client.destroy());
+//   process.exit(0);
+// });
 
-process.on("SIGTERM", async () => {
-  await manager.broadcastEval((client) => client.destroy());
-  process.exit(0);
-});
+// process.on("SIGTERM", async () => {
+//   await manager.broadcastEval((client) => client.destroy());
+//   process.exit(0);
+// });

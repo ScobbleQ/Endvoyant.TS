@@ -1,22 +1,22 @@
 import { Locale as DiscordLocale } from "discord.js";
-import type { Locale } from "#/types/locale.ts";
+import { Language, type Locale } from "../types.ts";
 
 const DISCORD_LOCALE_MAP = {
-  "de-de": DiscordLocale.German,
-  "en-us": DiscordLocale.EnglishUS,
-  "es-mx": DiscordLocale.SpanishES,
-  "fr-fr": DiscordLocale.French,
-  "id-id": DiscordLocale.Indonesian,
-  "it-it": DiscordLocale.Italian,
-  "ja-jp": DiscordLocale.Japanese,
-  "ko-kr": DiscordLocale.Korean,
-  "pt-br": DiscordLocale.PortugueseBR,
-  "ru-ru": DiscordLocale.Russian,
-  "th-th": DiscordLocale.Thai,
-  "vi-vn": DiscordLocale.Vietnamese,
-  "zh-cn": DiscordLocale.ChineseCN,
-  "zh-tw": DiscordLocale.ChineseTW,
-} as const satisfies Record<Locale, DiscordLocale>;
+  [Language.DE_DE]: DiscordLocale.German,
+  [Language.EN_US]: DiscordLocale.EnglishUS,
+  [Language.ES_MX]: DiscordLocale.SpanishES,
+  [Language.FR_FR]: DiscordLocale.French,
+  [Language.ID_ID]: DiscordLocale.Indonesian,
+  [Language.IT_IT]: DiscordLocale.Italian,
+  [Language.JA_JP]: DiscordLocale.Japanese,
+  [Language.KO_KR]: DiscordLocale.Korean,
+  [Language.PT_BR]: DiscordLocale.PortugueseBR,
+  [Language.RU_RU]: DiscordLocale.Russian,
+  [Language.TH_TH]: DiscordLocale.Thai,
+  [Language.VI_VN]: DiscordLocale.Vietnamese,
+  [Language.ZH_CN]: DiscordLocale.ChineseCN,
+  [Language.ZH_TW]: DiscordLocale.ChineseTW,
+} as const;
 
 export const toDiscordLocale = (locale: Locale): DiscordLocale => {
   return DISCORD_LOCALE_MAP[locale] ?? DiscordLocale.EnglishUS;

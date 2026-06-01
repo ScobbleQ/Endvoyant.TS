@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import type { Locale } from "#/types/locale.ts";
+import type { Locale } from "../types.ts";
 
 const localeCache = new Map<Locale, unknown>();
 

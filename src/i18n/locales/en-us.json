@@ -6,11 +6,11 @@
       "description": "About the bot"
     },
     "manage": {
-      "name": "account",
+      "name": "manage",
       "description": "Manage your linked accounts",
       "subcommands": {
         "accounts": {
-          "name": "manager",
+          "name": "accounts",
           "description": "Manage your linked accounts"
         }
       }

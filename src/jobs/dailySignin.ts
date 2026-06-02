@@ -80,6 +80,7 @@ export async function dailySignin(client: Client) {
         await Promise.allSettled(accountTask);
 
         if (!user.enableNotif) return;
+        if (!hasContent) return;
 
         try {
           await client.users.send(user.dcid, {

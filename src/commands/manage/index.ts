@@ -2,6 +2,7 @@ import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } f
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
 import { discordLocalization } from "#/i18n/index.ts";
+import { accountContainer } from "./components/account.ts";
 
 export default {
   cooldown: 5,
@@ -20,11 +21,12 @@ export default {
         ),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
+    await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
+
     const user = await UsersDB.findByDcid(interaction.user.id);
     if (!user) {
-      await interaction.reply({
+      await interaction.editReply({
         content: "You don't have any linked accounts. Use /add to link an account.",
-        flags: [MessageFlags.Ephemeral],
       });
       return;
     }
@@ -38,11 +40,15 @@ export default {
 
     const accounts = await AccountsDB.listByDcid(interaction.user.id);
     if (accounts.length === 0) {
-      await interaction.reply({
+      await interaction.editReply({
         content: "You don't have any linked accounts. Use /add to link an account.",
-        flags: [MessageFlags.Ephemeral],
       });
       return;
     }
+
+    await interaction.editReply({
+      components: [accountContainer(user.isPremium, accounts)],
+      flags: [MessageFlags.IsComponentsV2],
+    });
   },
 };

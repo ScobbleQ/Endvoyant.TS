@@ -33,7 +33,7 @@ export default {
     await interaction.deferUpdate();
     const tokens = interaction.fields.getTextInputValue("token");
 
-    const user = await UsersDB.findByDcid(interaction.user.id);
+    const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) {
       return;
     }
@@ -119,7 +119,7 @@ export default {
       return;
     }
 
-    await AccountsDB.insert(interaction.user.id, {
+    await AccountsDB.createForUser(interaction.user.id, {
       nickname: bind.defaultRole.nickname,
       accountToken: cookies["ACCOUNT_TOKEN"],
       hgId,

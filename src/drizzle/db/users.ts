@@ -1,31 +1,30 @@
 import { eq } from "drizzle-orm";
-import { db } from "../index.ts";
 import { users } from "../schema.ts";
+import { db } from "./client.ts";
 
 export class UsersDB {
-  static async insert(dcid: string) {
+  static async create(dcid: string) {
     await db.insert(users).values({ dcid });
   }
 
-  static async update(dcid: string, patch: Partial<typeof users.$inferInsert>) {
+  static async updateByDcid(dcid: string, patch: Partial<typeof users.$inferInsert>) {
     await db.update(users).set(patch).where(eq(users.dcid, dcid));
   }
 
-  static async delete(dcid: string) {
-    await db.delete(users).where(eq(users.dcid, dcid));
-  }
-
-  static async listAll() {
-    return await db.query.users.findMany({
+  static async findAccess(dcid: string) {
+    return await db.query.users.findFirst({
       columns: {
         dcid: true,
-        createdAt: true,
+        isBanned: true,
+        isPremium: true,
       },
-      orderBy: { createdAt: "desc" },
+      where: {
+        dcid,
+      },
     });
   }
 
-  static async findByDcid(dcid: string) {
+  static async findForExport(dcid: string) {
     return await db.query.users.findFirst({
       where: {
         dcid,

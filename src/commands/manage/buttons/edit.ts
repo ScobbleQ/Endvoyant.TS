@@ -12,7 +12,7 @@ export default {
   execute: async (interaction: ButtonInteraction, args: string[]) => {
     const shortId = parseInt(args[0]!, 10);
 
-    const account = await AccountsDB.byDcidAndShortId(interaction.user.id, shortId);
+    const account = await AccountsDB.findEditSettings(interaction.user.id, shortId);
     if (!account) return;
 
     await interaction.showModal(

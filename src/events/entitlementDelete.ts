@@ -8,7 +8,7 @@ export default {
   execute: async (entitlement: Entitlement) => {
     if (entitlement.skuId !== config.discord.premiumSkuId) return;
 
-    await UsersDB.update(entitlement.userId, {
+    await UsersDB.updateByDcid(entitlement.userId, {
       isPremium: false,
     });
   },

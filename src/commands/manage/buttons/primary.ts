@@ -14,13 +14,13 @@ export default {
     await interaction.deferUpdate();
     const shortId = parseInt(args[0]!, 10);
 
-    const user = await UsersDB.findByDcid(interaction.user.id);
+    const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) {
       return;
     }
 
     await AccountsDB.setPrimary(interaction.user.id, shortId);
-    const account = await AccountsDB.listByDcid(interaction.user.id);
+    const account = await AccountsDB.listForManage(interaction.user.id);
 
     await interaction.editReply({
       components: [accountContainer(user.isPremium, account)],

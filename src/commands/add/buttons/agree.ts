@@ -10,7 +10,7 @@ export default {
     .setLabel("Agree and Continue")
     .setStyle(ButtonStyle.Success),
   execute: async (interaction: ButtonInteraction) => {
-    await UsersDB.insert(interaction.user.id);
+    await UsersDB.create(interaction.user.id);
     await interaction.update({
       components: [onboardingSuccessContainer()],
       flags: [MessageFlags.IsComponentsV2],

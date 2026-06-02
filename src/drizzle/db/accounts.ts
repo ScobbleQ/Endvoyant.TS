@@ -1,49 +1,43 @@
 import { eq, sql, desc, asc, and } from "drizzle-orm";
-import { db } from "../index.ts";
 import { accounts, users } from "../schema.ts";
+import { db } from "./client.ts";
 
 export type Account = typeof accounts.$inferSelect;
-type AccountColumn = keyof Account;
+export type ManageAccount = Pick<
+  Account,
+  "isPrimary" | "nickname" | "roleId" | "serverName" | "shortId"
+>;
 type AccountPatch = Partial<typeof accounts.$inferInsert>;
-type PickAccount<T extends readonly AccountColumn[]> = T extends readonly []
-  ? { dcid: string }
-  : { dcid: string } & Pick<Account, T[number]>;
-type DeleteOptions =
-  | { shortId: number; deleteAll?: never }
-  | { shortId?: never; deleteAll: boolean };
 
 export class AccountsDB {
-  static async delete(dcid: string, options: DeleteOptions) {
-    if (options.deleteAll) {
-      await db.delete(accounts).where(eq(accounts.dcid, dcid));
-    } else if (options.shortId !== undefined) {
-      await db
-        .delete(accounts)
-        .where(and(eq(accounts.dcid, dcid), eq(accounts.shortId, options.shortId)));
-    }
+  static async deleteByShortId(dcid: string, shortId: number) {
+    await db.delete(accounts).where(and(eq(accounts.dcid, dcid), eq(accounts.shortId, shortId)));
   }
 
-  static async insert(dcid: string, data: Omit<typeof accounts.$inferInsert, "dcid" | "shortId">) {
-    return await db
-      .insert(accounts)
-      .values({
+  static async createForUser(
+    dcid: string,
+    data: Omit<typeof accounts.$inferInsert, "dcid" | "shortId">,
+  ) {
+    await db.transaction(async (tx) => {
+      await tx.execute(sql`
+        SELECT 1
+        FROM ${users}
+        WHERE ${users.dcid} = ${dcid}
+        FOR UPDATE
+      `);
+      await tx.insert(accounts).values({
         dcid,
         shortId: sql`(
-          SELECT COALESCE(MAX(${accounts.shortId}), 0) + 1 
-          FROM ${accounts} 
+          SELECT COALESCE(MAX(${accounts.shortId}), 0) + 1
+          FROM ${accounts}
           WHERE ${accounts.dcid} = ${dcid}
         )`,
         ...data,
-      })
-      .returning({ id: accounts.id });
+      });
+    });
   }
 
-  static async hasLinkedAccount(dcid: string) {
-    const count = await db.$count(accounts, eq(accounts.dcid, dcid));
-    return count > 0;
-  }
-
-  static async listByDcid(dcid: string) {
+  static async listForExport(dcid: string) {
     return await db.query.accounts.findMany({
       where: {
         dcid,
@@ -55,21 +49,38 @@ export class AccountsDB {
     });
   }
 
-  static async listAll<const T extends readonly AccountColumn[] = []>(
-    columns?: T,
-  ): Promise<PickAccount<T>[]> {
-    const cols = columns ?? ([] as unknown as T);
-    return (await db.query.accounts.findMany({
+  static async listForManage(dcid: string): Promise<ManageAccount[]> {
+    return await db.query.accounts.findMany({
       columns: {
-        dcid: true,
-        ...Object.fromEntries(cols.map((col) => [col, true])),
+        isPrimary: true,
+        nickname: true,
+        roleId: true,
+        serverName: true,
+        shortId: true,
       },
-    })) as PickAccount<T>[];
+      where: {
+        dcid,
+      },
+      orderBy: {
+        isPrimary: "desc",
+        shortId: "asc",
+      },
+    });
   }
 
-  static async update(dcid: string, patch: AccountPatch) {
+  static async listForTokenRefresh() {
+    return await db.query.accounts.findMany({
+      columns: {
+        dcid: true,
+        id: true,
+        accountToken: true,
+      },
+    });
+  }
+
+  static async updateByAccountId(id: Account["id"], patch: AccountPatch) {
     if (Object.keys(patch).length === 0) return;
-    await db.update(accounts).set(patch).where(eq(accounts.dcid, dcid));
+    await db.update(accounts).set(patch).where(eq(accounts.id, id));
   }
 
   static async updateByShortId(dcid: string, shortId: number, patch: AccountPatch) {
@@ -95,8 +106,13 @@ export class AccountsDB {
     return { exists: res !== undefined, dcid: res?.dcid };
   }
 
-  static async byDcidAndShortId(dcid: string, shortId: number) {
+  static async findEditSettings(dcid: string, shortId: number) {
     return await db.query.accounts.findFirst({
+      columns: {
+        enableRedeem: true,
+        enableSignin: true,
+        isPrivate: true,
+      },
       where: {
         dcid,
         shortId,
@@ -128,7 +144,7 @@ export class AccountsDB {
     return await db.$count(accounts, eq(accounts.dcid, dcid));
   }
 
-  static async withSigninEnabled() {
+  static async listForDailySignin() {
     const rows = await db
       .select({
         dcid: users.dcid,
@@ -136,7 +152,6 @@ export class AccountsDB {
         enableNotif: users.enableNotif,
         accountId: accounts.id,
         accountToken: accounts.accountToken,
-        enableSignin: accounts.enableSignin,
         roleId: accounts.roleId,
         serverId: accounts.serverId,
       })
@@ -149,10 +164,9 @@ export class AccountsDB {
       dcid: group[0]!.dcid,
       lang: group[0]!.lang,
       enableNotif: group[0]!.enableNotif,
-      accounts: group.map(({ accountId, accountToken, enableSignin, roleId, serverId }) => ({
+      accounts: group.map(({ accountId, accountToken, roleId, serverId }) => ({
         accountId,
         accountToken,
-        enableSignin,
         roleId,
         serverId,
       })),

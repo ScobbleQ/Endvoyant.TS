@@ -20,12 +20,12 @@ export default {
         ),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
-    const user = await UsersDB.findByDcid(interaction.user.id);
+    const user = await UsersDB.findForExport(interaction.user.id);
     if (!user) return;
 
     const [accounts, events] = await Promise.all([
-      AccountsDB.listByDcid(interaction.user.id),
-      EventsDB.listByDcid(interaction.user.id),
+      AccountsDB.listForExport(interaction.user.id),
+      EventsDB.listForExport(interaction.user.id),
     ]);
 
     const zip: Zippable = {

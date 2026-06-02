@@ -10,7 +10,7 @@ export async function dailySignin(client: Client) {
   const delay = Math.floor(Math.random() * 56) * 60 * 1000;
   await new Promise((resolve) => setTimeout(resolve, delay));
 
-  const users = await AccountsDB.withSigninEnabled();
+  const users = await AccountsDB.listForDailySignin();
 
   const userLimit = pLimit(10);
   const userTask = users.map((user) =>
@@ -18,9 +18,12 @@ export async function dailySignin(client: Client) {
       try {
         if (!user.accounts || user.accounts.length === 0) return;
 
+        const header = t(user.lang, "signin.header");
+        if (typeof header !== "string") return;
+
         let hasContent = false;
         const container = new ContainerBuilder().addTextDisplayComponents(
-          (txt) => txt.setContent(`## ▼// ${t(user.lang, "signin.header")}`),
+          (txt) => txt.setContent(`## ▼// ${header}`),
           (txt) => txt.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
         );
 
@@ -45,7 +48,7 @@ export async function dailySignin(client: Client) {
               if (!result) return;
 
               if (config.env === "production") {
-                await EventsDB.insert(user.dcid, {
+                await EventsDB.record(user.dcid, {
                   source: "cron",
                   action: "signin",
                   aid: account.accountId,
@@ -72,7 +75,7 @@ export async function dailySignin(client: Client) {
 
               hasContent = true;
             } catch (error) {
-              console.error(``);
+              console.error("Failed to complete daily signin:", error);
             }
           }),
         );
@@ -93,7 +96,7 @@ export async function dailySignin(client: Client) {
           }
         }
       } catch (error) {
-        console.error(``);
+        console.error("Failed to process daily signin user:", error);
       }
     }),
   );

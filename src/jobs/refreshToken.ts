@@ -7,24 +7,27 @@ export async function refreshTokens() {
   const delay = Math.floor(Math.random() * 56) * 60 * 1000;
   await new Promise((resolve) => setTimeout(resolve, delay));
 
-  const users = await AccountsDB.listAll(["accountToken"]);
+  const accounts = await AccountsDB.listForTokenRefresh();
 
   const limit = pLimit(10);
-  const task = users.map((user) =>
+  const task = accounts.map((account) =>
     limit(async () => {
       try {
         // Create a session with existing token
-        const session = await EndfieldSDK.createSkportSession({ accountToken: user.accountToken });
+        const session = await EndfieldSDK.createSkportSession({
+          accountToken: account.accountToken,
+        });
+
         if (!session) return;
 
         // Refresh the token
         const refreshedToken = await EndfieldSDK.refreshAccountToken(session);
         if (refreshedToken.code !== 0) return;
 
-        // Update the token
-        await AccountsDB.update(user.dcid, { accountToken: refreshedToken.data.token });
+        // Update only the account that produced this token.
+        await AccountsDB.updateByAccountId(account.id, { accountToken: refreshedToken.data.token });
       } catch (error) {
-        console.error(`Failed to refresh token for ${user.dcid}:`, error);
+        console.error(`Failed to refresh token for ${account.dcid}:`, error);
       }
     }),
   );

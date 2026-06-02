@@ -1,11 +1,11 @@
 import { ContainerBuilder } from "discord.js";
-import type { Account } from "#/drizzle/db/accounts.ts";
+import type { ManageAccount } from "#/drizzle/db/accounts.ts";
 import EditButton from "../buttons/edit.ts";
 import PrimaryButton from "../buttons/primary.ts";
 import RemoveButton from "../buttons/remove.ts";
 import UnlinkButton from "../buttons/unlink.ts";
 
-export function accountContainer(isPremium: boolean, accounts: Account[]) {
+export function accountContainer(isPremium: boolean, accounts: ManageAccount[]) {
   const container = new ContainerBuilder().addSectionComponents((s) =>
     s
       .addTextDisplayComponents(

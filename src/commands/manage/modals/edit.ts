@@ -67,11 +67,13 @@ export default {
       enableRedeem: autoRedeem,
     });
 
-    const user = await UsersDB.findByDcid(interaction.user.id);
-    const account = await AccountsDB.listByDcid(interaction.user.id);
+    const user = await UsersDB.findAccess(interaction.user.id);
+    if (!user) return;
+
+    const account = await AccountsDB.listForManage(interaction.user.id);
 
     await interaction.editReply({
-      components: [accountContainer(user?.isPremium!, account)],
+      components: [accountContainer(user.isPremium, account)],
       flags: [MessageFlags.IsComponentsV2],
     });
 

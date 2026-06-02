@@ -23,7 +23,7 @@ export default {
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
 
-    const user = await UsersDB.findByDcid(interaction.user.id);
+    const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) {
       await interaction.editReply({
         content: "You don't have any linked accounts. Use /add to link an account.",
@@ -32,13 +32,13 @@ export default {
     }
 
     if (config.env === "production") {
-      void EventsDB.insert(user.dcid, {
+      void EventsDB.record(user.dcid, {
         source: "slash",
         action: "account manager",
       });
     }
 
-    const accounts = await AccountsDB.listByDcid(interaction.user.id);
+    const accounts = await AccountsDB.listForManage(interaction.user.id);
     if (accounts.length === 0) {
       await interaction.editReply({
         content: "You don't have any linked accounts. Use /add to link an account.",

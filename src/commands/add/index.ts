@@ -24,7 +24,7 @@ export default {
         ),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
-    const user = await UsersDB.findByDcid(interaction.user.id);
+    const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) {
       await interaction.reply({
         components: [onboardingContainer()],
@@ -34,7 +34,7 @@ export default {
     }
 
     if (config.env === "production") {
-      void EventsDB.insert(user.dcid, {
+      void EventsDB.record(user.dcid, {
         source: "slash",
         action: "add account",
       });

@@ -47,7 +47,7 @@ export default {
     const email = interaction.fields.getTextInputValue("email");
     const password = interaction.fields.getTextInputValue("password");
 
-    const user = await UsersDB.findByDcid(interaction.user.id);
+    const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) {
       return;
     }
@@ -126,7 +126,7 @@ export default {
         return;
       }
 
-      await AccountsDB.insert(interaction.user.id, {
+      await AccountsDB.createForUser(interaction.user.id, {
         nickname: role.nickname,
         accountToken: res.data.token,
         hgId: res.data.hgId,

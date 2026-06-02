@@ -1,9 +1,8 @@
-import { eq } from "drizzle-orm";
-import { db } from "../index.ts";
 import { events } from "../schema.ts";
+import { db } from "./client.ts";
 
 export class EventsDB {
-  static async insert(
+  static async record(
     dcid: string,
     {
       source,
@@ -17,23 +16,16 @@ export class EventsDB {
       aid?: string | null;
     },
   ) {
-    return await db
-      .insert(events)
-      .values({
-        dcid,
-        source,
-        action,
-        metadata,
-        aid,
-      })
-      .returning({ id: events.id });
+    await db.insert(events).values({
+      dcid,
+      source,
+      action,
+      metadata,
+      aid,
+    });
   }
 
-  static async updateById(eid: number) {
-    await db.update(events).set({}).where(eq(events.id, eid));
-  }
-
-  static async listByDcid(dcid: string, opt: { limit?: number; offset?: number } = {}) {
+  static async listForExport(dcid: string, opt: { limit?: number; offset?: number } = {}) {
     return await db.query.events.findMany({
       where: {
         dcid,

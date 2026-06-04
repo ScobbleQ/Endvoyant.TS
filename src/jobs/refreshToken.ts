@@ -1,4 +1,4 @@
-import pLimit from "p-limit";
+import pQueue from "p-queue";
 import { AccountsDB } from "#/drizzle/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
@@ -8,29 +8,26 @@ export async function refreshTokens() {
   await new Promise((resolve) => setTimeout(resolve, delay));
 
   const accounts = await AccountsDB.listForTokenRefresh();
+  const queue = new pQueue({ concurrency: 10 });
 
-  const limit = pLimit(10);
-  const task = accounts.map((account) =>
-    limit(async () => {
+  accounts.forEach((account) => {
+    queue.add(async () => {
       try {
-        // Create a session with existing token
         const session = await EndfieldSDK.createSkportSession({
           accountToken: account.accountToken,
         });
 
         if (!session) return;
 
-        // Refresh the token
         const refreshedToken = await EndfieldSDK.refreshAccountToken(session);
         if (refreshedToken.code !== 0) return;
 
-        // Update only the account that produced this token.
         await AccountsDB.updateByAccountId(account.id, { accountToken: refreshedToken.data.token });
       } catch (error) {
-        console.error(`Failed to refresh token for ${account.dcid}:`, error);
+        console.error(`Failed to refresh token for account ${account.id}:`, error);
       }
-    }),
-  );
+    });
+  });
 
-  await Promise.allSettled(task);
+  await queue.onIdle();
 }

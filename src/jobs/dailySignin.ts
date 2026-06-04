@@ -1,5 +1,5 @@
 import { type Client, DiscordAPIError, ContainerBuilder, MessageFlags } from "discord.js";
-import pLimit from "p-limit";
+import pQueue from "p-queue";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB } from "#/drizzle/index.ts";
 import { t } from "#/i18n/index.ts";
@@ -11,25 +11,22 @@ export async function dailySignin(client: Client) {
   await new Promise((resolve) => setTimeout(resolve, delay));
 
   const users = await AccountsDB.listForDailySignin();
+  const userQueue = new pQueue({ concurrency: 10 });
 
-  const userLimit = pLimit(10);
-  const userTask = users.map((user) =>
-    userLimit(async () => {
+  users.forEach((user) => {
+    userQueue.add(async () => {
       try {
         if (!user.accounts || user.accounts.length === 0) return;
 
-        const header = t(user.lang, "signin.header");
-        if (typeof header !== "string") return;
-
         let hasContent = false;
         const container = new ContainerBuilder().addTextDisplayComponents(
-          (txt) => txt.setContent(`## ▼// ${header}`),
+          (txt) => txt.setContent(`## ▼// ${t(user.lang, "signin.header")}`),
           (txt) => txt.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
         );
 
-        const accountLimit = pLimit(5);
-        const accountTask = user.accounts.map((account) =>
-          accountLimit(async () => {
+        const accountQueue = new pQueue({ concurrency: 5 });
+        user.accounts.forEach((account) => {
+          accountQueue.add(async () => {
             try {
               const session = await EndfieldSDK.createSkportSession({
                 accountToken: account.accountToken,
@@ -75,12 +72,12 @@ export async function dailySignin(client: Client) {
 
               hasContent = true;
             } catch (error) {
-              console.error("Failed to complete daily signin:", error);
+              console.error(`Failed to sign in for ${user.dcid}.${account.roleId}:`, error);
             }
-          }),
-        );
+          });
+        });
 
-        await Promise.allSettled(accountTask);
+        await accountQueue.onIdle();
 
         if (!user.enableNotif) return;
         if (!hasContent) return;
@@ -96,10 +93,10 @@ export async function dailySignin(client: Client) {
           }
         }
       } catch (error) {
-        console.error("Failed to process daily signin user:", error);
+        console.error(`Failed to process daily signin user ${user.dcid}:`, error);
       }
-    }),
-  );
+    });
+  });
 
-  await Promise.allSettled(userTask);
+  await userQueue.onIdle();
 }

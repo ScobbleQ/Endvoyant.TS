@@ -19,7 +19,11 @@ export async function refreshTokens() {
 
         if (!session) return;
 
-        const refreshedToken = await EndfieldSDK.refreshAccountToken(session);
+        const refreshedToken = await EndfieldSDK.getAccountToken(
+          account.accountToken,
+          session.token,
+          account.hgId,
+        );
         if (refreshedToken.code !== 0) return;
 
         await AccountsDB.updateByAccountId(account.id, { accountToken: refreshedToken.data.token });

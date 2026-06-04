@@ -12,6 +12,7 @@ import type {
 } from "./types/auth.ts";
 import { type Locale } from "./types/language.ts";
 import { toWebLocale } from "./utils/convert.ts";
+import { getCookie } from "./utils/getCookie.ts";
 import { computeSign } from "./utils/signing.ts";
 
 // as uses msg/status/type
@@ -174,6 +175,45 @@ export class EndfieldSDK {
       return data as CredentialsFromCodeResponse;
     } catch (error) {
       throw new Error("INVALID_GENERATED_CREDENTIALS", { cause: error });
+    }
+  }
+
+  async getAccountToken(
+    accountToken: string,
+    token: string,
+    hgId: string,
+  ): Promise<{ code: -1; msg: string } | { code: 0; data: { token: string }; msg: string }> {
+    const url = "https://web-api.skport.com/cookie_store/account_token";
+
+    try {
+      const { body, statusCode, statusText, headers } = await request(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: `ACCOUNT_TOKEN=${accountToken}; SK_OAUTH_CRED_KEY=${token}; HG_INFO_KEY={"hgId":"${hgId}"};`,
+          "x-language": "en-us",
+        },
+        body: JSON.stringify({
+          content: accountToken,
+        }),
+      });
+
+      // 201 Created is expected
+      if (statusCode !== 201) {
+        await body.dump();
+        throw new Error(statusText);
+      }
+
+      const data = (await body.json()) as { code: number; msg: string };
+      const setCookies = headers["set-cookie"] as string[];
+
+      const newAccountToken = getCookie(setCookies);
+      if (!newAccountToken) return { code: -1, msg: "Failed to extract new account token" };
+
+      // imiate the response structure
+      return { code: 0, data: { token: newAccountToken }, msg: data.msg || "OK" };
+    } catch (error) {
+      throw new Error("FAILED_TO_GET_ACCOUNT_TOKEN", { cause: error });
     }
   }
 

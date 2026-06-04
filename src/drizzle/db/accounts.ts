@@ -74,6 +74,7 @@ export class AccountsDB {
         dcid: true,
         id: true,
         accountToken: true,
+        hgId: true,
       },
     });
   }

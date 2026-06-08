@@ -6,19 +6,21 @@
 ### Endvoyant V2 Checklist
 
 Commands:
-[] About
-[x] Add Account
-[x] Daily Signin
-[x] Export Data
-[] Full Profile
-[x] Manage Accounts
-[] Premium
-[] Profile
-[] Redeem
-[] Settings
-[] Umbral Monument
+
+- [ ] About
+- [x] Add Account
+- [x] Daily Signin
+- [x] Export Data
+- [ ] Full Profile
+- [x] Manage Accounts
+- [ ] Premium
+- [ ] Profile
+- [ ] Redeem
+- [ ] Settings
+- [ ] Umbral Monument
 
 Tasks:
-[x] Daily Signin
-[] Sanity; adpative notification
-[x] Refresh Account Token
+
+- [x] Daily Signin
+- [ ] Sanity; adpative notification
+- [x] Refresh Account Token

@@ -145,6 +145,41 @@ export class AccountsDB {
     return await db.$count(accounts, eq(accounts.dcid, dcid));
   }
 
+  static async findAccount(dcid: string, aid: string) {
+    return await db.query.accounts.findFirst({
+      columns: {
+        id: true,
+        nickname: true,
+        roleId: true,
+        serverId: true,
+        accountToken: true,
+      },
+      where: {
+        id: aid,
+        dcid,
+      },
+    });
+  }
+
+  static async listByDcid(dcid: string) {
+    return await db.query.accounts.findMany({
+      columns: {
+        id: true,
+        nickname: true,
+        roleId: true,
+        serverId: true,
+        accountToken: true,
+      },
+      where: {
+        dcid,
+      },
+      orderBy: {
+        isPrimary: "desc",
+        shortId: "asc",
+      },
+    });
+  }
+
   static async listForDailySignin() {
     const rows = await db
       .select({

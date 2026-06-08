@@ -17,6 +17,7 @@ export class UsersDB {
         dcid: true,
         isBanned: true,
         isPremium: true,
+        lang: true,
       },
       where: {
         dcid,

@@ -41,7 +41,14 @@ export default {
         await interactionReply(interaction, `There was an error while executing this command!`);
       }
     } else if (interaction.isAutocomplete()) {
-      // temp
+      const command = interaction.client.commands.get(interaction.commandName);
+      if (!command || typeof command.autocomplete !== "function") return;
+
+      try {
+        await command.autocomplete(interaction);
+      } catch (error) {
+        console.error(error);
+      }
     } else if (
       interaction.isButton() ||
       interaction.isModalSubmit() ||

@@ -131,9 +131,16 @@ export interface PlayerBindingsResponse extends SkportZonaiResponseBase {
 export interface SigninResponse extends SkportZonaiResponseBase {
   code: 0;
   data: {
-    id: string;
-    count: number;
-    name: string;
-    icon: string;
+    ts: string;
+    awardIds: { id: string; type: number }[];
+    resourceInfoMap: {
+      [key: string]: {
+        id: string;
+        count: number;
+        name: string;
+        icon: string;
+      };
+    };
+    tomorrowAwardIds: { id: string; type: number }[];
   };
 }

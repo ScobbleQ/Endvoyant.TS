@@ -7,7 +7,10 @@ export default {
     .setName("redeem")
     .setNameLocalizations(discordLocalization("command.redeem.name"))
     .setDescription("Redeem a reward code")
-    .setDescriptionLocalizations(discordLocalization("command.redeem.description")),
+    .setDescriptionLocalizations(discordLocalization("command.redeem.description"))
+    .addStringOption((option) =>
+      option.setName("code").setDescription("The reward code to redeem"),
+    ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.reply("About the bot!");
   },

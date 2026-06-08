@@ -63,16 +63,6 @@
       "name": "档案",
       "description": "查看你的档案"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "查看 Prydwen 强度榜",
-      "subcommands": {
-        "tierlist": {
-          "name": "强度榜",
-          "description": "查看 Prydwen 强度榜"
-        }
-      }
-    },
     "redeem": {
       "name": "兑换",
       "description": "兑换奖励码"

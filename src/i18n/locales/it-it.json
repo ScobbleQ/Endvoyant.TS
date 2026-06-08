@@ -63,16 +63,6 @@
       "name": "profilo",
       "description": "Visualizza il tuo profilo"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "Mostra la tier list di Prydwen",
-      "subcommands": {
-        "tierlist": {
-          "name": "tierlist",
-          "description": "Mostra la tier list di Prydwen"
-        }
-      }
-    },
     "redeem": {
       "name": "riscatta",
       "description": "Riscatta un codice ricompensa"

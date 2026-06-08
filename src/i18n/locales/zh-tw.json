@@ -63,16 +63,6 @@
       "name": "檔案",
       "description": "查看你的檔案"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "查看 Prydwen 強度榜",
-      "subcommands": {
-        "tierlist": {
-          "name": "強度榜",
-          "description": "查看 Prydwen 強度榜"
-        }
-      }
-    },
     "redeem": {
       "name": "兌換",
       "description": "兌換獎勵碼"

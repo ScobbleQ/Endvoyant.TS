@@ -63,16 +63,6 @@
       "name": "プロフィール",
       "description": "あなたのプロフィールを表示します"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "Prydwenのティアリストを表示します",
-      "subcommands": {
-        "tierlist": {
-          "name": "ティアリスト",
-          "description": "Prydwenのティアリストを表示します"
-        }
-      }
-    },
     "redeem": {
       "name": "交換",
       "description": "報酬コードを交換します"

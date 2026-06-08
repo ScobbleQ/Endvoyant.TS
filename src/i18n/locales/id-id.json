@@ -63,16 +63,6 @@
       "name": "profil",
       "description": "Lihat profilmu"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "Tampilkan tier list Prydwen",
-      "subcommands": {
-        "tierlist": {
-          "name": "peringkat",
-          "description": "Tampilkan tier list Prydwen"
-        }
-      }
-    },
     "redeem": {
       "name": "tebus",
       "description": "Tebus kode hadiah"

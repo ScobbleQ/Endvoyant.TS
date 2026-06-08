@@ -66,10 +66,6 @@ export default {
       ? [await AccountsDB.findAccount(user.dcid, selectedAccountId)]
       : await AccountsDB.listByDcid(user.dcid);
 
-    if (accounts.length === 0) {
-      return;
-    }
-
     await interaction.deferReply();
 
     const container = new ContainerBuilder().addTextDisplayComponents(

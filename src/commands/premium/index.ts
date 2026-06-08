@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import { discordLocalization } from "#/i18n/index.ts";
 
 export default {
@@ -9,6 +9,20 @@ export default {
     .setDescription("View your premium status")
     .setDescriptionLocalizations(discordLocalization("command.premium.description")),
   execute: async (interaction: ChatInputCommandInteraction) => {
-    await interaction.reply("View your premium status!");
+    const premiumFeatures = [
+      "Infinite account links",
+      "AI chat (frontier open weight models)*",
+      "Support the bot's development",
+    ]
+      .map((f) => `- ${f}`)
+      .join("\n");
+
+    const disclaimer =
+      "-# *AI chat feature is in early development and may not work as expected. It is also subject to change based on user feedback and performance.";
+
+    await interaction.reply({
+      content: `Premium coming soon! Features may include:\n${premiumFeatures}\n\n${disclaimer}`,
+      flags: [MessageFlags.Ephemeral],
+    });
   },
 };

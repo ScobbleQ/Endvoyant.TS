@@ -63,16 +63,6 @@
       "name": "профиль",
       "description": "Посмотрите свой профиль"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "Показывает тирлист Prydwen",
-      "subcommands": {
-        "tierlist": {
-          "name": "тирлист",
-          "description": "Показывает тирлист Prydwen"
-        }
-      }
-    },
     "redeem": {
       "name": "активировать",
       "description": "Активируйте код награды"

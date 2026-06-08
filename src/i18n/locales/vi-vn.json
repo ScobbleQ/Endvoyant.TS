@@ -63,16 +63,6 @@
       "name": "hồ-sơ",
       "description": "Xem hồ sơ của bạn"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "Hiển thị tier list Prydwen",
-      "subcommands": {
-        "tierlist": {
-          "name": "xếp-hạng",
-          "description": "Hiển thị tier list Prydwen"
-        }
-      }
-    },
     "redeem": {
       "name": "đổi",
       "description": "Đổi mã phần thưởng"

@@ -63,16 +63,6 @@
       "name": "perfil",
       "description": "Veja seu perfil"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "Mostre a tier list da Prydwen",
-      "subcommands": {
-        "tierlist": {
-          "name": "ranking",
-          "description": "Mostre a tier list da Prydwen"
-        }
-      }
-    },
     "redeem": {
       "name": "resgatar",
       "description": "Resgate um código de recompensa"

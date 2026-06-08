@@ -63,16 +63,6 @@
       "name": "โปรไฟล์",
       "description": "ดูโปรไฟล์ของคุณ"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "แสดงเทียร์ลิสต์ของ Prydwen",
-      "subcommands": {
-        "tierlist": {
-          "name": "เทียร์ลิสต์",
-          "description": "แสดงเทียร์ลิสต์ของ Prydwen"
-        }
-      }
-    },
     "redeem": {
       "name": "แลก",
       "description": "แลกรหัสรางวัล"

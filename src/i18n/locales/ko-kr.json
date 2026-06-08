@@ -63,16 +63,6 @@
       "name": "프로필",
       "description": "내 프로필을 봅니다"
     },
-    "prydwen": {
-      "name": "prydwen",
-      "description": "Prydwen 티어표를 봅니다",
-      "subcommands": {
-        "tierlist": {
-          "name": "티어표",
-          "description": "Prydwen 티어표를 봅니다"
-        }
-      }
-    },
     "redeem": {
       "name": "교환",
       "description": "보상 코드를 교환합니다"

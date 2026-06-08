@@ -1,6 +1,6 @@
 {
   "dialect": "postgres",
-  "id": "567a9a31-1c92-4c3a-8f24-7d53be63e3e0",
+  "id": "f3090bab-5f9e-4d22-b1bc-1b34226f6955",
   "prevIds": ["00000000-0000-0000-0000-000000000000"],
   "version": "8",
   "ddl": [
@@ -408,19 +408,6 @@
       "table": "accounts"
     },
     {
-      "type": "uuid",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "aid",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "events"
-    },
-    {
       "type": "boolean",
       "typeSchema": null,
       "notNull": true,
@@ -432,6 +419,19 @@
       "entityType": "columns",
       "schema": "public",
       "table": "users"
+    },
+    {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "aid",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "events"
     },
     {
       "type": "text",
@@ -486,19 +486,6 @@
       "table": "accounts"
     },
     {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "server_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "accounts"
-    },
-    {
       "type": "boolean",
       "typeSchema": null,
       "notNull": true,
@@ -519,7 +506,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "server_name",
+      "name": "server_id",
       "entityType": "columns",
       "schema": "public",
       "table": "accounts"
@@ -538,14 +525,14 @@
       "table": "users"
     },
     {
-      "type": "boolean",
+      "type": "text",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
-      "default": "false",
+      "default": null,
       "generated": null,
       "identity": null,
-      "name": "is_private",
+      "name": "server_name",
       "entityType": "columns",
       "schema": "public",
       "table": "accounts"
@@ -571,10 +558,10 @@
       "default": "false",
       "generated": null,
       "identity": null,
-      "name": "isPremium",
+      "name": "is_private",
       "entityType": "columns",
       "schema": "public",
-      "table": "users"
+      "table": "accounts"
     },
     {
       "type": "boolean",
@@ -594,6 +581,19 @@
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
+      "default": "false",
+      "generated": null,
+      "identity": null,
+      "name": "isPremium",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "users"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
       "default": "true",
       "generated": null,
       "identity": null,
@@ -607,6 +607,19 @@
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
+      "default": "false",
+      "generated": null,
+      "identity": null,
+      "name": "enable_reminder",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "users"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
       "default": "true",
       "generated": null,
       "identity": null,
@@ -614,6 +627,19 @@
       "entityType": "columns",
       "schema": "public",
       "table": "accounts"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "true",
+      "generated": null,
+      "identity": null,
+      "name": "allow_data",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "users"
     },
     {
       "type": "boolean",

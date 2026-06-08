@@ -123,4 +123,6 @@ export const users = pgTable.withRLS("users", {
     .notNull(),
   lang: langEnum().default("en-us").notNull(),
   isPremium: boolean().default(false).notNull(),
+  enableReminder: boolean("enable_reminder").default(false).notNull(),
+  allowData: boolean("allow_data").default(true).notNull(),
 });

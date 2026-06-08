@@ -14,7 +14,7 @@ export async function dailySignin(client: Client) {
   const userQueue = new pQueue({ concurrency: 10 });
 
   users.forEach((user) => {
-    userQueue.add(async () => {
+    void userQueue.add(async () => {
       try {
         if (!user.accounts || user.accounts.length === 0) return;
 
@@ -26,7 +26,7 @@ export async function dailySignin(client: Client) {
 
         const accountQueue = new pQueue({ concurrency: 5 });
         user.accounts.forEach((account) => {
-          accountQueue.add(async () => {
+          void accountQueue.add(async () => {
             try {
               const session = await EndfieldSDK.createSkportSession({
                 accountToken: account.accountToken,
@@ -44,7 +44,7 @@ export async function dailySignin(client: Client) {
 
               if (!result) return;
 
-              if (config.env === "production") {
+              if (config.env === "production" && user.allowData) {
                 await EventsDB.record(user.dcid, {
                   source: "cron",
                   action: "signin",

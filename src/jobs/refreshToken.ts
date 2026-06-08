@@ -11,7 +11,7 @@ export async function refreshTokens() {
   const queue = new pQueue({ concurrency: 10 });
 
   accounts.forEach((account) => {
-    queue.add(async () => {
+    void queue.add(async () => {
       try {
         const session = await EndfieldSDK.createSkportSession({
           accountToken: account.accountToken,

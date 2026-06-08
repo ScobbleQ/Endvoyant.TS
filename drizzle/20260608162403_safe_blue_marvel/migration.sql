@@ -64,7 +64,9 @@ CREATE TABLE "users" (
 	"is_private" boolean DEFAULT false NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"lang" "langEnum" DEFAULT 'en-us'::"langEnum" NOT NULL,
-	"isPremium" boolean DEFAULT false NOT NULL
+	"isPremium" boolean DEFAULT false NOT NULL,
+	"enable_reminder" boolean DEFAULT false NOT NULL,
+	"allow_data" boolean DEFAULT true NOT NULL
 );
 --> statement-breakpoint
 ALTER TABLE "users" ENABLE ROW LEVEL SECURITY;--> statement-breakpoint

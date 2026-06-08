@@ -1,5 +1,7 @@
 import { SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
+import { UsersDB } from "#/drizzle/index.ts";
 import { discordLocalization } from "#/i18n/index.ts";
+import SettingModal from "./modals/setting.ts";
 
 export default {
   cooldown: 5,
@@ -9,6 +11,20 @@ export default {
     .setDescription("Adjust your bot settings")
     .setDescriptionLocalizations(discordLocalization("command.settings.description")),
   execute: async (interaction: ChatInputCommandInteraction) => {
-    await interaction.reply("Settings for the bot!");
+    const user = await UsersDB.findUser(interaction.user.id);
+    if (!user) {
+      await interaction.reply("Please link an account first using /add account.");
+      return;
+    }
+
+    await interaction.showModal(
+      SettingModal.data({
+        curLang: user.lang,
+        curPrivacy: user.isPrivate,
+        curNotif: user.enableNotif,
+        curReminder: user.enableReminder,
+        curData: user.allowData,
+      }),
+    );
   },
 };

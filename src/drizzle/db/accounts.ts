@@ -185,6 +185,7 @@ export class AccountsDB {
       .select({
         dcid: users.dcid,
         lang: users.lang,
+        allowData: users.allowData,
         enableNotif: users.enableNotif,
         accountId: accounts.id,
         accountToken: accounts.accountToken,
@@ -199,6 +200,7 @@ export class AccountsDB {
     return [...Map.groupBy(rows, (row) => row.dcid).values()].map((group) => ({
       dcid: group[0]!.dcid,
       lang: group[0]!.lang,
+      allowData: group[0]!.allowData,
       enableNotif: group[0]!.enableNotif,
       accounts: group.map(({ accountId, accountToken, roleId, serverId }) => ({
         accountId,

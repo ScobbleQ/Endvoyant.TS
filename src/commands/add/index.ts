@@ -33,7 +33,7 @@ export default {
       return;
     }
 
-    if (config.env === "production") {
+    if (config.env === "production" && user.allowData) {
       void EventsDB.record(user.dcid, {
         source: "slash",
         action: "add account",

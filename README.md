@@ -16,7 +16,7 @@ Commands:
 - [ ] Premium
 - [ ] Profile
 - [ ] Redeem
-- [ ] Settings
+- [x] Settings
 - [ ] Umbral Monument
 
 Tasks:
@@ -24,3 +24,4 @@ Tasks:
 - [x] Daily Signin
 - [ ] Sanity; adpative notification
 - [x] Refresh Account Token
+- [ ] Automatic code redemption

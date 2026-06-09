@@ -349,4 +349,79 @@ export class EndfieldSDK {
       throw new Error("", { cause: error });
     }
   }
+
+  async getChannelToken({ channelId, code }: { channelId: string; code: string }) {
+    const url = "https://u8.gryphline.com/u8/user/auth/v2/token_by_channel_token";
+
+    try {
+      const { body, statusCode, statusText } = await request(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          appCode: "973bd727dd11cbb6ead8",
+          channelMasterId: channelId,
+          channelToken: {
+            type: 1,
+            isSuc: true,
+            code,
+          },
+          platform: 0,
+          type: 0,
+        }),
+      });
+
+      if (statusCode !== 200) {
+        await body.dump();
+        throw new Error(statusText);
+      }
+
+      const data = await body.json();
+      console.dir(data, { depth: null });
+      return data;
+    } catch (error) {
+      throw new Error("", { cause: error });
+    }
+  }
+
+  async redeemCode({
+    code,
+    channelId,
+    serverId,
+    token,
+  }: {
+    code: string;
+    channelId: string;
+    serverId: string;
+    token: string;
+  }) {
+    const url = "https://game-hub.gryphline.com/giftcode/api/redeem";
+
+    try {
+      const { body, statusCode, statusText } = await request(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          channelId: channelId,
+          code: code,
+          confirm: false,
+          platform: "iOS",
+          serverId: serverId,
+          token: token,
+        }),
+      });
+
+      if (statusCode !== 200) {
+        await body.dump();
+        throw new Error(statusText);
+      }
+
+      const data = await body.json();
+      console.dir(data, { depth: null });
+      return data;
+    } catch (error) {
+      throw new Error("", { cause: error });
+    }
+  }
 }

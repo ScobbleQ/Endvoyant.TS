@@ -62,7 +62,7 @@ export default {
     }
 
     const selectedAccountId = interaction.options.getString("for");
-    let accounts = selectedAccountId
+    const accounts = selectedAccountId
       ? [await AccountsDB.findAccount(user.dcid, selectedAccountId)]
       : await AccountsDB.listByDcid(user.dcid);
 

@@ -37,18 +37,6 @@ export class AccountsDB {
     });
   }
 
-  static async listForExport(dcid: string) {
-    return await db.query.accounts.findMany({
-      where: {
-        dcid,
-      },
-      orderBy: {
-        isPrimary: "desc",
-        shortId: "asc",
-      },
-    });
-  }
-
   static async listForManage(dcid: string): Promise<ManageAccount[]> {
     return await db.query.accounts.findMany({
       columns: {

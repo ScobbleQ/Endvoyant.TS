@@ -41,12 +41,4 @@ export class UsersDB {
       },
     });
   }
-
-  static async findForExport(dcid: string) {
-    return await db.query.users.findFirst({
-      where: {
-        dcid,
-      },
-    });
-  }
 }

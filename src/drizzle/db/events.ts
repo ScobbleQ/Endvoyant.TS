@@ -24,17 +24,4 @@ export class EventsDB {
       aid,
     });
   }
-
-  static async listForExport(dcid: string, opt: { limit?: number; offset?: number } = {}) {
-    return await db.query.events.findMany({
-      where: {
-        dcid,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      limit: opt.limit,
-      offset: opt.offset,
-    });
-  }
 }

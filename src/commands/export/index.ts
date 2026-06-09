@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import { zipSync, strToU8, type Zippable } from "fflate";
-import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
+import { db } from "#/drizzle/index.ts";
 import { discordLocalization } from "#/i18n/index.ts";
 
 export default {
@@ -20,12 +20,37 @@ export default {
         ),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
-    const user = await UsersDB.findForExport(interaction.user.id);
-    if (!user) return;
+    await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
+    const user = await db.query.users.findFirst({
+      where: {
+        dcid: interaction.user.id,
+      },
+    });
+
+    if (!user) {
+      await interaction.editReply("Not a registered Endvoyant user.");
+      return;
+    }
 
     const [accounts, events] = await Promise.all([
-      AccountsDB.listForExport(interaction.user.id),
-      EventsDB.listForExport(interaction.user.id),
+      db.query.accounts.findMany({
+        where: {
+          dcid: interaction.user.id,
+        },
+        orderBy: {
+          isPrimary: "desc",
+          addedOn: "desc",
+        },
+      }),
+      db.query.events.findMany({
+        where: {
+          dcid: interaction.user.id,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        limit: 1000,
+      }),
     ]);
 
     const zip: Zippable = {
@@ -45,10 +70,9 @@ export default {
 
     const fileName = `endvoyant-${interaction.user.id}.zip`;
 
-    await interaction.reply({
+    await interaction.editReply({
       content: "Download the zip file below to view your data",
       files: [{ attachment: zipBuffer, name: fileName }],
-      flags: MessageFlags.Ephemeral,
     });
   },
 };

@@ -5,6 +5,7 @@ import {
   type AutocompleteInteraction,
   ContainerBuilder,
 } from "discord.js";
+import pQueue from "p-queue";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
 import { discordLocalization } from "#/i18n/index.ts";
@@ -57,7 +58,7 @@ export default {
     if (config.env === "production" && user.allowData) {
       void EventsDB.record(user.dcid, {
         source: "slash",
-        action: "add account",
+        action: "signin",
       });
     }
 
@@ -68,40 +69,39 @@ export default {
 
     await interaction.deferReply();
 
+    const queue = new pQueue({ concurrency: 5 });
+
+    const results = await Promise.allSettled(
+      accounts
+        .filter((a): a is NonNullable<typeof a> => a != null)
+        .map((account) =>
+          queue.add(async () => {
+            const session = await EndfieldSDK.createSkportSession({
+              accountToken: account.accountToken,
+            });
+
+            if (!session) return null;
+
+            const res = await EndfieldSDK.completeSignIn({
+              cred: session.cred,
+              token: session.token,
+              roleId: account.roleId,
+              serverId: account.serverId,
+              lang: user.lang,
+            });
+
+            return { account, res };
+          }),
+        ),
+    );
+
     const container = new ContainerBuilder().addTextDisplayComponents(
       (txt) => txt.setContent(`## ▼// Manual Signin Summary`),
       (t) => t.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
     );
 
-    const validAccounts = accounts.filter((a) => a !== null) as NonNullable<
-      (typeof accounts)[number]
-    >[];
-
-    const results = await Promise.allSettled(
-      validAccounts.map(async (account) => {
-        const session = await EndfieldSDK.createSkportSession({
-          accountToken: account.accountToken,
-        });
-
-        if (!session) {
-          console.error(`Failed to create session for account ${account.id} (${account.nickname})`);
-          return null;
-        }
-
-        const res = await EndfieldSDK.completeSignIn({
-          cred: session.cred,
-          token: session.token,
-          roleId: account.roleId,
-          serverId: account.serverId,
-          lang: user.lang,
-        });
-
-        return { account, res };
-      }),
-    );
-
     for (const result of results) {
-      if (result.status === "rejected" || !result.value) continue;
+      if (result.status !== "fulfilled" || !result.value) continue;
       const { account, res } = result.value;
 
       if (res.code !== 0) {
@@ -112,10 +112,7 @@ export default {
             (t) => t.setContent(res.message || "Failed to signin for unknown reason."),
           );
       } else {
-        const rewards = res.data.awardIds.map((a) => {
-          return res.data.resourceInfoMap[a.id]!;
-        });
-
+        const rewards = res.data.awardIds.map((a) => res.data.resourceInfoMap[a.id]!);
         const mainReward = rewards[0]!;
         const extraRewards = rewards.slice(1);
 

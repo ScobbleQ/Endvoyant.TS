@@ -1,4 +1,4 @@
-import { request } from "undici";
+import { Agent } from "undici";
 import type {
   GryphlineErrorResponse,
   EmailPasswordLoginResponse,
@@ -14,6 +14,12 @@ import { type Locale } from "./types/language.ts";
 import { toWebLocale } from "./utils/convert.ts";
 import { getCookie } from "./utils/getCookie.ts";
 import { computeSign } from "./utils/signing.ts";
+
+const agent = new Agent({
+  connect: { timeout: 5_000 },
+  keepAliveTimeout: 30_000,
+  keepAliveMaxTimeout: 60_000,
+});
 
 // as uses msg/status/type
 // zonai uses message/code/timestamp
@@ -46,16 +52,16 @@ export class EndfieldSDK {
     password: string,
     options: { lang?: Locale } = {},
   ): Promise<GryphlineErrorResponse | EmailPasswordLoginResponse> {
-    const url = "https://as.gryphline.com/user/auth/v1/token_by_email_password";
-
     try {
-      const { body, statusCode, statusText } = await request(url, {
+      const { body, statusCode, statusText } = await agent.request({
+        origin: "https://as.gryphline.com",
+        path: "/user/auth/v1/token_by_email_password",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Host: "as.gryphline.com",
-          "X-Captcha-Version": "4.0",
-          "X-Language": options.lang || this.defaultLang,
+          "content-type": "application/json",
+          host: "as.gryphline.com",
+          "x-captcha-version": "4.0",
+          "x-language": options.lang || this.defaultLang,
         },
         body: JSON.stringify({ email, from: 1, password }),
       });
@@ -82,12 +88,12 @@ export class EndfieldSDK {
     channelId: string;
     channelToken: string;
   }): Promise<GryphlineErrorResponse | ChannelTokenAuthResponse> {
-    const url = "https://u8.gryphline.com/u8/user/auth/v2/token_by_channel_token";
-
     try {
-      const { body, statusCode, statusText } = await request(url, {
+      const { body, statusCode, statusText } = await agent.request({
+        origin: "https://u8.gryphline.com",
+        path: "/u8/user/auth/v2/token_by_channel_token",
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "content-type": "application/json" },
         body: JSON.stringify({
           appCode: "973bd727dd11cbb6ead8",
           channelMasterId: channelId,
@@ -120,12 +126,12 @@ export class EndfieldSDK {
     appCode: T;
     token: string;
   }): Promise<GryphlineErrorResponse | OAuth2GrantByAppCode[T]> {
-    const url = "https://as.gryphline.com/user/oauth2/v2/grant";
-
     try {
-      const { body, statusCode, statusText } = await request(url, {
+      const { body, statusCode, statusText } = await agent.request({
+        origin: "https://as.gryphline.com",
+        path: "/user/oauth2/v2/grant",
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "content-type": "application/json" },
         body: JSON.stringify({ appCode, token, type: SKPORT_APPCODES[appCode] }),
       });
 
@@ -148,13 +154,13 @@ export class EndfieldSDK {
     code: string;
     lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | CredentialsFromCodeResponse> {
-    const url = "https://zonai.skport.com/web/v1/user/auth/generate_cred_by_code";
-
     try {
-      const { body, statusCode, statusText } = await request(url, {
+      const { body, statusCode, statusText } = await agent.request({
+        origin: "https://zonai.skport.com",
+        path: "/web/v1/user/auth/generate_cred_by_code",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
           platform: "3",
           "sk-language": toWebLocale(lang ?? this.defaultLang),
           timestamp: Math.floor(Date.now() / 1000).toString(),
@@ -183,14 +189,14 @@ export class EndfieldSDK {
     token: string,
     hgId: string,
   ): Promise<{ code: -1; msg: string } | { code: 0; data: { token: string }; msg: string }> {
-    const url = "https://web-api.skport.com/cookie_store/account_token";
-
     try {
-      const { body, statusCode, statusText, headers } = await request(url, {
+      const { body, statusCode, statusText, headers } = await agent.request({
+        origin: "https://web-api.skport.com",
+        path: "/cookie_store/account_token",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Cookie: `ACCOUNT_TOKEN=${accountToken}; SK_OAUTH_CRED_KEY=${token}; HG_INFO_KEY={"hgId":"${hgId}"};`,
+          "content-type": "application/json",
+          cookie: `ACCOUNT_TOKEN=${accountToken}; SK_OAUTH_CRED_KEY=${token}; HG_INFO_KEY={"hgId":"${hgId}"};`,
           "x-language": "en-us",
         },
         body: JSON.stringify({
@@ -226,14 +232,15 @@ export class EndfieldSDK {
     token: string;
     lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | RefreshAccountTokenResponse> {
-    const url = "https://zonai.skport.com/web/v1/auth/refresh";
     const ts = Math.floor(Date.now() / 1000).toString();
 
     try {
-      const { body, statusCode, statusText } = await request(url, {
+      const { body, statusCode, statusText } = await agent.request({
+        origin: "https://zonai.skport.com",
+        path: "/web/v1/auth/refresh",
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
           language: "en-us",
           sign: computeSign({ token, path: "/web/v1/auth/refresh", body: "{}", timestamp: ts }),
           timestamp: ts,
@@ -274,11 +281,12 @@ export class EndfieldSDK {
     token: string;
     lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | PlayerBindingsResponse> {
-    const url = "https://zonai.skport.com/api/v1/game/player/binding?";
     const ts = Math.floor(Date.now() / 1000).toString();
 
     try {
-      const { body, statusCode, statusText } = await request(url, {
+      const { body, statusCode, statusText } = await agent.request({
+        origin: "https://zonai.skport.com",
+        path: "/api/v1/game/player/binding?",
         method: "GET",
         headers: {
           cred,
@@ -320,22 +328,23 @@ export class EndfieldSDK {
     serverId: string;
     lang?: Locale;
   }): Promise<SigninResponse | SkportZonaiErrorResponse> {
-    const url = "https://zonai.skport.com/web/v1/game/endfield/attendance";
     const ts = Math.floor(Date.now() / 1000).toString();
 
     try {
-      const { body } = await request(url, {
+      const { body } = await agent.request({
+        origin: "https://zonai.skport.com",
+        path: "/web/v1/game/endfield/attendance",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          cred: cred,
+          "content-type": "application/json",
+          cred,
           platform: "3",
           "sk-game-role": `3_${roleId}_${serverId}`,
           "sk-language": toWebLocale(lang ?? this.defaultLang),
           vName: "1.0.0",
           timestamp: ts,
           sign: computeSign({
-            token: token,
+            token,
             path: "/web/v1/game/endfield/attendance",
             body: "",
             timestamp: ts,
@@ -351,12 +360,12 @@ export class EndfieldSDK {
   }
 
   async getChannelToken({ channelId, code }: { channelId: string; code: string }) {
-    const url = "https://u8.gryphline.com/u8/user/auth/v2/token_by_channel_token";
-
     try {
-      const { body, statusCode, statusText } = await request(url, {
+      const { body, statusCode, statusText } = await agent.request({
+        origin: "https://u8.gryphline.com",
+        path: "/u8/user/auth/v2/token_by_channel_token",
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "content-type": "application/json" },
         body: JSON.stringify({
           appCode: "973bd727dd11cbb6ead8",
           channelMasterId: channelId,
@@ -394,21 +403,21 @@ export class EndfieldSDK {
     serverId: string;
     token: string;
   }) {
-    const url = "https://game-hub.gryphline.com/giftcode/api/redeem";
-
     try {
-      const { body, statusCode, statusText } = await request(url, {
+      const { body, statusCode, statusText } = await agent.request({
+        origin: "https://game-hub.gryphline.com",
+        path: "/giftcode/api/redeem",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
         },
         body: JSON.stringify({
-          channelId: channelId,
-          code: code,
+          channelId,
+          code,
           confirm: false,
           platform: "iOS",
-          serverId: serverId,
-          token: token,
+          serverId,
+          token,
         }),
       });
 

@@ -12,27 +12,21 @@ export async function dailySignin(client: Client) {
 
   const users = await AccountsDB.listForDailySignin();
   const userQueue = new pQueue({ concurrency: 10 });
+  const accountQueue = new pQueue({ concurrency: 5 });  
 
-  users.forEach((user) => {
+  for (const user of users) {
     void userQueue.add(async () => {
       try {
-        if (!user.accounts || user.accounts.length === 0) return;
+        if (!user.accounts?.length) return;
 
-        let hasContent = false;
-        const container = new ContainerBuilder().addTextDisplayComponents(
-          (txt) => txt.setContent(`## ▼// ${t(user.lang, "signin.header")}`),
-          (txt) => txt.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
-        );
-
-        const accountQueue = new pQueue({ concurrency: 5 });
-        user.accounts.forEach((account) => {
-          void accountQueue.add(async () => {
-            try {
+        const results = await Promise.allSettled(
+          user.accounts.map((account) =>
+            accountQueue.add(async () => {
               const session = await EndfieldSDK.createSkportSession({
                 accountToken: account.accountToken,
               });
 
-              if (!session) return;
+              if (!session) return null;
 
               const result = await EndfieldSDK.completeSignIn({
                 cred: session.cred,
@@ -42,10 +36,10 @@ export async function dailySignin(client: Client) {
                 lang: user.lang,
               });
 
-              if (!result) return;
+              if (!result) return null;
 
               if (config.env === "production" && user.allowData) {
-                await EventsDB.record(user.dcid, {
+                void EventsDB.record(user.dcid, {
                   source: "cron",
                   action: "signin",
                   aid: account.accountId,
@@ -59,28 +53,39 @@ export async function dailySignin(client: Client) {
                 });
               }
 
-              container
-                .addSeparatorComponents((s) => s)
-                .addSectionComponents((s) =>
-                  s
-                    .addTextDisplayComponents(
-                      (txt) => txt.setContent(""),
-                      (txt) => txt.setContent(""),
-                    )
-                    .setThumbnailAccessory((a) => a.setURL("")),
-                );
+              return result;
+            }),
+          ),
+        );
 
-              hasContent = true;
-            } catch (error) {
-              console.error(`Failed to sign in for ${user.dcid}.${account.roleId}:`, error);
-            }
-          });
-        });
-
-        await accountQueue.onIdle();
+        const succeeded = results.filter(
+          (
+            r,
+          ): r is PromiseFulfilledResult<
+            NonNullable<Awaited<ReturnType<typeof EndfieldSDK.completeSignIn>>>
+          > => r.status === "fulfilled" && r.value != null,
+        );
 
         if (!user.enableNotif) return;
-        if (!hasContent) return;
+        if (succeeded.length === 0) return;
+
+        const container = new ContainerBuilder().addTextDisplayComponents(
+          (txt) => txt.setContent(`## ▼// ${t(user.lang, "signin.header")}`),
+          (txt) => txt.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
+        );
+
+        for (const _ of succeeded) {
+          container
+            .addSeparatorComponents((s) => s)
+            .addSectionComponents((s) =>
+              s
+                .addTextDisplayComponents(
+                  (txt) => txt.setContent(""),
+                  (txt) => txt.setContent(""),
+                )
+                .setThumbnailAccessory((a) => a.setURL("")),
+            );
+        }
 
         try {
           await client.users.send(user.dcid, {
@@ -96,7 +101,7 @@ export async function dailySignin(client: Client) {
         console.error(`Failed to process daily signin user ${user.dcid}:`, error);
       }
     });
-  });
+  }
 
   await userQueue.onIdle();
 }

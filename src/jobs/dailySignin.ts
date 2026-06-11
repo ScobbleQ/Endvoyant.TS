@@ -12,7 +12,7 @@ export async function dailySignin(client: Client) {
 
   const users = await AccountsDB.listForDailySignin();
   const userQueue = new pQueue({ concurrency: 10 });
-  const accountQueue = new pQueue({ concurrency: 5 });  
+  const accountQueue = new pQueue({ concurrency: 5 });
 
   for (const user of users) {
     void userQueue.add(async () => {

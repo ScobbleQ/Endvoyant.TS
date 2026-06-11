@@ -1,4 +1,4 @@
-import { Agent } from "undici";
+import { Agent, type Dispatcher } from "undici";
 import type {
   GryphlineErrorResponse,
   EmailPasswordLoginResponse,
@@ -21,9 +21,6 @@ const agent = new Agent({
   keepAliveMaxTimeout: 60_000,
 });
 
-// as uses msg/status/type
-// zonai uses message/code/timestamp
-
 const SKPORT_APPCODES = {
   "6eb76d4e13aa36e6": 0,
   d9f6dbb6bbd6bb33: 0,
@@ -44,16 +41,37 @@ export class EndfieldSDK {
     this.defaultLang = options.defaultLang || this.defaultLang;
   }
 
-  /**
-   * Authenticate with email and password (Gryphline AS).
-   */
+  private async _request(options: Dispatcher.RequestOptions): Promise<Dispatcher.ResponseData> {
+    const { body, statusCode, statusText, ...rest } = await agent.request(options);
+
+    // We should just show the error message
+    // Since API returns details in the body
+    // if (statusCode !== 200) {
+    //   await body.dump();
+    //   throw new Error(statusText);
+    // }
+
+    return { body, statusCode, statusText, ...rest };
+  }
+
+  private _skportHeaders(token: string, path: string, body: string, lang?: Locale) {
+    const ts = Math.floor(Date.now() / 1000).toString();
+    return {
+      platform: "3",
+      "sk-language": toWebLocale(lang ?? this.defaultLang),
+      vName: "1.0.0",
+      timestamp: ts,
+      sign: computeSign({ token, path, body, timestamp: ts }),
+    };
+  }
+
   async loginWithEmailPassword(
     email: string,
     password: string,
     options: { lang?: Locale } = {},
   ): Promise<GryphlineErrorResponse | EmailPasswordLoginResponse> {
     try {
-      const { body, statusCode, statusText } = await agent.request({
+      const { body } = await this._request({
         origin: "https://as.gryphline.com",
         path: "/user/auth/v1/token_by_email_password",
         method: "POST",
@@ -66,21 +84,12 @@ export class EndfieldSDK {
         body: JSON.stringify({ email, from: 1, password }),
       });
 
-      if (statusCode !== 200) {
-        await body.dump();
-        throw new Error(statusText);
-      }
-
-      const data = await body.json();
-      return data as EmailPasswordLoginResponse;
+      return (await body.json()) as EmailPasswordLoginResponse;
     } catch (error) {
       throw new Error("INVALID_EMAIL_OR_PASSWORD", { cause: error });
     }
   }
 
-  /**
-   * Exchange a channel token for a Gryphline account token (U8).
-   */
   async authenticateWithChannelToken({
     channelId,
     channelToken,
@@ -89,7 +98,7 @@ export class EndfieldSDK {
     channelToken: string;
   }): Promise<GryphlineErrorResponse | ChannelTokenAuthResponse> {
     try {
-      const { body, statusCode, statusText } = await agent.request({
+      const { body } = await this._request({
         origin: "https://u8.gryphline.com",
         path: "/u8/user/auth/v2/token_by_channel_token",
         method: "POST",
@@ -97,23 +106,13 @@ export class EndfieldSDK {
         body: JSON.stringify({
           appCode: "973bd727dd11cbb6ead8",
           channelMasterId: channelId,
-          channelToken: {
-            type: 1,
-            isSuc: true,
-            code: channelToken,
-          },
+          channelToken: { type: 1, isSuc: true, code: channelToken },
           platform: 0,
           type: 0,
         }),
       });
 
-      if (statusCode !== 200) {
-        await body.dump();
-        throw new Error(statusText);
-      }
-
-      const data = await body.json();
-      return data as ChannelTokenAuthResponse;
+      return (await body.json()) as ChannelTokenAuthResponse;
     } catch (error) {
       throw new Error("INVALID_CHANNEL_TOKEN", { cause: error });
     }
@@ -127,7 +126,7 @@ export class EndfieldSDK {
     token: string;
   }): Promise<GryphlineErrorResponse | OAuth2GrantByAppCode[T]> {
     try {
-      const { body, statusCode, statusText } = await agent.request({
+      const { body } = await this._request({
         origin: "https://as.gryphline.com",
         path: "/user/oauth2/v2/grant",
         method: "POST",
@@ -135,13 +134,7 @@ export class EndfieldSDK {
         body: JSON.stringify({ appCode, token, type: SKPORT_APPCODES[appCode] }),
       });
 
-      if (statusCode !== 200) {
-        await body.dump();
-        throw new Error(statusText);
-      }
-
-      const data = await body.json();
-      return data as OAuth2GrantByAppCode[T];
+      return (await body.json()) as OAuth2GrantByAppCode[T];
     } catch (error) {
       throw new Error("INVALID_OAUTH2_GRANT", { cause: error });
     }
@@ -155,30 +148,23 @@ export class EndfieldSDK {
     lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | CredentialsFromCodeResponse> {
     try {
-      const { body, statusCode, statusText } = await agent.request({
+      const { body } = await this._request({
         origin: "https://zonai.skport.com",
         path: "/web/v1/user/auth/generate_cred_by_code",
         method: "POST",
         headers: {
           "content-type": "application/json",
-          platform: "3",
-          "sk-language": toWebLocale(lang ?? this.defaultLang),
-          timestamp: Math.floor(Date.now() / 1000).toString(),
-          vName: "1.0.0",
+          ...this._skportHeaders(
+            "",
+            "/web/v1/user/auth/generate_cred_by_code",
+            JSON.stringify({ kind: 1, code }),
+            lang,
+          ),
         },
-        body: JSON.stringify({
-          kind: 1,
-          code,
-        }),
+        body: JSON.stringify({ kind: 1, code }),
       });
 
-      if (statusCode !== 200) {
-        await body.dump();
-        throw new Error(statusText);
-      }
-
-      const data = await body.json();
-      return data as CredentialsFromCodeResponse;
+      return (await body.json()) as CredentialsFromCodeResponse;
     } catch (error) {
       throw new Error("INVALID_GENERATED_CREDENTIALS", { cause: error });
     }
@@ -190,7 +176,7 @@ export class EndfieldSDK {
     hgId: string,
   ): Promise<{ code: -1; msg: string } | { code: 0; data: { token: string }; msg: string }> {
     try {
-      const { body, statusCode, statusText, headers } = await agent.request({
+      const { body, statusCode, headers } = await agent.request({
         origin: "https://web-api.skport.com",
         path: "/cookie_store/account_token",
         method: "POST",
@@ -199,24 +185,20 @@ export class EndfieldSDK {
           cookie: `ACCOUNT_TOKEN=${accountToken}; SK_OAUTH_CRED_KEY=${token}; HG_INFO_KEY={"hgId":"${hgId}"};`,
           "x-language": "en-us",
         },
-        body: JSON.stringify({
-          content: accountToken,
-        }),
+        body: JSON.stringify({ content: accountToken }),
       });
 
       // 201 Created is expected
       if (statusCode !== 201) {
         await body.dump();
-        throw new Error(statusText);
+        throw new Error("Expected 201");
       }
 
       const data = (await body.json()) as { code: number; msg: string };
       const setCookies = headers["set-cookie"] as string[];
-
       const newAccountToken = getCookie(setCookies);
       if (!newAccountToken) return { code: -1, msg: "Failed to extract new account token" };
 
-      // imiate the response structure
       return { code: 0, data: { token: newAccountToken }, msg: data.msg || "OK" };
     } catch (error) {
       throw new Error("FAILED_TO_GET_ACCOUNT_TOKEN", { cause: error });
@@ -232,33 +214,21 @@ export class EndfieldSDK {
     token: string;
     lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | RefreshAccountTokenResponse> {
-    const ts = Math.floor(Date.now() / 1000).toString();
-
     try {
-      const { body, statusCode, statusText } = await agent.request({
+      const { body } = await this._request({
         origin: "https://zonai.skport.com",
         path: "/web/v1/auth/refresh",
         method: "GET",
         headers: {
           "content-type": "application/json",
           language: "en-us",
-          sign: computeSign({ token, path: "/web/v1/auth/refresh", body: "{}", timestamp: ts }),
-          timestamp: ts,
           vCode: "100000018",
-          vName: "1.0.0",
           cred,
-          platform: "3",
-          "sk-language": toWebLocale(lang ?? this.defaultLang),
+          ...this._skportHeaders(token, "/web/v1/auth/refresh", "{}", lang),
         },
       });
 
-      if (statusCode !== 200) {
-        await body.dump();
-        throw new Error(statusText);
-      }
-
-      const data = await body.json();
-      return data as RefreshAccountTokenResponse;
+      return (await body.json()) as RefreshAccountTokenResponse;
     } catch (error) {
       throw new Error("TOKEN_REFRESH_FAILED", { cause: error });
     }
@@ -281,35 +251,18 @@ export class EndfieldSDK {
     token: string;
     lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | PlayerBindingsResponse> {
-    const ts = Math.floor(Date.now() / 1000).toString();
-
     try {
-      const { body, statusCode, statusText } = await agent.request({
+      const { body } = await this._request({
         origin: "https://zonai.skport.com",
         path: "/api/v1/game/player/binding?",
         method: "GET",
         headers: {
           cred,
-          platform: "3",
-          "sk-language": toWebLocale(lang ?? this.defaultLang),
-          vName: "1.0.0",
-          timestamp: ts,
-          sign: computeSign({
-            token,
-            path: "/api/v1/game/player/binding",
-            body: "",
-            timestamp: ts,
-          }),
+          ...this._skportHeaders(token, "/api/v1/game/player/binding", "", lang),
         },
       });
 
-      if (statusCode !== 200) {
-        await body.dump();
-        throw new Error(statusText);
-      }
-
-      const data = await body.json();
-      return data as PlayerBindingsResponse;
+      return (await body.json()) as PlayerBindingsResponse;
     } catch (error) {
       throw new Error("", { cause: error });
     }
@@ -328,65 +281,20 @@ export class EndfieldSDK {
     serverId: string;
     lang?: Locale;
   }): Promise<SigninResponse | SkportZonaiErrorResponse> {
-    const ts = Math.floor(Date.now() / 1000).toString();
-
     try {
-      const { body } = await agent.request({
+      const { body } = await this._request({
         origin: "https://zonai.skport.com",
         path: "/web/v1/game/endfield/attendance",
         method: "POST",
         headers: {
           "content-type": "application/json",
           cred,
-          platform: "3",
           "sk-game-role": `3_${roleId}_${serverId}`,
-          "sk-language": toWebLocale(lang ?? this.defaultLang),
-          vName: "1.0.0",
-          timestamp: ts,
-          sign: computeSign({
-            token,
-            path: "/web/v1/game/endfield/attendance",
-            body: "",
-            timestamp: ts,
-          }),
+          ...this._skportHeaders(token, "/web/v1/game/endfield/attendance", "", lang),
         },
       });
 
-      const data = await body.json();
-      return data as SigninResponse | SkportZonaiErrorResponse;
-    } catch (error) {
-      throw new Error("", { cause: error });
-    }
-  }
-
-  async getChannelToken({ channelId, code }: { channelId: string; code: string }) {
-    try {
-      const { body, statusCode, statusText } = await agent.request({
-        origin: "https://u8.gryphline.com",
-        path: "/u8/user/auth/v2/token_by_channel_token",
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          appCode: "973bd727dd11cbb6ead8",
-          channelMasterId: channelId,
-          channelToken: {
-            type: 1,
-            isSuc: true,
-            code,
-          },
-          platform: 0,
-          type: 0,
-        }),
-      });
-
-      if (statusCode !== 200) {
-        await body.dump();
-        throw new Error(statusText);
-      }
-
-      const data = await body.json();
-      console.dir(data, { depth: null });
-      return data;
+      return (await body.json()) as SigninResponse | SkportZonaiErrorResponse;
     } catch (error) {
       throw new Error("", { cause: error });
     }
@@ -404,31 +312,15 @@ export class EndfieldSDK {
     token: string;
   }) {
     try {
-      const { body, statusCode, statusText } = await agent.request({
+      const { body } = await this._request({
         origin: "https://game-hub.gryphline.com",
         path: "/giftcode/api/redeem",
         method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          channelId,
-          code,
-          confirm: false,
-          platform: "iOS",
-          serverId,
-          token,
-        }),
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ channelId, code, confirm: false, platform: "iOS", serverId, token }),
       });
 
-      if (statusCode !== 200) {
-        await body.dump();
-        throw new Error(statusText);
-      }
-
-      const data = await body.json();
-      console.dir(data, { depth: null });
-      return data;
+      return await body.json();
     } catch (error) {
       throw new Error("", { cause: error });
     }

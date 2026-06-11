@@ -73,22 +73,36 @@ export default {
       (t) => t.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
     );
 
-    for (const account of accounts) {
-      if (!account) continue; // in case the selected account doesn't exist or something
+    const validAccounts = accounts.filter((a) => a !== null) as NonNullable<
+      (typeof accounts)[number]
+    >[];
 
-      const session = await EndfieldSDK.createSkportSession({ accountToken: account.accountToken });
-      if (!session) {
-        console.error(`Failed to create session for account ${account.id} (${account.nickname})`);
-        continue;
-      }
+    const results = await Promise.allSettled(
+      validAccounts.map(async (account) => {
+        const session = await EndfieldSDK.createSkportSession({
+          accountToken: account.accountToken,
+        });
 
-      const res = await EndfieldSDK.completeSignIn({
-        cred: session.cred,
-        token: session.token,
-        roleId: account.roleId,
-        serverId: account.serverId,
-        lang: user.lang,
-      });
+        if (!session) {
+          console.error(`Failed to create session for account ${account.id} (${account.nickname})`);
+          return null;
+        }
+
+        const res = await EndfieldSDK.completeSignIn({
+          cred: session.cred,
+          token: session.token,
+          roleId: account.roleId,
+          serverId: account.serverId,
+          lang: user.lang,
+        });
+
+        return { account, res };
+      }),
+    );
+
+    for (const result of results) {
+      if (result.status === "rejected" || !result.value) continue;
+      const { account, res } = result.value;
 
       if (res.code !== 0) {
         container
@@ -98,12 +112,11 @@ export default {
             (t) => t.setContent(res.message || "Failed to signin for unknown reason."),
           );
       } else {
-        // Map reward IDs to their info
         const rewards = res.data.awardIds.map((a) => {
-          return res.data.resourceInfoMap[a.id]!; // Always present
+          return res.data.resourceInfoMap[a.id]!;
         });
 
-        const mainReward = rewards[0]!; // Always be at least 1
+        const mainReward = rewards[0]!;
         const extraRewards = rewards.slice(1);
 
         container

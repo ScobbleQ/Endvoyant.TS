@@ -1,4 +1,3 @@
-import { join } from "node:path";
 import { Collection, ContainerBuilder, Events, MessageFlags, type Interaction } from "discord.js";
 import { parseComponentId } from "#/utils/componentId.ts";
 
@@ -65,24 +64,13 @@ export default {
       if (interaction.isModalSubmit()) interactionType = "modals";
       if (interaction.isStringSelectMenu()) interactionType = "selectmenus";
 
-      const mod = await import(
-        join(
-          import.meta.dirname,
-          "..",
-          "commands",
-          parsed.commandName,
-          interactionType,
-          `${parsed.interactionName}.ts`,
-        )
-      );
+      const key = `${parsed.commandName}|${interactionType}|${parsed.interactionName}`;
+      const handler = interaction.client.interactions.get(key);
 
-      if (!mod) {
-        // malformed
-        return;
-      }
+      if (!handler) return;
 
       try {
-        await mod.default.execute(interaction, parsed.args);
+        await handler.execute(interaction, parsed.args);
       } catch (error) {
         console.error(error);
         return;

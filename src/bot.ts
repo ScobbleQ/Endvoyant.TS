@@ -2,7 +2,7 @@ import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import { config } from "#/config.ts";
-import { loadCommands } from "#/utils/loader.ts";
+import { loadCommands, loadInteractions } from "#/utils/loader.ts";
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds],
@@ -10,9 +10,14 @@ const client = new Client({
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
+client.interactions = new Collection();
 
 for (const command of await loadCommands()) {
   client.commands.set(command.data.name, command);
+}
+
+for (const [key, handler] of await loadInteractions()) {
+  client.interactions.set(key, handler);
 }
 
 const eventsPath = join(import.meta.dirname, "events");

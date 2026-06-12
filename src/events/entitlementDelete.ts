@@ -4,7 +4,6 @@ import { UsersDB } from "#/drizzle/index.ts";
 
 export default {
   name: Events.EntitlementDelete,
-  once: true,
   execute: async (entitlement: Entitlement) => {
     if (entitlement.skuId !== config.discord.premiumSkuId) return;
 

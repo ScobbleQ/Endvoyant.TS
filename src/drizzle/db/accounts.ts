@@ -1,4 +1,4 @@
-import { eq, sql, desc, asc, and } from "drizzle-orm";
+import { eq, sql, and } from "drizzle-orm";
 import { accounts, users } from "../schema.ts";
 import { db } from "./client.ts";
 
@@ -169,35 +169,31 @@ export class AccountsDB {
   }
 
   static async listForDailySignin() {
-    const rows = await db
-      .select({
-        dcid: users.dcid,
-        lang: users.lang,
-        allowData: users.allowData,
-        enableNotif: users.enableNotif,
-        accountId: accounts.id,
-        nickname: accounts.nickname,
-        accountToken: accounts.accountToken,
-        roleId: accounts.roleId,
-        serverId: accounts.serverId,
-      })
-      .from(accounts)
-      .innerJoin(users, eq(accounts.dcid, users.dcid))
-      .where(eq(accounts.enableSignin, true))
-      .orderBy(desc(accounts.isPrimary), asc(accounts.addedOn));
-
-    return [...Map.groupBy(rows, (row) => row.dcid).values()].map((group) => ({
-      dcid: group[0]!.dcid,
-      lang: group[0]!.lang,
-      allowData: group[0]!.allowData,
-      enableNotif: group[0]!.enableNotif,
-      accounts: group.map(({ accountId, nickname, accountToken, roleId, serverId }) => ({
-        accountId,
-        nickname,
-        accountToken,
-        roleId,
-        serverId,
-      })),
-    }));
+    return db.query.users.findMany({
+      columns: {
+        dcid: true,
+        lang: true,
+        allowData: true,
+        enableNotif: true,
+      },
+      with: {
+        accounts: {
+          columns: {
+            id: true,
+            nickname: true,
+            accountToken: true,
+            roleId: true,
+            serverId: true,
+          },
+          where: {
+            enableSignin: true,
+          },
+          orderBy: {
+            isPrimary: "desc",
+            addedOn: "asc",
+          },
+        },
+      },
+    });
   }
 }

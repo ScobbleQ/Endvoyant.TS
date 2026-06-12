@@ -45,7 +45,7 @@ export async function dailySignin(client: Client) {
                 void EventsDB.record(user.dcid, {
                   source: "cron",
                   action: "attendance",
-                  aid: account.accountId,
+                  aid: account.id,
                   metadata: {
                     reward: {
                       name: main.name,

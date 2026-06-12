@@ -9,14 +9,15 @@ export async function dailySignin(client: Client) {
   const delay = Math.floor(Math.random() * 56) * 60 * 1000;
   await new Promise((resolve) => setTimeout(resolve, delay));
 
-  const users = await AccountsDB.listForDailySignin();
+  const users = (await AccountsDB.listForDailySignin()).filter((u) => u.accounts.length > 0);
   const userQueue = new pQueue({ concurrency: 10 });
   const accountQueue = new pQueue({ concurrency: 5 });
 
   for (const user of users) {
     void userQueue.add(async () => {
       try {
-        if (!user.accounts?.length) return;
+        // Shouldn't happen, but just in case
+        if (!user.accounts.length) return;
 
         const results = await Promise.allSettled(
           user.accounts.map((account) =>

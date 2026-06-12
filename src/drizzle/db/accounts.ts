@@ -176,6 +176,7 @@ export class AccountsDB {
         allowData: users.allowData,
         enableNotif: users.enableNotif,
         accountId: accounts.id,
+        nickname: accounts.nickname,
         accountToken: accounts.accountToken,
         roleId: accounts.roleId,
         serverId: accounts.serverId,
@@ -190,8 +191,9 @@ export class AccountsDB {
       lang: group[0]!.lang,
       allowData: group[0]!.allowData,
       enableNotif: group[0]!.enableNotif,
-      accounts: group.map(({ accountId, accountToken, roleId, serverId }) => ({
+      accounts: group.map(({ accountId, nickname, accountToken, roleId, serverId }) => ({
         accountId,
+        nickname,
         accountToken,
         roleId,
         serverId,

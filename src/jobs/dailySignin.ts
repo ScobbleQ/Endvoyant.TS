@@ -2,7 +2,6 @@ import { type Client, DiscordAPIError, ContainerBuilder, MessageFlags } from "di
 import pQueue from "p-queue";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB } from "#/drizzle/index.ts";
-import { t } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export async function dailySignin(client: Client) {
@@ -38,53 +37,82 @@ export async function dailySignin(client: Client) {
 
               if (!result) return null;
 
-              if (config.env === "production" && user.allowData) {
+              if (config.env === "production" && user.allowData && result.code === 0) {
+                const rewards = result.data.awardIds.map((a) => result.data.resourceInfoMap[a.id]!);
+                const main = rewards[0]!;
+                const rest = rewards.slice(1);
+
                 void EventsDB.record(user.dcid, {
                   source: "cron",
-                  action: "signin",
+                  action: "attendance",
                   aid: account.accountId,
                   metadata: {
                     reward: {
-                      name: "",
-                      count: "",
-                      icon: "",
+                      name: main.name,
+                      count: String(main.count),
+                      icon: main.icon,
                     },
+                    ...(rest.length > 0 && {
+                      bonus: rest.map((r) => ({
+                        name: r.name,
+                        count: String(r.count),
+                        icon: r.icon,
+                      })),
+                    }),
                   },
                 });
               }
 
-              return result;
+              return { account, result };
             }),
           ),
         );
 
-        const succeeded = results.filter(
-          (
-            r,
-          ): r is PromiseFulfilledResult<
-            NonNullable<Awaited<ReturnType<typeof EndfieldSDK.completeSignIn>>>
-          > => r.status === "fulfilled" && r.value != null,
+        const settled = results.flatMap((r) =>
+          r.status === "fulfilled" && r.value != null ? [r.value] : [],
         );
 
         if (!user.enableNotif) return;
-        if (succeeded.length === 0) return;
+        if (settled.length === 0) return;
 
         const container = new ContainerBuilder().addTextDisplayComponents(
-          (txt) => txt.setContent(`## ▼// ${t(user.lang, "signin.header")}`),
+          (txt) => txt.setContent(`## ▼// Daily Signin`),
           (txt) => txt.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
         );
 
-        for (const _ of succeeded) {
-          container
-            .addSeparatorComponents((s) => s)
-            .addSectionComponents((s) =>
-              s
-                .addTextDisplayComponents(
-                  (txt) => txt.setContent(""),
-                  (txt) => txt.setContent(""),
-                )
-                .setThumbnailAccessory((a) => a.setURL("")),
-            );
+        for (const { account, result } of settled) {
+          if (result.code !== 0) {
+            container
+              .addSeparatorComponents((s) => s)
+              .addTextDisplayComponents(
+                (t) => t.setContent(`### ${account.nickname} (${account.roleId})`),
+                (t) => t.setContent(result.message || "Failed to signin for unknown reason."),
+              );
+          } else {
+            const rewards = result.data.awardIds.map((a) => result.data.resourceInfoMap[a.id]!);
+            const mainReward = rewards[0]!;
+            const extraRewards = rewards.slice(1);
+
+            container
+              .addSeparatorComponents((s) => s)
+              .addSectionComponents((s) =>
+                s
+                  .addTextDisplayComponents(
+                    (t) => t.setContent(`### ${account.nickname} (${account.roleId})`),
+                    (t) => t.setContent(`${mainReward.name} x${mainReward.count}`),
+                  )
+                  .setThumbnailAccessory((a) =>
+                    a.setURL(mainReward.icon).setDescription(mainReward.name),
+                  ),
+              );
+
+            if (extraRewards.length > 0) {
+              container.addTextDisplayComponents(
+                (t) => t.setContent(`Bonus Rewards:`),
+                (t) => t.setContent(extraRewards.map((r) => `- ${r.name} x${r.count}`).join("\n")),
+              );
+            }
+          }
         }
 
         try {

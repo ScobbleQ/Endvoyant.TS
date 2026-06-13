@@ -15,7 +15,7 @@ Commands:
 - [x] Manage Accounts
 - [ ] Premium
 - [ ] Profile
-- [ ] Redeem
+- [x] Redeem
 - [x] Settings
 - [ ] Umbral Monument
 

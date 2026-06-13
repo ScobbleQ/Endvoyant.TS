@@ -320,7 +320,7 @@ export class EndfieldSDK {
         body: JSON.stringify({ channelId, code, confirm: false, platform: "iOS", serverId, token }),
       });
 
-      return await body.json();
+      return (await body.json()) as { code: number; msg: string; data: {} };
     } catch (error) {
       throw new Error("", { cause: error });
     }

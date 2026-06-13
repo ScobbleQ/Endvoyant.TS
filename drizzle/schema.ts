@@ -6,9 +6,9 @@ import {
   uuid,
   text,
   timestamp,
+  boolean,
   smallint,
   jsonb,
-  boolean,
   uniqueIndex,
   unique,
 } from "drizzle-orm/pg-core";
@@ -90,6 +90,7 @@ export const efCodes = pgTable.withRLS(
     code: text().notNull(),
     rewards: text().array(),
     notes: text().array(),
+    isActive: boolean().default(true).notNull(),
   },
   (table) => [unique("ef_codes_code_key").on(table.code)],
 );

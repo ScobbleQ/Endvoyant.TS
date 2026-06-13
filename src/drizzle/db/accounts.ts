@@ -141,6 +141,7 @@ export class AccountsDB {
         roleId: true,
         serverId: true,
         accountToken: true,
+        channelId: true,
       },
       where: {
         id: aid,
@@ -157,6 +158,7 @@ export class AccountsDB {
         roleId: true,
         serverId: true,
         accountToken: true,
+        channelId: true,
       },
       where: {
         dcid,

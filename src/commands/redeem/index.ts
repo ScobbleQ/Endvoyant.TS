@@ -5,8 +5,11 @@ import {
   type ChatInputCommandInteraction,
   MessageFlags,
 } from "discord.js";
+import { and, eq } from "drizzle-orm";
 import { UsersDB, db, AccountsDB } from "#/drizzle/index.ts";
+import { efAttemptedCodes, efCodes } from "#/drizzle/schema.ts";
 import { discordLocalization } from "#/i18n/index.ts";
+import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export default {
   cooldown: 30,
@@ -41,15 +44,26 @@ export default {
       return;
     }
 
-    const codes = [];
-    const inputCode = interaction.options.getString("code");
+    const codes: string[] = [];
+    const inputCode = interaction.options.getString("code")?.trim();
     if (inputCode) {
+      if (inputCode.length < 6 || inputCode.length > 16) {
+        await interaction.reply({
+          content: "Invalid code format.",
+          flags: [MessageFlags.Ephemeral],
+        });
+        return;
+      }
+
       codes.push(inputCode);
     } else {
       const dbCodes = await db.query.efCodes.findMany({
         columns: {
           code: true,
           rewards: true,
+        },
+        where: {
+          isActive: true,
         },
       });
 
@@ -87,23 +101,78 @@ export default {
         },
       });
 
-      // Sets for faster lookups
-      const activeCodes = new Set(codes);
       const seen = new Set(pastRedemptions.map((r) => r.code));
 
       const toRedeem = [
-        // Failed codes from previous attempts that are still active
         ...pastRedemptions
-          .filter((r) => r.status === -1 && activeCodes.has(r.code))
+          .filter((r) => r.status === -1 && codes.includes(r.code))
           .map((r) => r.code),
-        // New codes that haven't been attempted
         ...codes.filter((c) => !seen.has(c)),
       ];
 
-      for (const code of toRedeem) {
-        // TODO: Add redeem logic here
+      if (toRedeem.length === 0) {
+        container.addTextDisplayComponents((t) =>
+          t.setContent("No new codes to redeem for this account."),
+        );
+        continue;
+      }
 
-        container.addTextDisplayComponents((t) => t.setContent(`- ${code}`));
+      const oauth = await EndfieldSDK.grantOAuth2({
+        appCode: "d9f6dbb6bbd6bb33",
+        token: account.accountToken,
+      });
+
+      if (oauth.status !== 0) continue;
+
+      const channelToken = await EndfieldSDK.authenticateWithChannelToken({
+        channelId: account.channelId,
+        channelToken: oauth.data.code,
+      });
+
+      if (channelToken.status !== 0) continue;
+
+      for (const code of toRedeem) {
+        const res = await EndfieldSDK.redeemCode({
+          code,
+          channelId: account.channelId,
+          serverId: account.serverId,
+          token: channelToken.data.token,
+        });
+
+        if (res.code === 0) {
+          container.addTextDisplayComponents((t) =>
+            t.setContent(`- ${code}\nCode redeemed successfully!`),
+          );
+        } else {
+          container.addTextDisplayComponents((t) => t.setContent(`- ${code}\n${res.msg}`));
+
+          // Inactive code
+          if (res.code === 11004) {
+            await db.update(efCodes).set({ isActive: false }).where(eq(efCodes.code, code));
+          }
+
+          // Already redeemed
+          if (res.code === 11005) {
+            await db
+              .update(efAttemptedCodes)
+              .set({ status: 0 })
+              .where(and(eq(efAttemptedCodes.aid, account.id), eq(efAttemptedCodes.code, code)));
+          }
+        }
+
+        await db
+          .insert(efAttemptedCodes)
+          .values({
+            aid: account.id,
+            code,
+            status: res.code === 0 ? 0 : -1,
+          })
+          .onConflictDoUpdate({
+            target: [efAttemptedCodes.aid, efAttemptedCodes.code],
+            set: {
+              status: res.code === 0 ? 0 : -1,
+            },
+          });
       }
     }
 

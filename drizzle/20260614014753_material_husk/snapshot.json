@@ -1,6 +1,6 @@
 {
   "dialect": "postgres",
-  "id": "f3090bab-5f9e-4d22-b1bc-1b34226f6955",
+  "id": "62d8583b-1e04-42f1-b894-9b8e5b68cd9b",
   "prevIds": ["00000000-0000-0000-0000-000000000000"],
   "version": "8",
   "ddl": [
@@ -64,50 +64,6 @@
       "generated": null,
       "identity": {
         "type": "byDefault",
-        "name": "ef_attempted_codes_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "9223372036854775807",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "ef_attempted_codes"
-    },
-    {
-      "type": "bigint",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "byDefault",
-        "name": "ef_codes_id_seq",
-        "increment": "1",
-        "minValue": "1",
-        "maxValue": "9223372036854775807",
-        "startWith": "1",
-        "cycle": false,
-        "cache": 1
-      },
-      "name": "id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "ef_codes"
-    },
-    {
-      "type": "bigint",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": {
-        "type": "byDefault",
         "name": "event_id_seq",
         "increment": "1",
         "minValue": "1",
@@ -148,27 +104,45 @@
       "table": "users"
     },
     {
-      "type": "text",
+      "type": "bigint",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
       "default": null,
       "generated": null,
-      "identity": null,
-      "name": "dcid",
+      "identity": {
+        "type": "byDefault",
+        "name": "ef_codes_id_seq",
+        "increment": "1",
+        "minValue": "1",
+        "maxValue": "9223372036854775807",
+        "startWith": "1",
+        "cycle": false,
+        "cache": 1
+      },
+      "name": "id",
       "entityType": "columns",
       "schema": "public",
-      "table": "events"
+      "table": "ef_codes"
     },
     {
-      "type": "uuid",
+      "type": "bigint",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
       "default": null,
       "generated": null,
-      "identity": null,
-      "name": "aid",
+      "identity": {
+        "type": "byDefault",
+        "name": "ef_attempted_codes_id_seq",
+        "increment": "1",
+        "minValue": "1",
+        "maxValue": "9223372036854775807",
+        "startWith": "1",
+        "cycle": false,
+        "cache": 1
+      },
+      "name": "id",
       "entityType": "columns",
       "schema": "public",
       "table": "ef_attempted_codes"
@@ -197,6 +171,19 @@
       "name": "dcid",
       "entityType": "columns",
       "schema": "public",
+      "table": "events"
+    },
+    {
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "dcid",
+      "entityType": "columns",
+      "schema": "public",
       "table": "accounts"
     },
     {
@@ -213,6 +200,19 @@
       "table": "users"
     },
     {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "aid",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "ef_attempted_codes"
+    },
+    {
       "type": "text",
       "typeSchema": null,
       "notNull": true,
@@ -224,6 +224,19 @@
       "entityType": "columns",
       "schema": "public",
       "table": "ef_attempted_codes"
+    },
+    {
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "name": "added_on",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "accounts"
     },
     {
       "type": "text",
@@ -259,23 +272,23 @@
       "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "added_on",
+      "name": "attempted_at",
       "entityType": "columns",
       "schema": "public",
-      "table": "accounts"
+      "table": "ef_attempted_codes"
     },
     {
       "type": "text",
       "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
+      "notNull": false,
+      "dimensions": 1,
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "nickname",
+      "name": "notes",
       "entityType": "columns",
       "schema": "public",
-      "table": "accounts"
+      "table": "ef_codes"
     },
     {
       "type": "text",
@@ -293,28 +306,15 @@
     {
       "type": "text",
       "typeSchema": null,
-      "notNull": false,
-      "dimensions": 1,
+      "notNull": true,
+      "dimensions": 0,
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "notes",
+      "name": "nickname",
       "entityType": "columns",
       "schema": "public",
-      "table": "ef_codes"
-    },
-    {
-      "type": "timestamp with time zone",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": "now()",
-      "generated": null,
-      "identity": null,
-      "name": "attempted_at",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "ef_attempted_codes"
+      "table": "accounts"
     },
     {
       "type": "text",
@@ -341,6 +341,19 @@
       "entityType": "columns",
       "schema": "public",
       "table": "events"
+    },
+    {
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "true",
+      "generated": null,
+      "identity": null,
+      "name": "isActive",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "ef_codes"
     },
     {
       "type": "smallint",
@@ -395,6 +408,19 @@
       "table": "ef_attempted_codes"
     },
     {
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "aid",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "events"
+    },
+    {
       "type": "text",
       "typeSchema": null,
       "notNull": true,
@@ -421,19 +447,6 @@
       "table": "users"
     },
     {
-      "type": "uuid",
-      "typeSchema": null,
-      "notNull": false,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "aid",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "events"
-    },
-    {
       "type": "text",
       "typeSchema": null,
       "notNull": true,
@@ -442,19 +455,6 @@
       "generated": null,
       "identity": null,
       "name": "role_id",
-      "entityType": "columns",
-      "schema": "public",
-      "table": "accounts"
-    },
-    {
-      "type": "text",
-      "typeSchema": null,
-      "notNull": true,
-      "dimensions": 0,
-      "default": null,
-      "generated": null,
-      "identity": null,
-      "name": "channel_id",
       "entityType": "columns",
       "schema": "public",
       "table": "accounts"
@@ -480,23 +480,23 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "server_type",
+      "name": "channel_id",
       "entityType": "columns",
       "schema": "public",
       "table": "accounts"
     },
     {
-      "type": "boolean",
+      "type": "text",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
-      "default": "false",
+      "default": null,
       "generated": null,
       "identity": null,
-      "name": "is_private",
+      "name": "server_type",
       "entityType": "columns",
       "schema": "public",
-      "table": "users"
+      "table": "accounts"
     },
     {
       "type": "text",
@@ -512,14 +512,14 @@
       "table": "accounts"
     },
     {
-      "type": "timestamp with time zone",
+      "type": "boolean",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
-      "default": "now()",
+      "default": "false",
       "generated": null,
       "identity": null,
-      "name": "updated_at",
+      "name": "is_private",
       "entityType": "columns",
       "schema": "public",
       "table": "users"
@@ -538,14 +538,14 @@
       "table": "accounts"
     },
     {
-      "type": "langEnum",
-      "typeSchema": "public",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
-      "default": "'en-us'",
+      "default": "now()",
       "generated": null,
       "identity": null,
-      "name": "lang",
+      "name": "updated_at",
       "entityType": "columns",
       "schema": "public",
       "table": "users"
@@ -562,6 +562,19 @@
       "entityType": "columns",
       "schema": "public",
       "table": "accounts"
+    },
+    {
+      "type": "langEnum",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'en-us'",
+      "generated": null,
+      "identity": null,
+      "name": "lang",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "users"
     },
     {
       "type": "boolean",
@@ -597,23 +610,23 @@
       "default": "true",
       "generated": null,
       "identity": null,
-      "name": "enable_signin",
+      "name": "enable_reminder",
       "entityType": "columns",
       "schema": "public",
-      "table": "accounts"
+      "table": "users"
     },
     {
       "type": "boolean",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
-      "default": "false",
+      "default": "true",
       "generated": null,
       "identity": null,
-      "name": "enable_reminder",
+      "name": "enable_signin",
       "entityType": "columns",
       "schema": "public",
-      "table": "users"
+      "table": "accounts"
     },
     {
       "type": "boolean",

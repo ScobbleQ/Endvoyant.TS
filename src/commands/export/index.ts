@@ -1,23 +1,21 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import { zipSync, strToU8, type Zippable } from "fflate";
 import { db } from "#/drizzle/index.ts";
-import { discordLocalization } from "#/i18n/index.ts";
+import { localizations } from "#/i18n/index.ts";
 
 export default {
   cooldown: 86400,
   data: new SlashCommandBuilder()
     .setName("export")
-    .setNameLocalizations(discordLocalization("command.export.name"))
+    .setNameLocalizations(localizations("command.export.name"))
     .setDescription("Export your Endvoyant data")
-    .setDescriptionLocalizations(discordLocalization("command.export.description"))
+    .setDescriptionLocalizations(localizations("command.export.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("data")
-        .setNameLocalizations(discordLocalization("command.export.subcommands.data.name"))
+        .setNameLocalizations(localizations("command.export.subcommands.data.name"))
         .setDescription("Export your Endvoyant data")
-        .setDescriptionLocalizations(
-          discordLocalization("command.export.subcommands.data.description"),
-        ),
+        .setDescriptionLocalizations(localizations("command.export.subcommands.data.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });

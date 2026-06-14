@@ -8,16 +8,16 @@ import {
 import { and, eq } from "drizzle-orm";
 import { UsersDB, db, AccountsDB } from "#/drizzle/index.ts";
 import { efAttemptedCodes, efCodes } from "#/drizzle/schema.ts";
-import { discordLocalization } from "#/i18n/index.ts";
+import { localizations } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export default {
   cooldown: 30,
   data: new SlashCommandBuilder()
     .setName("redeem")
-    .setNameLocalizations(discordLocalization("command.redeem.name"))
+    .setNameLocalizations(localizations("command.redeem.name"))
     .setDescription("Redeem a reward code")
-    .setDescriptionLocalizations(discordLocalization("command.redeem.description"))
+    .setDescriptionLocalizations(localizations("command.redeem.description"))
     .addStringOption((option) => option.setName("code").setDescription("The reward code to redeem"))
     .addStringOption((option) =>
       option.setName("for").setDescription("The account to redeem for").setAutocomplete(true),

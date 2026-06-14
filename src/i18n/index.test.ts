@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { t, discordLocalization, Language } from "./index.ts";
+import { t, localizations, Language } from "./index.ts";
 
 describe("i18n", () => {
   it("should get a locale", () => {
@@ -7,9 +7,9 @@ describe("i18n", () => {
   });
 
   it("should get a discord localization", () => {
-    expect(discordLocalization("lang")).toMatchObject({
-      de: "Deutsch",
-      "zh-CN": "简体中文",
+    expect(localizations("command.about.name")).toMatchObject({
+      "en-US": "about",
+      "zh-CN": "关于",
     });
   });
 });

@@ -5,6 +5,7 @@ import type {
   LocaleData,
   LocaleSchema,
   TemplateArgs,
+  CommandKey,
   TranslationKey,
   PathValue,
 } from "../types.ts";
@@ -35,16 +36,12 @@ export function t<K extends TranslationKey>(
 }
 
 /**
- * Returns an object containing localized versions of the given key for all supported languages.
+ * Returns a Discord LocalizationMap for the given command key across all supported languages.
+ * Restricted to command.* paths only.
  * @example
- * // locales/en-us.json -> { "test": "Test" }
- * // locales/zh-cn.json -> { "test": "测试" }
- * discordLocalization("test") // { "en-US": "Test", "zh-CN": "测试" }
+ * localizations("command.about.name") // { "en-US": "about", "zh-CN": "关于", ... }
  */
-export const discordLocalization = <K extends TranslationKey>(
-  key: K,
-  args?: TemplateArgs,
-): LocalizationMap => {
+export function localizations<K extends CommandKey>(key: K, args?: TemplateArgs): LocalizationMap {
   const out: LocalizationMap = {};
   for (const lang of Object.values(Language)) {
     const value = t(lang, key, args);
@@ -52,7 +49,7 @@ export const discordLocalization = <K extends TranslationKey>(
     out[toDiscordLocale(lang)] = value;
   }
   return out;
-};
+}
 
 const getByKey = <K extends TranslationKey>(
   root: LocaleData,

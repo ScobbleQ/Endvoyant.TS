@@ -2,7 +2,7 @@ import { MessageFlags, SlashCommandBuilder, type ChatInputCommandInteraction } f
 import { errorContainer } from "#/components/container.ts";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
-import { discordLocalization } from "#/i18n/index.ts";
+import { localizations } from "#/i18n/index.ts";
 import { addAccountContainer } from "./components/addAccount.ts";
 import { maxAccountContainer } from "./components/maxAccount.ts";
 import { onboardingContainer } from "./components/onboarding.ts";
@@ -11,17 +11,15 @@ export default {
   cooldown: 30,
   data: new SlashCommandBuilder()
     .setName("add")
-    .setNameLocalizations(discordLocalization("command.add.name"))
+    .setNameLocalizations(localizations("command.add.name"))
     .setDescription("Add an account to your Discord")
-    .setDescriptionLocalizations(discordLocalization("command.add.description"))
+    .setDescriptionLocalizations(localizations("command.add.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("account")
-        .setNameLocalizations(discordLocalization("command.add.subcommands.account.name"))
+        .setNameLocalizations(localizations("command.add.subcommands.account.name"))
         .setDescription("Add an account to your Discord")
-        .setDescriptionLocalizations(
-          discordLocalization("command.add.subcommands.account.description"),
-        ),
+        .setDescriptionLocalizations(localizations("command.add.subcommands.account.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     const user = await UsersDB.findAccess(interaction.user.id);

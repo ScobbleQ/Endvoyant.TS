@@ -1,23 +1,23 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
-import { discordLocalization } from "#/i18n/index.ts";
+import { localizations } from "#/i18n/index.ts";
 import { accountContainer } from "./components/account.ts";
 
 export default {
   cooldown: 5,
   data: new SlashCommandBuilder()
     .setName("manage")
-    .setNameLocalizations(discordLocalization("command.manage.name"))
+    .setNameLocalizations(localizations("command.manage.name"))
     .setDescription("Manage your linked accounts")
-    .setDescriptionLocalizations(discordLocalization("command.manage.description"))
+    .setDescriptionLocalizations(localizations("command.manage.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("accounts")
-        .setNameLocalizations(discordLocalization("command.manage.subcommands.accounts.name"))
+        .setNameLocalizations(localizations("command.manage.subcommands.accounts.name"))
         .setDescription("Manage your linked accounts")
         .setDescriptionLocalizations(
-          discordLocalization("command.manage.subcommands.accounts.description"),
+          localizations("command.manage.subcommands.accounts.description"),
         ),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {

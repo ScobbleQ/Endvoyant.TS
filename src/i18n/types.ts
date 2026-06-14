@@ -16,6 +16,7 @@ export type DotPaths<T> = T extends object
   : never;
 
 export type TranslationKey = DotPaths<LocaleSchema>;
+export type CommandKey = Extract<TranslationKey, `command.${string}`>;
 
 export type PathValue<T, P extends string> = P extends `${infer K}.${infer Rest}`
   ? K extends keyof T

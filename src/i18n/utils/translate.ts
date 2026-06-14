@@ -1,9 +1,15 @@
 import type { LocalizationMap } from "discord.js";
-import { Language, type Locale } from "../types.ts";
+import { Language } from "../constants.ts";
+import type {
+  Locale,
+  LocaleData,
+  LocaleSchema,
+  TemplateArgs,
+  TranslationKey,
+  PathValue,
+} from "../types.ts";
 import { toDiscordLocale } from "./discord.ts";
 import { loadLocale } from "./load.ts";
-
-type TemplateArgs = Record<string, string | number | boolean>;
 
 const LOCALE_TOKEN_RE = /\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g;
 
@@ -13,12 +19,20 @@ const LOCALE_TOKEN_RE = /\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g;
  * // locales/en-us.json -> { "test": { "1": "Test 1 {{name}}" } }
  * t(Language.EN_US, "test.1", { name: "BOB" }) // "Test 1 BOB"
  */
-export const t = (lang: Locale, key: string, args?: TemplateArgs): unknown => {
-  const data = loadLocale(lang);
+export function t<K extends TranslationKey>(
+  lang: Locale,
+  key: K,
+  args?: TemplateArgs,
+): PathValue<LocaleSchema, K> {
+  const data = loadLocale(lang) as LocaleData;
   const value = getByKey(data, key);
-  if (value === null) return null;
-  return deepFormat(value, args);
-};
+
+  if (value === null) {
+    throw new Error(`Missing translation key '${key}' for locale '${lang}'`);
+  }
+
+  return deepFormat(value, args) as PathValue<LocaleSchema, K>;
+}
 
 /**
  * Returns an object containing localized versions of the given key for all supported languages.
@@ -27,7 +41,10 @@ export const t = (lang: Locale, key: string, args?: TemplateArgs): unknown => {
  * // locales/zh-cn.json -> { "test": "测试" }
  * discordLocalization("test") // { "en-US": "Test", "zh-CN": "测试" }
  */
-export const discordLocalization = (key: string, args?: TemplateArgs): LocalizationMap => {
+export const discordLocalization = <K extends TranslationKey>(
+  key: K,
+  args?: TemplateArgs,
+): LocalizationMap => {
   const out: LocalizationMap = {};
   for (const lang of Object.values(Language)) {
     const value = t(lang, key, args);
@@ -37,15 +54,20 @@ export const discordLocalization = (key: string, args?: TemplateArgs): Localizat
   return out;
 };
 
-const getByKey = (root: unknown, key: string): unknown => {
+const getByKey = <K extends TranslationKey>(
+  root: LocaleData,
+  key: K,
+): PathValue<LocaleSchema, K> | null => {
   const parts = key.split(".");
   let current: unknown = root;
+
   for (const part of parts) {
     if (current === null || typeof current !== "object") return null;
     if (!(part in current)) return null;
     current = (current as Record<string, unknown>)[part];
   }
-  return current;
+
+  return current as PathValue<LocaleSchema, K>;
 };
 
 const deepFormat = (value: unknown, args?: TemplateArgs): unknown => {

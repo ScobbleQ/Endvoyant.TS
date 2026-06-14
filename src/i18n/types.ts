@@ -1,36 +1,26 @@
-export const Language = {
-  DE_DE: "de-de",
-  EN_US: "en-us",
-  ES_MX: "es-mx",
-  FR_FR: "fr-fr",
-  ID_ID: "id-id",
-  IT_IT: "it-it",
-  JA_JP: "ja-jp",
-  KO_KR: "ko-kr",
-  PT_BR: "pt-br",
-  RU_RU: "ru-ru",
-  TH_TH: "th-th",
-  VI_VN: "vi-vn",
-  ZH_CN: "zh-cn",
-  ZH_TW: "zh-tw",
-} as const;
-
-export const WebLanguage = {
-  ZH_CN: "zh_Hans",
-  ZH_TW: "zh_Hant",
-  DE_DE: "de_DE",
-  EN_US: "en",
-  ES_MX: "es_MX",
-  FR_FR: "fr_FR",
-  ID_ID: "id_ID",
-  IT_IT: "it_IT",
-  JA_JP: "ja",
-  KO_KR: "ko",
-  PT_BR: "pt_BR",
-  RU_RU: "ru_RU",
-  TH_TH: "th_TH",
-  VI_VN: "vi_VN",
-} as const;
+import { Language, WebLanguage } from "./constants.ts";
+import enUS from "./locales/en-us.json" with { type: "json" };
 
 export type Locale = (typeof Language)[keyof typeof Language];
 export type WebLocale = (typeof WebLanguage)[keyof typeof WebLanguage];
+
+export type LocaleSchema = typeof enUS;
+export type LocaleData = LocaleSchema;
+
+export type TemplateArgs = Record<string, string | number | boolean>;
+
+export type DotPaths<T> = T extends object
+  ? {
+      [K in keyof T & string]: T[K] extends object ? K | `${K}.${DotPaths<T[K]>}` : K;
+    }[keyof T & string]
+  : never;
+
+export type TranslationKey = DotPaths<LocaleSchema>;
+
+export type PathValue<T, P extends string> = P extends `${infer K}.${infer Rest}`
+  ? K extends keyof T
+    ? PathValue<T[K], Rest>
+    : never
+  : P extends keyof T
+    ? T[P]
+    : never;

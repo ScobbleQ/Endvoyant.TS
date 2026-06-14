@@ -6,8 +6,8 @@ import {
   CheckboxBuilder,
   MessageFlags,
 } from "discord.js";
-import { successContainer, errorContainer } from "#/components/container.ts";
 import { UsersDB } from "#/drizzle/index.ts";
+import { successContainer, errorContainer } from "#/globals/components/container.ts";
 import { t, Language, type Locale } from "#/i18n/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 

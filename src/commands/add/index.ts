@@ -1,7 +1,7 @@
 import { MessageFlags, SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
-import { errorContainer } from "#/components/container.ts";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
+import { errorContainer } from "#/globals/components/container.ts";
 import { localizations, t } from "#/i18n/index.ts";
 import { addAccountContainer } from "./components/addAccount.ts";
 import { maxAccountContainer } from "./components/maxAccount.ts";

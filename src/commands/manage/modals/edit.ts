@@ -7,8 +7,8 @@ import {
   CheckboxBuilder,
   RadioGroupBuilder,
 } from "discord.js";
-import { successContainer } from "#/components/container.ts";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
+import { successContainer } from "#/globals/components/container.ts";
 import { t } from "#/i18n/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { accountContainer } from "../components/account.ts";

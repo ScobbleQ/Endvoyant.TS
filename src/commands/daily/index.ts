@@ -6,9 +6,9 @@ import {
   ContainerBuilder,
 } from "discord.js";
 import pQueue from "p-queue";
-import { errorContainer } from "#/components/container.ts";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
+import { errorContainer } from "#/globals/components/container.ts";
 import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 

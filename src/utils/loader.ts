@@ -72,5 +72,22 @@ export async function loadInteractions() {
     }
   }
 
+  const globalsPath = join(import.meta.dirname, "..", "globals");
+
+  for (const type of INTERACTION_TYPES) {
+    const typePath = join(globalsPath, type);
+    if (!existsSync(typePath)) continue;
+
+    const files = readdirSync(typePath).filter((f) => f.endsWith(".ts"));
+    for (const file of files) {
+      const filePath = join(typePath, file);
+      const handler = (await import(filePath)).default;
+      if (isInteractionHandler(handler)) {
+        const key = `globals|${type}|${file.replace(".ts", "")}`;
+        interactions.set(key, handler);
+      }
+    }
+  }
+
   return interactions;
 }

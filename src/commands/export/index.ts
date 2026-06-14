@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import { zipSync, strToU8, type Zippable } from "fflate";
-import { errorContainer } from "#/components/container.ts";
 import { db } from "#/drizzle/index.ts";
+import { errorContainer } from "#/globals/components/container.ts";
 import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
 
 export default {

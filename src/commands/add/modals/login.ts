@@ -7,13 +7,13 @@ import {
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
+import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
 import {
   errorContainer,
   successContainer,
   container,
   warnContainer,
-} from "#/components/container.ts";
-import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
+} from "#/globals/components/container.ts";
 import { t } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";

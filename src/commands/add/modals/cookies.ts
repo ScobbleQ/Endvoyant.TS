@@ -7,8 +7,8 @@ import {
   DiscordAPIError,
   MessageFlags,
 } from "discord.js";
-import { errorContainer, successContainer, warnContainer } from "#/components/container.ts";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
+import { errorContainer, successContainer, warnContainer } from "#/globals/components/container.ts";
 import { t } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";

@@ -6,9 +6,9 @@ import {
   MessageFlags,
 } from "discord.js";
 import { and, eq } from "drizzle-orm";
-import { errorContainer } from "#/components/container.ts";
 import { UsersDB, db, AccountsDB } from "#/drizzle/index.ts";
 import { efAttemptedCodes, efCodes } from "#/drizzle/schema.ts";
+import { errorContainer } from "#/globals/components/container.ts";
 import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 

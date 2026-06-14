@@ -1,6 +1,6 @@
+import { Client, Collection, GatewayIntentBits } from "discord.js";
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
-import { Client, Collection, GatewayIntentBits } from "discord.js";
 import { config } from "#/config.ts";
 import { loadCommands, loadInteractions } from "#/utils/loader.ts";
 

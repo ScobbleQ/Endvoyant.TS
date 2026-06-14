@@ -2,8 +2,7 @@ import { MessageFlags, SlashCommandBuilder, type ChatInputCommandInteraction } f
 import { errorContainer } from "#/components/container.ts";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
-import { localizations } from "#/i18n/index.ts";
-import { t } from "#/i18n/index.ts";
+import { localizations, t } from "#/i18n/index.ts";
 import { addAccountContainer } from "./components/addAccount.ts";
 import { maxAccountContainer } from "./components/maxAccount.ts";
 import { onboardingContainer } from "./components/onboarding.ts";

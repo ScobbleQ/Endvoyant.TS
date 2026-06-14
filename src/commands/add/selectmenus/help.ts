@@ -1,8 +1,8 @@
 import {
   MessageFlags,
   StringSelectMenuBuilder,
-  type StringSelectMenuInteraction,
   StringSelectMenuOptionBuilder,
+  type StringSelectMenuInteraction,
 } from "discord.js";
 import { createComponentId } from "#/utils/componentId.ts";
 import { helpContainer } from "../components/help.ts";

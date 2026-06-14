@@ -90,7 +90,7 @@ export default {
         components: [successContainer({ desc: t(selectedLang, "success.settingsSaved") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
-    } catch (error) {
+    } catch {
       await interaction.reply({
         components: [errorContainer({ desc: t(selectedLang, "error.settingsFailed") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],

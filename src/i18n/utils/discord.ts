@@ -1,6 +1,6 @@
 import { Locale as DiscordLocale } from "discord.js";
-import { Language } from "../constants.ts";
 import type { Locale } from "../types.ts";
+import { Language } from "../constants.ts";
 
 const DISCORD_LOCALE_MAP = {
   [Language.DE_DE]: DiscordLocale.German,

@@ -1,5 +1,5 @@
-import { join } from "node:path";
 import { ShardingManager } from "discord.js";
+import { join } from "node:path";
 import { config } from "#/config.ts";
 
 const manager = new ShardingManager(join(import.meta.dirname, "bot.ts"), {

@@ -1,5 +1,4 @@
 import type { LocalizationMap } from "discord.js";
-import { Language } from "../constants.ts";
 import type {
   Locale,
   LocaleData,
@@ -9,6 +8,7 @@ import type {
   TranslationKey,
   PathValue,
 } from "../types.ts";
+import { Language } from "../constants.ts";
 import { toDiscordLocale } from "./discord.ts";
 import { loadLocale } from "./load.ts";
 

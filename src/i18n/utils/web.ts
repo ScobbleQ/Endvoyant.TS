@@ -1,5 +1,5 @@
-import { Language, WebLanguage } from "../constants.ts";
 import type { Locale, WebLocale } from "../types.ts";
+import { Language, WebLanguage } from "../constants.ts";
 
 const WEB_LOCALE_MAP = {
   [Language.ZH_CN]: WebLanguage.ZH_CN,

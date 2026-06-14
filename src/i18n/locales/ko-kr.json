@@ -2,77 +2,77 @@
   "lang": "한국어",
   "command": {
     "about": {
-      "name": "봇정보",
-      "description": "봇 정보를 확인합니다"
-    },
-    "manage": {
-      "name": "계정",
-      "description": "연결된 계정을 관리합니다",
-      "subcommands": {
-        "accounts": {
-          "name": "관리",
-          "description": "연결된 계정을 관리합니다"
-        }
-      }
+      "name": "정보",
+      "description": "봇 정보 보기"
     },
     "add": {
       "name": "추가",
-      "description": "계정을 Discord에 연결합니다",
+      "description": "Discord에 계정 연결하기",
       "subcommands": {
         "account": {
           "name": "계정",
-          "description": "계정을 Discord에 연결합니다"
+          "description": "Discord에 계정 연결하기"
         }
       }
     },
     "daily": {
       "name": "일일",
-      "description": "게임 일일 보상을 받습니다",
+      "description": "게임 내 일일 보상 받기",
       "subcommands": {
         "signin": {
           "name": "출석",
-          "description": "게임 일일 보상을 받습니다"
+          "description": "게임 내 일일 보상 받기"
         }
       }
     },
     "export": {
       "name": "내보내기",
-      "description": "Endvoyant 데이터를 내보냅니다",
+      "description": "Endvoyant 데이터 내보내기",
       "subcommands": {
         "data": {
           "name": "데이터",
-          "description": "Endvoyant 데이터를 내보냅니다"
+          "description": "Endvoyant 데이터 내보내기"
         }
       }
     },
     "full": {
-      "name": "전체",
-      "description": "내 전체 플레이어 프로필을 봅니다",
+      "name": "상세",
+      "description": "플레이어 상세 프로필 보기",
       "subcommands": {
         "profile": {
           "name": "프로필",
-          "description": "내 전체 플레이어 프로필을 봅니다"
+          "description": "플레이어 상세 프로필 보기"
+        }
+      }
+    },
+    "manage": {
+      "name": "계정",
+      "description": "연결된 계정 관리",
+      "subcommands": {
+        "accounts": {
+          "name": "관리",
+          "description": "연결된 계정 관리"
         }
       }
     },
     "premium": {
-      "name": "premium",
-      "description": "temp"
+      "name": "프리미엄",
+      "description": "프리미엄 상태 보기"
     },
     "profile": {
       "name": "프로필",
-      "description": "내 프로필을 봅니다"
+      "description": "내 프로필 보기"
     },
     "redeem": {
       "name": "교환",
-      "description": "보상 코드를 교환합니다"
+      "description": "보상 코드 교환하기"
     },
     "settings": {
       "name": "설정",
-      "description": "내 Endvoyant 개인 설정을 변경합니다"
+      "description": "Endvoyant 개인 설정 변경"
     },
     "umbral": {
-      "name": "엄브럴",
+      "name": "움브랄",
       "description": "임시",
       "subcommands": {
         "monument": {
@@ -81,5 +81,27 @@
         }
       }
     }
+  },
+  "error": {
+    "generic": "문제가 발생했습니다. 나중에 다시 시도해 주세요.",
+    "requireSetup": "아직 봇을 설정하지 않았어요. `/add account`로 시작해 보세요.",
+    "commandFailed": "이 명령어를 실행하는 중 오류가 발생했습니다.",
+    "cooldown": "`{{command}}` 쿨다운 중입니다. <t:{{time}}:R>에 다시 시도해 주세요.",
+    "notLinked": "아직 연결된 계정이 없어요. `/add account`로 시작해 보세요.",
+    "isBanned": "이 계정은 정지되었습니다. 도움이 필요하면 지원팀에 문의하세요.",
+    "invalidCode": "이 보상 코드가 유효하지 않은 것 같아요.",
+    "invalidCookies": "제공한 쿠키가 유효하지 않습니다. 올바르게 복사했는지 확인해 주세요.",
+    "alreadyLinked": {
+      "owner": "이 계정은 이미 Discord에 연결되어 있습니다.",
+      "other": "이 계정은 다른 Discord 사용자에게 연결되어 있습니다."
+    },
+    "settingsFailed": "설정을 저장하는 중 오류가 발생했습니다. 다시 시도해 주세요."
+  },
+  "success": {
+    "accountsLinked": "계정이 성공적으로 연결되었습니다!",
+    "loginSuccessful": "로그인 성공! 계정 정보를 가져오는 중...",
+    "accountRemoved": "계정이 삭제되었습니다.",
+    "accountUpdated": "계정 설정이 업데이트되었습니다.",
+    "settingsSaved": "설정이 저장되었습니다."
   }
 }

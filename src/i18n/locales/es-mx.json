@@ -1,19 +1,9 @@
 {
-  "lang": "Español (México)",
+  "lang": "Español (MX)",
   "command": {
     "about": {
       "name": "info",
       "description": "Información sobre el bot"
-    },
-    "manage": {
-      "name": "cuenta",
-      "description": "Administra tus cuentas vinculadas",
-      "subcommands": {
-        "accounts": {
-          "name": "gestionar",
-          "description": "Administra tus cuentas vinculadas"
-        }
-      }
     },
     "add": {
       "name": "agregar",
@@ -47,39 +37,71 @@
     },
     "full": {
       "name": "completo",
-      "description": "Ve tu perfil de jugador completo",
+      "description": "Muestra tu perfil completo de jugador",
       "subcommands": {
         "profile": {
           "name": "perfil",
-          "description": "Ve tu perfil de jugador completo"
+          "description": "Muestra tu perfil completo de jugador"
+        }
+      }
+    },
+    "manage": {
+      "name": "cuenta",
+      "description": "Gestiona tus cuentas vinculadas",
+      "subcommands": {
+        "accounts": {
+          "name": "gestionar",
+          "description": "Gestiona tus cuentas vinculadas"
         }
       }
     },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "Consulta tu estado de premium"
     },
     "profile": {
       "name": "perfil",
-      "description": "Ve tu perfil"
+      "description": "Muestra tu perfil"
     },
     "redeem": {
       "name": "canjear",
       "description": "Canjea un código de recompensa"
     },
     "settings": {
-      "name": "ajustes",
-      "description": "Cambia tus ajustes personales de Endvoyant"
+      "name": "configuración",
+      "description": "Cambia tu configuración personal de Endvoyant"
     },
     "umbral": {
       "name": "umbral",
-      "description": "Temporal",
+      "description": "temp",
       "subcommands": {
         "monument": {
           "name": "monumento",
-          "description": "Temporal"
+          "description": "temp"
         }
       }
     }
+  },
+  "error": {
+    "generic": "Algo salió mal. Por favor, inténtalo de nuevo más tarde.",
+    "requireSetup": "Aún no has configurado el bot. Usa `/add account` para comenzar.",
+    "commandFailed": "Este comando encontró un error al ejecutarse.",
+    "cooldown": "`{{command}}` está en enfriamiento. Intenta de nuevo <t:{{time}}:R>.",
+    "notLinked": "Aún no tienes una cuenta vinculada. Usa `/add account` para comenzar.",
+    "isBanned": "Esta cuenta ha sido baneada. Por favor, contacta al soporte para obtener ayuda.",
+    "invalidCode": "Parece que este código de recompensa no es válido.",
+    "invalidCookies": "Las cookies que proporcionaste no son válidas. Asegúrate de haberlas copiado correctamente.",
+    "alreadyLinked": {
+      "owner": "Esta cuenta ya está vinculada a tu Discord.",
+      "other": "Esta cuenta ya está vinculada a otro usuario de Discord."
+    },
+    "settingsFailed": "Algo salió mal al guardar tu configuración. Por favor, inténtalo de nuevo."
+  },
+  "success": {
+    "accountsLinked": "¡Tus cuentas se han vinculado exitosamente!",
+    "loginSuccessful": "¡Inicio de sesión exitoso! Obteniendo la información de tu cuenta...",
+    "accountRemoved": "La cuenta ha sido eliminada.",
+    "accountUpdated": "La configuración de tu cuenta ha sido actualizada.",
+    "settingsSaved": "Tu configuración ha sido guardada."
   }
 }

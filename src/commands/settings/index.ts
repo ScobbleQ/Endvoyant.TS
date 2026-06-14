@@ -1,6 +1,7 @@
-import { SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
+import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
+import { errorContainer } from "#/components/container.ts";
 import { UsersDB } from "#/drizzle/index.ts";
-import { localizations } from "#/i18n/index.ts";
+import { t, localizations, fromDiscordLocale } from "#/i18n/index.ts";
 import SettingModal from "./modals/setting.ts";
 
 export default {
@@ -13,7 +14,11 @@ export default {
   execute: async (interaction: ChatInputCommandInteraction) => {
     const user = await UsersDB.findUser(interaction.user.id);
     if (!user) {
-      await interaction.reply("Please link an account first using /add account.");
+      const locale = fromDiscordLocale(interaction.locale);
+      await interaction.reply({
+        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
       return;
     }
 

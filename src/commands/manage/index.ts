@@ -1,7 +1,8 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
+import { errorContainer } from "#/components/container.ts";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
-import { localizations } from "#/i18n/index.ts";
+import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
 import { accountContainer } from "./components/account.ts";
 
 export default {
@@ -25,8 +26,10 @@ export default {
 
     const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) {
+      const locale = fromDiscordLocale(interaction.locale);
       await interaction.editReply({
-        content: "You don't have any linked accounts. Use /add to link an account.",
+        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        flags: [MessageFlags.IsComponentsV2],
       });
       return;
     }
@@ -41,7 +44,8 @@ export default {
     const accounts = await AccountsDB.listForManage(interaction.user.id);
     if (accounts.length === 0) {
       await interaction.editReply({
-        content: "You don't have any linked accounts. Use /add to link an account.",
+        components: [errorContainer({ desc: t(user.lang, "error.notLinked") })],
+        flags: [MessageFlags.IsComponentsV2],
       });
       return;
     }

@@ -2,84 +2,106 @@
   "lang": "Tiếng Việt",
   "command": {
     "about": {
-      "name": "giới-thiệu",
+      "name": "thong-tin",
       "description": "Thông tin về bot"
     },
-    "manage": {
-      "name": "tài-khoản",
-      "description": "Quản lý các tài khoản đã liên kết",
-      "subcommands": {
-        "accounts": {
-          "name": "quản-lý",
-          "description": "Quản lý các tài khoản đã liên kết"
-        }
-      }
-    },
     "add": {
-      "name": "thêm",
+      "name": "them",
       "description": "Liên kết tài khoản với Discord của bạn",
       "subcommands": {
         "account": {
-          "name": "tài-khoản",
+          "name": "tai-khoan",
           "description": "Liên kết tài khoản với Discord của bạn"
         }
       }
     },
     "daily": {
-      "name": "hằng-ngày",
-      "description": "Nhận thưởng hằng ngày trong game",
+      "name": "hang-ngay",
+      "description": "Nhận phần thưởng hàng ngày trong game",
       "subcommands": {
         "signin": {
-          "name": "điểm-danh",
-          "description": "Nhận thưởng hằng ngày trong game"
+          "name": "diem-danh",
+          "description": "Nhận phần thưởng hàng ngày trong game"
         }
       }
     },
     "export": {
-      "name": "xuất",
+      "name": "xuat",
       "description": "Xuất dữ liệu Endvoyant của bạn",
       "subcommands": {
         "data": {
-          "name": "dữ-liệu",
+          "name": "du-lieu",
           "description": "Xuất dữ liệu Endvoyant của bạn"
         }
       }
     },
     "full": {
-      "name": "đầy-đủ",
-      "description": "Xem hồ sơ người chơi đầy đủ của bạn",
+      "name": "day-du",
+      "description": "Xem hồ sơ người chơi đầy đủ",
       "subcommands": {
         "profile": {
-          "name": "hồ-sơ",
-          "description": "Xem hồ sơ người chơi đầy đủ của bạn"
+          "name": "ho-so",
+          "description": "Xem hồ sơ người chơi đầy đủ"
+        }
+      }
+    },
+    "manage": {
+      "name": "quan-ly",
+      "description": "Quản lý các tài khoản đã liên kết",
+      "subcommands": {
+        "accounts": {
+          "name": "danh-sach",
+          "description": "Quản lý các tài khoản đã liên kết"
         }
       }
     },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "Xem trạng thái premium của bạn"
     },
     "profile": {
-      "name": "hồ-sơ",
+      "name": "ho-so",
       "description": "Xem hồ sơ của bạn"
     },
     "redeem": {
-      "name": "đổi",
+      "name": "doi",
       "description": "Đổi mã phần thưởng"
     },
     "settings": {
-      "name": "cài-đặt",
-      "description": "Thay đổi cài đặt Endvoyant cá nhân của bạn"
+      "name": "cai-dat",
+      "description": "Thay đổi cài đặt cá nhân Endvoyant"
     },
     "umbral": {
       "name": "umbral",
-      "description": "Tạm thời",
+      "description": "tạm thời",
       "subcommands": {
         "monument": {
-          "name": "tượng-đài",
-          "description": "Tạm thời"
+          "name": "tuong-dai",
+          "description": "tạm thời"
         }
       }
     }
+  },
+  "error": {
+    "generic": "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+    "requireSetup": "Bạn chưa thiết lập bot. Sử dụng `/add account` để bắt đầu.",
+    "commandFailed": "Lệnh này gặp lỗi khi thực thi.",
+    "cooldown": "`{{command}}` đang cooldown. Thử lại <t:{{time}}:R>.",
+    "notLinked": "Bạn chưa có tài khoản liên kết nào. Sử dụng `/add account` để bắt đầu.",
+    "isBanned": "Tài khoản này đã bị cấm. Vui lòng liên hệ bộ phận hỗ trợ để được giúp đỡ.",
+    "invalidCode": "Có vẻ mã phần thưởng này không hợp lệ.",
+    "invalidCookies": "Cookie bạn cung cấp không hợp lệ. Hãy đảm bảo bạn đã sao chép đúng.",
+    "alreadyLinked": {
+      "owner": "Tài khoản này đã được liên kết với Discord của bạn.",
+      "other": "Tài khoản này đã được liên kết với người dùng Discord khác."
+    },
+    "settingsFailed": "Đã xảy ra lỗi khi lưu cài đặt. Vui lòng thử lại."
+  },
+  "success": {
+    "accountsLinked": "Tài khoản của bạn đã được liên kết thành công!",
+    "loginSuccessful": "Đăng nhập thành công! Đang lấy thông tin tài khoản...",
+    "accountRemoved": "Tài khoản đã được xóa.",
+    "accountUpdated": "Cài đặt tài khoản đã được cập nhật.",
+    "settingsSaved": "Cài đặt của bạn đã được lưu."
   }
 }

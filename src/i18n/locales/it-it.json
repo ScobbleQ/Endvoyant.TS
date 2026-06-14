@@ -5,33 +5,23 @@
       "name": "info",
       "description": "Informazioni sul bot"
     },
-    "manage": {
-      "name": "account",
-      "description": "Gestisci gli account collegati",
-      "subcommands": {
-        "accounts": {
-          "name": "gestisci",
-          "description": "Gestisci gli account collegati"
-        }
-      }
-    },
     "add": {
       "name": "aggiungi",
-      "description": "Collega un account a Discord",
+      "description": "Collega un account al tuo Discord",
       "subcommands": {
         "account": {
           "name": "account",
-          "description": "Collega un account a Discord"
+          "description": "Collega un account al tuo Discord"
         }
       }
     },
     "daily": {
       "name": "giornaliero",
-      "description": "Riscatta le ricompense giornaliere di gioco",
+      "description": "Riscuoti le tue ricompense giornaliere di gioco",
       "subcommands": {
         "signin": {
           "name": "checkin",
-          "description": "Riscatta le ricompense giornaliere di gioco"
+          "description": "Riscuoti le tue ricompense giornaliere di gioco"
         }
       }
     },
@@ -47,21 +37,31 @@
     },
     "full": {
       "name": "completo",
-      "description": "Visualizza il tuo profilo giocatore completo",
+      "description": "Mostra il tuo profilo giocatore completo",
       "subcommands": {
         "profile": {
           "name": "profilo",
-          "description": "Visualizza il tuo profilo giocatore completo"
+          "description": "Mostra il tuo profilo giocatore completo"
+        }
+      }
+    },
+    "manage": {
+      "name": "account",
+      "description": "Gestisci i tuoi account collegati",
+      "subcommands": {
+        "accounts": {
+          "name": "gestisci",
+          "description": "Gestisci i tuoi account collegati"
         }
       }
     },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "Visualizza il tuo stato premium"
     },
     "profile": {
       "name": "profilo",
-      "description": "Visualizza il tuo profilo"
+      "description": "Mostra il tuo profilo"
     },
     "redeem": {
       "name": "riscatta",
@@ -69,17 +69,39 @@
     },
     "settings": {
       "name": "impostazioni",
-      "description": "Modifica le tue impostazioni personali di Endvoyant"
+      "description": "Modifica le tue impostazioni personali Endvoyant"
     },
     "umbral": {
       "name": "umbral",
-      "description": "Temporaneo",
+      "description": "temp",
       "subcommands": {
         "monument": {
           "name": "monumento",
-          "description": "Temporaneo"
+          "description": "temp"
         }
       }
     }
+  },
+  "error": {
+    "generic": "Qualcosa è andato storto. Riprova più tardi.",
+    "requireSetup": "Non hai ancora configurato il bot. Usa `/add account` per iniziare.",
+    "commandFailed": "Questo comando ha riscontrato un errore durante l'esecuzione.",
+    "cooldown": "`{{command}}` è in fase di recupero. Riprova <t:{{time}}:R>.",
+    "notLinked": "Non hai ancora un account collegato. Usa `/add account` per iniziare.",
+    "isBanned": "Questo account è stato bannato. Contatta l'assistenza per ricevere aiuto.",
+    "invalidCode": "Questo codice ricompensa sembra non essere valido.",
+    "invalidCookies": "I cookie che hai fornito non sono validi. Assicurati di averli copiati correttamente.",
+    "alreadyLinked": {
+      "owner": "Questo account è già collegato al tuo Discord.",
+      "other": "Questo account è già collegato a un altro utente Discord."
+    },
+    "settingsFailed": "Si è verificato un errore durante il salvataggio delle impostazioni. Riprova."
+  },
+  "success": {
+    "accountsLinked": "I tuoi account sono stati collegati con successo!",
+    "loginSuccessful": "Accesso riuscito! Recupero delle informazioni del tuo account...",
+    "accountRemoved": "L'account è stato rimosso.",
+    "accountUpdated": "Le impostazioni del tuo account sono state aggiornate.",
+    "settingsSaved": "Le tue impostazioni sono state salvate."
   }
 }

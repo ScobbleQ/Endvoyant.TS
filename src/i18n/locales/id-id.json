@@ -2,84 +2,106 @@
   "lang": "Bahasa Indonesia",
   "command": {
     "about": {
-      "name": "tentang",
-      "description": "Info tentang bot"
-    },
-    "manage": {
-      "name": "akun",
-      "description": "Kelola akun yang tertaut",
-      "subcommands": {
-        "accounts": {
-          "name": "kelola",
-          "description": "Kelola akun yang tertaut"
-        }
-      }
+      "name": "info",
+      "description": "Informasi tentang bot"
     },
     "add": {
       "name": "tambah",
-      "description": "Tautkan akun ke Discord",
+      "description": "Hubungkan akun ke Discord kamu",
       "subcommands": {
         "account": {
           "name": "akun",
-          "description": "Tautkan akun ke Discord"
+          "description": "Hubungkan akun ke Discord kamu"
         }
       }
     },
     "daily": {
       "name": "harian",
-      "description": "Klaim hadiah harian dalam game",
+      "description": "Klaim hadiah harian kamu dalam game",
       "subcommands": {
         "signin": {
-          "name": "absen",
-          "description": "Klaim hadiah harian dalam game"
+          "name": "checkin",
+          "description": "Klaim hadiah harian kamu dalam game"
         }
       }
     },
     "export": {
       "name": "ekspor",
-      "description": "Ekspor data Endvoyant milikmu",
+      "description": "Ekspor data Endvoyant kamu",
       "subcommands": {
         "data": {
           "name": "data",
-          "description": "Ekspor data Endvoyant milikmu"
+          "description": "Ekspor data Endvoyant kamu"
         }
       }
     },
     "full": {
       "name": "lengkap",
-      "description": "Lihat profil pemain lengkapmu",
+      "description": "Lihat profil pemain kamu secara lengkap",
       "subcommands": {
         "profile": {
           "name": "profil",
-          "description": "Lihat profil pemain lengkapmu"
+          "description": "Lihat profil pemain kamu secara lengkap"
+        }
+      }
+    },
+    "manage": {
+      "name": "akun",
+      "description": "Kelola akun yang sudah terhubung",
+      "subcommands": {
+        "accounts": {
+          "name": "kelola",
+          "description": "Kelola akun yang sudah terhubung"
         }
       }
     },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "Lihat status premium kamu"
     },
     "profile": {
       "name": "profil",
-      "description": "Lihat profilmu"
+      "description": "Lihat profil kamu"
     },
     "redeem": {
-      "name": "tebus",
-      "description": "Tebus kode hadiah"
+      "name": "tukar",
+      "description": "Tukarkan kode hadiah"
     },
     "settings": {
       "name": "pengaturan",
-      "description": "Ubah pengaturan Endvoyant pribadimu"
+      "description": "Ubah pengaturan pribadi Endvoyant kamu"
     },
     "umbral": {
       "name": "umbral",
-      "description": "Sementara",
+      "description": "temp",
       "subcommands": {
         "monument": {
           "name": "monumen",
-          "description": "Sementara"
+          "description": "temp"
         }
       }
     }
+  },
+  "error": {
+    "generic": "Terjadi kesalahan. Silakan coba lagi nanti.",
+    "requireSetup": "Kamu belum mengatur bot ini. Gunakan `/add account` untuk memulai.",
+    "commandFailed": "Perintah ini mengalami error saat dijalankan.",
+    "cooldown": "`{{command}}` sedang cooldown. Coba lagi <t:{{time}}:R>.",
+    "notLinked": "Kamu belum punya akun yang terhubung. Gunakan `/add account` untuk memulai.",
+    "isBanned": "Akun ini telah dibanned. Silakan hubungi support untuk bantuan.",
+    "invalidCode": "Sepertinya kode hadiah ini tidak valid.",
+    "invalidCookies": "Cookie yang kamu berikan tidak valid. Pastikan kamu sudah menyalinnya dengan benar.",
+    "alreadyLinked": {
+      "owner": "Akun ini sudah terhubung ke Discord kamu.",
+      "other": "Akun ini sudah terhubung ke pengguna Discord lain."
+    },
+    "settingsFailed": "Terjadi kesalahan saat menyimpan pengaturan kamu. Silakan coba lagi."
+  },
+  "success": {
+    "accountsLinked": "Akun kamu berhasil terhubung!",
+    "loginSuccessful": "Login berhasil! Mengambil informasi akun kamu...",
+    "accountRemoved": "Akun telah dihapus.",
+    "accountUpdated": "Pengaturan akun kamu telah diperbarui.",
+    "settingsSaved": "Pengaturan kamu berhasil disimpan."
   }
 }

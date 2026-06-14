@@ -5,16 +5,6 @@
       "name": "关于",
       "description": "查看机器人信息"
     },
-    "manage": {
-      "name": "账号",
-      "description": "管理已绑定的账号",
-      "subcommands": {
-        "accounts": {
-          "name": "管理",
-          "description": "管理已绑定的账号"
-        }
-      }
-    },
     "add": {
       "name": "添加",
       "description": "将账号绑定到你的 Discord",
@@ -55,9 +45,19 @@
         }
       }
     },
+    "manage": {
+      "name": "账号",
+      "description": "管理已绑定的账号",
+      "subcommands": {
+        "accounts": {
+          "name": "管理",
+          "description": "管理已绑定的账号"
+        }
+      }
+    },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "查看你的高级会员状态"
     },
     "profile": {
       "name": "档案",
@@ -81,5 +81,27 @@
         }
       }
     }
+  },
+  "error": {
+    "generic": "出了点问题，请稍后再试。",
+    "requireSetup": "你还没有设置机器人，使用 `/add account` 开始吧。",
+    "commandFailed": "执行此命令时遇到了错误。",
+    "cooldown": "`{{command}}` 冷却中，<t:{{time}}:R> 后再试。",
+    "notLinked": "你还没有绑定账号，使用 `/add account` 开始吧。",
+    "isBanned": "此账号已被封禁，请联系客服获取帮助。",
+    "invalidCode": "这个奖励码似乎无效。",
+    "invalidCookies": "提供的 Cookie 无效，请确认你已正确复制。",
+    "alreadyLinked": {
+      "owner": "此账号已绑定到你的 Discord。",
+      "other": "此账号已绑定到其他 Discord 用户。"
+    },
+    "settingsFailed": "保存设置时出了点问题，请重试。"
+  },
+  "success": {
+    "accountsLinked": "你的账号已成功绑定！",
+    "loginSuccessful": "登录成功！正在获取账号信息...",
+    "accountRemoved": "账号已删除。",
+    "accountUpdated": "账号设置已更新。",
+    "settingsSaved": "设置已保存。"
   }
 }

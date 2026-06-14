@@ -25,3 +25,11 @@ Tasks:
 - [ ] Sanity; adpative notification
 - [x] Refresh Account Token
 - [ ] Automatic code redemption
+- [ ] Full text translations
+  - [ ] Command translations
+  - [ ] UI translations
+  - [ ] Instruction translations
+
+### Credits
+
+- Translations — MiMo by Xiaomi and GPT-5.5 by OpenAI

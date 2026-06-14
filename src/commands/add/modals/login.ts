@@ -14,6 +14,7 @@ import {
   warnContainer,
 } from "#/components/container.ts";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
+import { t } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { maxAccountContainer } from "../components/maxAccount.ts";
@@ -60,19 +61,14 @@ export default {
     const res = await EndfieldSDK.loginWithEmailPassword(email, password);
     if (res.status !== 0) {
       await interaction.editReply({
-        components: [errorContainer({ title: "Login Failed", description: res.msg })],
+        components: [errorContainer({ title: "Login Failed", desc: res.msg })],
         flags: [MessageFlags.IsComponentsV2],
       });
       return;
     }
 
     await interaction.editReply({
-      components: [
-        successContainer({
-          title: "Login Successful",
-          description: "Getting your account information...",
-        }),
-      ],
+      components: [successContainer({ desc: t(user.lang, "success.loginSuccessful") })],
       flags: [MessageFlags.IsComponentsV2],
     });
 
@@ -105,10 +101,9 @@ export default {
         await interaction.editReply({
           components: [
             errorContainer({
-              title: "Account Already Linked",
-              description: isOwner
-                ? "This account is already linked to your Discord."
-                : "This account is already linked to another Discord account.",
+              desc: isOwner
+                ? t(user.lang, "error.alreadyLinked.owner")
+                : t(user.lang, "error.alreadyLinked.other"),
             }),
           ],
           flags: [MessageFlags.IsComponentsV2],
@@ -141,12 +136,7 @@ export default {
     }
 
     await interaction.editReply({
-      components: [
-        successContainer({
-          title: "Accounts Linked",
-          description: "Your accounts have been successfully linked.",
-        }),
-      ],
+      components: [successContainer({ desc: t(user.lang, "success.accountsLinked") })],
       flags: [MessageFlags.IsComponentsV2],
     });
 

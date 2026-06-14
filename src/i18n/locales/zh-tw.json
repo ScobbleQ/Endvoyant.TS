@@ -5,23 +5,13 @@
       "name": "關於",
       "description": "查看機器人資訊"
     },
-    "manage": {
-      "name": "帳號",
-      "description": "管理已綁定的帳號",
-      "subcommands": {
-        "accounts": {
-          "name": "管理",
-          "description": "管理已綁定的帳號"
-        }
-      }
-    },
     "add": {
       "name": "新增",
-      "description": "將帳號綁定到你的 Discord",
+      "description": "將帳號連結到你的 Discord",
       "subcommands": {
         "account": {
           "name": "帳號",
-          "description": "將帳號綁定到你的 Discord"
+          "description": "將帳號連結到你的 Discord"
         }
       }
     },
@@ -55,9 +45,19 @@
         }
       }
     },
+    "manage": {
+      "name": "帳號",
+      "description": "管理已連結的帳號",
+      "subcommands": {
+        "accounts": {
+          "name": "管理",
+          "description": "管理已連結的帳號"
+        }
+      }
+    },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "查看你的進階會員狀態"
     },
     "profile": {
       "name": "檔案",
@@ -69,17 +69,39 @@
     },
     "settings": {
       "name": "設定",
-      "description": "變更你的 Endvoyant 個人設定"
+      "description": "更改你的 Endvoyant 個人設定"
     },
     "umbral": {
       "name": "umbral",
       "description": "暫時",
       "subcommands": {
         "monument": {
-          "name": "豐碑",
+          "name": "紀念碑",
           "description": "暫時"
         }
       }
     }
+  },
+  "error": {
+    "generic": "發生了一些問題，請稍後再試。",
+    "requireSetup": "你還沒有設定機器人，使用 `/add account` 開始吧。",
+    "commandFailed": "執行此指令時遇到了錯誤。",
+    "cooldown": "`{{command}}` 冷卻中，<t:{{time}}:R> 後再試。",
+    "notLinked": "你還沒有連結帳號，使用 `/add account` 開始吧。",
+    "isBanned": "此帳號已被封鎖，請聯繫客服獲取協助。",
+    "invalidCode": "這個獎勵碼似乎無效。",
+    "invalidCookies": "提供的 Cookie 無效，請確認你已正確複製。",
+    "alreadyLinked": {
+      "owner": "此帳號已連結到你的 Discord。",
+      "other": "此帳號已連結到其他 Discord 用戶。"
+    },
+    "settingsFailed": "儲存設定時出了點問題，請重試。"
+  },
+  "success": {
+    "accountsLinked": "你的帳號已成功連結！",
+    "loginSuccessful": "登入成功！正在取得帳號資訊...",
+    "accountRemoved": "帳號已刪除。",
+    "accountUpdated": "帳號設定已更新。",
+    "settingsSaved": "設定已儲存。"
   }
 }

@@ -2,26 +2,16 @@
   "lang": "Français",
   "command": {
     "about": {
-      "name": "infos",
+      "name": "info",
       "description": "Informations sur le bot"
-    },
-    "manage": {
-      "name": "compte",
-      "description": "Gère tes comptes liés",
-      "subcommands": {
-        "accounts": {
-          "name": "gestion",
-          "description": "Gère tes comptes liés"
-        }
-      }
     },
     "add": {
       "name": "ajouter",
-      "description": "Lie un compte à ton Discord",
+      "description": "Lier un compte à ton Discord",
       "subcommands": {
         "account": {
           "name": "compte",
-          "description": "Lie un compte à ton Discord"
+          "description": "Lier un compte à ton Discord"
         }
       }
     },
@@ -30,7 +20,7 @@
       "description": "Récupère tes récompenses quotidiennes en jeu",
       "subcommands": {
         "signin": {
-          "name": "présence",
+          "name": "connexion",
           "description": "Récupère tes récompenses quotidiennes en jeu"
         }
       }
@@ -47,17 +37,27 @@
     },
     "full": {
       "name": "complet",
-      "description": "Affiche ton profil de joueur complet",
+      "description": "Affiche ton profil joueur complet",
       "subcommands": {
         "profile": {
           "name": "profil",
-          "description": "Affiche ton profil de joueur complet"
+          "description": "Affiche ton profil joueur complet"
+        }
+      }
+    },
+    "manage": {
+      "name": "compte",
+      "description": "Gère tes comptes liés",
+      "subcommands": {
+        "accounts": {
+          "name": "gérer",
+          "description": "Gère tes comptes liés"
         }
       }
     },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "Consulte ton statut premium"
     },
     "profile": {
       "name": "profil",
@@ -65,21 +65,43 @@
     },
     "redeem": {
       "name": "échanger",
-      "description": "Utilise un code de récompense"
+      "description": "Échange un code de récompense"
     },
     "settings": {
-      "name": "réglages",
-      "description": "Modifie tes réglages personnels Endvoyant"
+      "name": "paramètres",
+      "description": "Modifie tes paramètres personnels Endvoyant"
     },
     "umbral": {
       "name": "umbral",
-      "description": "Temporaire",
+      "description": "temp",
       "subcommands": {
         "monument": {
           "name": "monument",
-          "description": "Temporaire"
+          "description": "temp"
         }
       }
     }
+  },
+  "error": {
+    "generic": "Une erreur s'est produite. Veuillez réessayer plus tard.",
+    "requireSetup": "Tu n'as pas encore configuré le bot. Utilise `/add account` pour commencer.",
+    "commandFailed": "Une erreur est survenue lors de l'exécution de cette commande.",
+    "cooldown": "`{{command}}` est en recharge. Réessaie <t:{{time}}:R>.",
+    "notLinked": "Tu n'as pas encore de compte lié. Utilise `/add account` pour commencer.",
+    "isBanned": "Ce compte a été banni. Veuillez contacter le support pour obtenir de l'aide.",
+    "invalidCode": "Ce code de récompense ne semble pas valide.",
+    "invalidCookies": "Les cookies que tu as fournis sont invalides. Assure-toi de les avoir copiés correctement.",
+    "alreadyLinked": {
+      "owner": "Ce compte est déjà lié à ton Discord.",
+      "other": "Ce compte est déjà lié à un autre utilisateur Discord."
+    },
+    "settingsFailed": "Une erreur est survenue lors de la sauvegarde de tes paramètres. Veuillez réessayer."
+  },
+  "success": {
+    "accountsLinked": "Tes comptes ont été liés avec succès !",
+    "loginSuccessful": "Connexion réussie ! Récupération de tes informations de compte...",
+    "accountRemoved": "Le compte a été supprimé.",
+    "accountUpdated": "Les paramètres de ton compte ont été mis à jour.",
+    "settingsSaved": "Tes paramètres ont été sauvegardés."
   }
 }

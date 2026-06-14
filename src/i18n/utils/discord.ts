@@ -19,6 +19,14 @@ const DISCORD_LOCALE_MAP = {
   [Language.ZH_TW]: DiscordLocale.ChineseTW,
 } as const;
 
+const FROM_DISCORD_LOCALE_MAP = Object.fromEntries(
+  Object.entries(DISCORD_LOCALE_MAP).map(([k, v]) => [v, k]),
+) as Record<DiscordLocale, Locale>;
+
 export const toDiscordLocale = (locale: Locale): DiscordLocale => {
   return DISCORD_LOCALE_MAP[locale] ?? DiscordLocale.EnglishUS;
+};
+
+export const fromDiscordLocale = (discordLocale: DiscordLocale): Locale => {
+  return FROM_DISCORD_LOCALE_MAP[discordLocale] ?? Language.EN_US;
 };

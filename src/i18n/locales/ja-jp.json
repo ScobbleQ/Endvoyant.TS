@@ -5,16 +5,6 @@
       "name": "bot情報",
       "description": "Botの情報を表示します"
     },
-    "manage": {
-      "name": "アカウント",
-      "description": "連携済みアカウントを管理します",
-      "subcommands": {
-        "accounts": {
-          "name": "管理",
-          "description": "連携済みアカウントを管理します"
-        }
-      }
-    },
     "add": {
       "name": "追加",
       "description": "アカウントをDiscordに連携します",
@@ -55,9 +45,19 @@
         }
       }
     },
+    "manage": {
+      "name": "アカウント",
+      "description": "連携済みアカウントを管理します",
+      "subcommands": {
+        "accounts": {
+          "name": "管理",
+          "description": "連携済みアカウントを管理します"
+        }
+      }
+    },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "プレミアムステータスを表示します"
     },
     "profile": {
       "name": "プロフィール",
@@ -81,5 +81,27 @@
         }
       }
     }
+  },
+  "error": {
+    "generic": "問題が発生しました。しばらくしてからもう一度お試しください。",
+    "requireSetup": "Botの設定がまだ完了していません。`/add account` で始めましょう。",
+    "commandFailed": "このコマンドの実行中にエラーが発生しました。",
+    "cooldown": "`{{command}}` クールダウン中です。<t:{{time}}:R> にお試しください。",
+    "notLinked": "まだアカウントが連携されていません。`/add account` で始めましょう。",
+    "isBanned": "このアカウントはBANされています。サポートにお問い合わせください。",
+    "invalidCode": "この報酬コードは無効のようです。",
+    "invalidCookies": "指定されたCookieが無効です。正しくコピーしたか確認してください。",
+    "alreadyLinked": {
+      "owner": "このアカウントは既にあなたのDiscordに連携されています。",
+      "other": "このアカウントは他のDiscordユーザーに連携されています。"
+    },
+    "settingsFailed": "設定の保存中にエラーが発生しました。もう一度お試しください。"
+  },
+  "success": {
+    "accountsLinked": "アカウントの連携が完了しました！",
+    "loginSuccessful": "ログイン成功！アカウント情報を取得中...",
+    "accountRemoved": "アカウントが削除されました。",
+    "accountUpdated": "アカウント設定が更新されました。",
+    "settingsSaved": "設定が保存されました。"
   }
 }

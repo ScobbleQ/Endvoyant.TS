@@ -6,9 +6,10 @@ import {
   ContainerBuilder,
 } from "discord.js";
 import pQueue from "p-queue";
+import { errorContainer } from "#/components/container.ts";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
-import { localizations } from "#/i18n/index.ts";
+import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export default {
@@ -46,9 +47,10 @@ export default {
   execute: async (interaction: ChatInputCommandInteraction) => {
     const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) {
+      const locale = fromDiscordLocale(interaction.locale);
       await interaction.reply({
-        content: "Please link an account first using /add account.",
-        flags: [MessageFlags.Ephemeral],
+        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
     }

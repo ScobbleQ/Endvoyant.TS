@@ -3,35 +3,25 @@
   "command": {
     "about": {
       "name": "ข้อมูล",
-      "description": "ดูข้อมูลของบอต"
-    },
-    "manage": {
-      "name": "บัญชี",
-      "description": "จัดการบัญชีที่เชื่อมไว้",
-      "subcommands": {
-        "accounts": {
-          "name": "จัดการ",
-          "description": "จัดการบัญชีที่เชื่อมไว้"
-        }
-      }
+      "description": "ข้อมูลเกี่ยวกับบอท"
     },
     "add": {
       "name": "เพิ่ม",
-      "description": "เชื่อมบัญชีกับ Discord ของคุณ",
+      "description": "เชื่อมต่อบัญชีกับ Discord ของคุณ",
       "subcommands": {
         "account": {
           "name": "บัญชี",
-          "description": "เชื่อมบัญชีกับ Discord ของคุณ"
+          "description": "เชื่อมต่อบัญชีกับ Discord ของคุณ"
         }
       }
     },
     "daily": {
       "name": "รายวัน",
-      "description": "รับรางวัลรายวันในเกม",
+      "description": "รับรางวัลประจำวันในเกม",
       "subcommands": {
         "signin": {
-          "name": "เช็กอิน",
-          "description": "รับรางวัลรายวันในเกม"
+          "name": "เช็คอิน",
+          "description": "รับรางวัลประจำวันในเกม"
         }
       }
     },
@@ -47,17 +37,27 @@
     },
     "full": {
       "name": "เต็ม",
-      "description": "ดูโปรไฟล์ผู้เล่นแบบเต็มของคุณ",
+      "description": "ดูโปรไฟล์ผู้เล่นแบบเต็ม",
       "subcommands": {
         "profile": {
           "name": "โปรไฟล์",
-          "description": "ดูโปรไฟล์ผู้เล่นแบบเต็มของคุณ"
+          "description": "ดูโปรไฟล์ผู้เล่นแบบเต็ม"
+        }
+      }
+    },
+    "manage": {
+      "name": "บัญชี",
+      "description": "จัดการบัญชีที่เชื่อมต่อแล้ว",
+      "subcommands": {
+        "accounts": {
+          "name": "จัดการ",
+          "description": "จัดการบัญชีที่เชื่อมต่อแล้ว"
         }
       }
     },
     "premium": {
-      "name": "premium",
-      "description": "temp"
+      "name": "พรีเมียม",
+      "description": "ดูสถานะพรีเมียมของคุณ"
     },
     "profile": {
       "name": "โปรไฟล์",
@@ -69,17 +69,39 @@
     },
     "settings": {
       "name": "ตั้งค่า",
-      "description": "เปลี่ยนการตั้งค่า Endvoyant ส่วนตัวของคุณ"
+      "description": "เปลี่ยนการตั้งค่าส่วนตัว Endvoyant ของคุณ"
     },
     "umbral": {
-      "name": "umbral",
+      "name": "อัมบรัล",
       "description": "ชั่วคราว",
       "subcommands": {
         "monument": {
-          "name": "อนุสาวรีย์",
+          "name": "อนุสรณ์",
           "description": "ชั่วคราว"
         }
       }
     }
+  },
+  "error": {
+    "generic": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งในภายหลัง",
+    "requireSetup": "คุณยังไม่ได้ตั้งค่าบอท ใช้ `/add account` เพื่อเริ่มต้น",
+    "commandFailed": "คำสั่งนี้เกิดข้อผิดพลาดขณะดำเนินการ",
+    "cooldown": "`{{command}}` อยู่ในช่วงคูลดาวน์ ลองอีกครั้ง <t:{{time}}:R>",
+    "notLinked": "คุณยังไม่มีบัญชีที่เชื่อมต่อ ใช้ `/add account` เพื่อเริ่มต้น",
+    "isBanned": "บัญชีนี้ถูกแบนแล้ว กรุณาติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือ",
+    "invalidCode": "ดูเหมือนว่ารหัสรางวัลนี้จะไม่ถูกต้อง",
+    "invalidCookies": "คุกกี้ที่คุณให้มาไม่ถูกต้อง กรุณาตรวจสอบว่าคัดลอกมาอย่างถูกต้อง",
+    "alreadyLinked": {
+      "owner": "บัญชีนี้เชื่อมต่อกับ Discord ของคุณแล้ว",
+      "other": "บัญชีนี้เชื่อมต่อกับผู้ใช้ Discord อื่นแล้ว"
+    },
+    "settingsFailed": "เกิดข้อผิดพลาดขณะบันทึกการตั้งค่าของคุณ กรุณาลองอีกครั้ง"
+  },
+  "success": {
+    "accountsLinked": "เชื่อมต่อบัญชีของคุณสำเร็จแล้ว!",
+    "loginSuccessful": "เข้าสู่ระบบสำเร็จ! กำลังดึงข้อมูลบัญชีของคุณ...",
+    "accountRemoved": "ลบบัญชีแล้ว",
+    "accountUpdated": "อัปเดตการตั้งค่าบัญชีแล้ว",
+    "settingsSaved": "บันทึกการตั้งค่าแล้ว"
   }
 }

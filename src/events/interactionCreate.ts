@@ -1,9 +1,12 @@
 import { Collection, ContainerBuilder, Events, MessageFlags, type Interaction } from "discord.js";
+import { fromDiscordLocale, t } from "#/i18n/index.ts";
 import { parseComponentId } from "#/utils/componentId.ts";
 
 export default {
   name: Events.InteractionCreate,
   execute: async (interaction: Interaction) => {
+    const locale = fromDiscordLocale(interaction.locale);
+
     if (interaction.isChatInputCommand()) {
       const { commands, cooldowns } = interaction.client;
       const command = commands.get(interaction.commandName);
@@ -23,9 +26,11 @@ export default {
         const expirationTime = lastUsed + cooldownAmount;
         if (now < expirationTime) {
           const expiredTimestamp = Math.round(expirationTime / 1000);
+          const commandName =
+            command.data.name_localizations?.[interaction.locale] ?? command.data.name;
           return interactionReply(
             interaction,
-            `Please wait, you are on cooldown for \`${command.data.name}\`. You can use it again <t:${expiredTimestamp}:R>.`,
+            t(locale, "error.cooldown", { command: commandName, time: expiredTimestamp }),
           );
         }
       }
@@ -37,7 +42,7 @@ export default {
         await command.execute(interaction);
       } catch (error) {
         console.error(error);
-        await interactionReply(interaction, `There was an error while executing this command!`);
+        await interactionReply(interaction, t(locale, "error.commandFailed"));
       }
     } else if (interaction.isAutocomplete()) {
       const command = interaction.client.commands.get(interaction.commandName);
@@ -55,7 +60,7 @@ export default {
     ) {
       const parsed = parseComponentId(interaction.customId);
       if (!parsed) {
-        await interactionReply(interaction, "Womp womp");
+        await interactionReply(interaction, t(locale, "error.generic"));
         return;
       }
 

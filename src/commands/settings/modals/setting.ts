@@ -87,22 +87,12 @@ export default {
       });
 
       await interaction.reply({
-        components: [
-          successContainer({
-            title: "Settings Saved",
-            description: "Your preferences have been updated.",
-          }),
-        ],
+        components: [successContainer({ desc: t(selectedLang, "success.settingsSaved") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
     } catch (error) {
       await interaction.reply({
-        components: [
-          errorContainer({
-            title: "Couldn't Save Settings",
-            description: "Something went wrong while updating your preferences. Please try again.",
-          }),
-        ],
+        components: [errorContainer({ desc: t(selectedLang, "error.settingsFailed") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
     }

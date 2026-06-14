@@ -9,6 +9,7 @@ import {
 } from "discord.js";
 import { errorContainer, successContainer, warnContainer } from "#/components/container.ts";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
+import { t } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { maxAccountContainer } from "../components/maxAccount.ts";
@@ -34,9 +35,7 @@ export default {
     const tokens = interaction.fields.getTextInputValue("token");
 
     const user = await UsersDB.findAccess(interaction.user.id);
-    if (!user) {
-      return;
-    }
+    if (!user) return;
 
     // Decode the tokens
     const decoded = decodeURIComponent(tokens);
@@ -51,12 +50,7 @@ export default {
 
     if (!cookies["ACCOUNT_TOKEN"] || !cookies["SK_OAUTH_CRED_KEY"] || !cookies["HG_INFO_KEY"]) {
       await interaction.editReply({
-        components: [
-          errorContainer({
-            title: "Invalid Cookies",
-            description: "Please ensure you have provided valid cookie tokens.",
-          }),
-        ],
+        components: [errorContainer({ desc: t(user.lang, "error.invalidCookies") })],
         flags: [MessageFlags.IsComponentsV2],
       });
       return;
@@ -99,10 +93,9 @@ export default {
       await interaction.editReply({
         components: [
           errorContainer({
-            title: "Account Already Linked",
-            description: isOwner
-              ? "This account is already linked to your Discord."
-              : "This account is already linked to another Discord account.",
+            desc: isOwner
+              ? t(user.lang, "error.alreadyLinked.owner")
+              : t(user.lang, "error.alreadyLinked.other"),
           }),
         ],
         flags: [MessageFlags.IsComponentsV2],
@@ -133,12 +126,7 @@ export default {
     });
 
     await interaction.editReply({
-      components: [
-        successContainer({
-          title: "Accounts Linked",
-          description: "Your accounts have been successfully linked.",
-        }),
-      ],
+      components: [successContainer({ desc: t(user.lang, "success.accountsLinked") })],
       flags: [MessageFlags.IsComponentsV2],
     });
 

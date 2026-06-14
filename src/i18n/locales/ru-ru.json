@@ -5,81 +5,103 @@
       "name": "инфо",
       "description": "Информация о боте"
     },
-    "manage": {
-      "name": "аккаунт",
-      "description": "Управляйте привязанными аккаунтами",
-      "subcommands": {
-        "accounts": {
-          "name": "управление",
-          "description": "Управляйте привязанными аккаунтами"
-        }
-      }
-    },
     "add": {
       "name": "добавить",
-      "description": "Привяжите аккаунт к Discord",
+      "description": "Привязать аккаунт к Discord",
       "subcommands": {
         "account": {
           "name": "аккаунт",
-          "description": "Привяжите аккаунт к Discord"
+          "description": "Привязать аккаунт к Discord"
         }
       }
     },
     "daily": {
       "name": "ежедневно",
-      "description": "Получите ежедневные игровые награды",
+      "description": "Получи ежедневные награды в игре",
       "subcommands": {
         "signin": {
-          "name": "отметка",
-          "description": "Получите ежедневные игровые награды"
+          "name": "вход",
+          "description": "Получи ежедневные награды в игре"
         }
       }
     },
     "export": {
       "name": "экспорт",
-      "description": "Экспортируйте свои данные Endvoyant",
+      "description": "Экспортируй данные Endvoyant",
       "subcommands": {
         "data": {
           "name": "данные",
-          "description": "Экспортируйте свои данные Endvoyant"
+          "description": "Экспортируй данные Endvoyant"
         }
       }
     },
     "full": {
       "name": "полный",
-      "description": "Посмотрите свой полный профиль игрока",
+      "description": "Полный профиль игрока",
       "subcommands": {
         "profile": {
           "name": "профиль",
-          "description": "Посмотрите свой полный профиль игрока"
+          "description": "Полный профиль игрока"
+        }
+      }
+    },
+    "manage": {
+      "name": "аккаунт",
+      "description": "Управление привязанными аккаунтами",
+      "subcommands": {
+        "accounts": {
+          "name": "управление",
+          "description": "Управление привязанными аккаунтами"
         }
       }
     },
     "premium": {
-      "name": "premium",
-      "description": "temp"
+      "name": "премиум",
+      "description": "Посмотреть статус премиума"
     },
     "profile": {
       "name": "профиль",
-      "description": "Посмотрите свой профиль"
+      "description": "Посмотреть профиль"
     },
     "redeem": {
       "name": "активировать",
-      "description": "Активируйте код награды"
+      "description": "Активировать код награды"
     },
     "settings": {
       "name": "настройки",
-      "description": "Измените личные настройки Endvoyant"
+      "description": "Изменить личные настройки Endvoyant"
     },
     "umbral": {
       "name": "умбрал",
-      "description": "Временно",
+      "description": "временный",
       "subcommands": {
         "monument": {
           "name": "монумент",
-          "description": "Временно"
+          "description": "временный"
         }
       }
     }
+  },
+  "error": {
+    "generic": "Что-то пошло не так. Пожалуйста, попробуйте позже.",
+    "requireSetup": "Вы ещё не настроили бота. Используйте `/add account`, чтобы начать.",
+    "commandFailed": "При выполнении этой команды произошла ошибка.",
+    "cooldown": "`{{command}}` на кулдауне. Попробуйте снова <t:{{time}}:R>.",
+    "notLinked": "У вас ещё нет привязанного аккаунта. Используйте `/add account`, чтобы начать.",
+    "isBanned": "Этот аккаунт был заблокирован. Обратитесь в поддержку за помощью.",
+    "invalidCode": "Похоже, этот код награды недействителен.",
+    "invalidCookies": "Предоставленные cookie недействительны. Убедитесь, что вы скопировали их правильно.",
+    "alreadyLinked": {
+      "owner": "Этот аккаунт уже привязан к вашему Discord.",
+      "other": "Этот аккаунт уже привязан к другому пользователю Discord."
+    },
+    "settingsFailed": "При сохранении настроек произошла ошибка. Пожалуйста, попробуйте снова."
+  },
+  "success": {
+    "accountsLinked": "Ваши аккаунты успешно привязаны!",
+    "loginSuccessful": "Вход выполнен успешно! Получение информации об аккаунте...",
+    "accountRemoved": "Аккаунт был удалён.",
+    "accountUpdated": "Настройки аккаунта были обновлены.",
+    "settingsSaved": "Ваши настройки были сохранены."
   }
 }

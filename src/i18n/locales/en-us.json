@@ -5,16 +5,6 @@
       "name": "about",
       "description": "About the bot"
     },
-    "manage": {
-      "name": "manage",
-      "description": "Manage your linked accounts",
-      "subcommands": {
-        "accounts": {
-          "name": "accounts",
-          "description": "Manage your linked accounts"
-        }
-      }
-    },
     "add": {
       "name": "add",
       "description": "Link an account to your Discord",
@@ -51,13 +41,23 @@
       "subcommands": {
         "profile": {
           "name": "profile",
-          "description": "View your complete player profile"
+          "description": "View a complete player profile"
+        }
+      }
+    },
+    "manage": {
+      "name": "manage",
+      "description": "Manage your linked accounts",
+      "subcommands": {
+        "accounts": {
+          "name": "accounts",
+          "description": "Manage your linked accounts"
         }
       }
     },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "View your premium status"
     },
     "profile": {
       "name": "profile",
@@ -81,5 +81,27 @@
         }
       }
     }
+  },
+  "error": {
+    "generic": "Something went wrong while processing your request. Please try again later.",
+    "requireSetup": "You haven't set up the bot yet. Use `/add account` to get started.",
+    "commandFailed": "This command ran into an error while executing.",
+    "cooldown": "`{{command}}` is on cooldown. Try again <t:{{time}}:R>.",
+    "notLinked": "You don't have a linked account yet. Use `/add account` to get started.",
+    "isBanned": "This account has been banned. Please contact support for help.",
+    "invalidCode": "That reward code doesn't seem to be valid.",
+    "invalidCookies": "The cookies you provided are invalid. Please make sure you copied them correctly.",
+    "alreadyLinked": {
+      "owner": "This account is already linked to your Discord.",
+      "other": "This account is already linked to another Discord user."
+    },
+    "settingsFailed": "Something went wrong while saving your settings. Please try again."
+  },
+  "success": {
+    "accountsLinked": "Your accounts have been linked successfully!",
+    "loginSuccessful": "Login successful! Fetching your account information...",
+    "accountRemoved": "The account has been removed.",
+    "accountUpdated": "Your account settings have been updated.",
+    "settingsSaved": "Your settings have been saved."
   }
 }

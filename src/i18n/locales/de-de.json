@@ -5,16 +5,6 @@
       "name": "info",
       "description": "Informationen zum Bot"
     },
-    "manage": {
-      "name": "konto",
-      "description": "Verwalte deine verknüpften Konten",
-      "subcommands": {
-        "accounts": {
-          "name": "verwaltung",
-          "description": "Verwalte deine verknüpften Konten"
-        }
-      }
-    },
     "add": {
       "name": "hinzufügen",
       "description": "Verknüpfe ein Konto mit Discord",
@@ -55,9 +45,19 @@
         }
       }
     },
+    "manage": {
+      "name": "konto",
+      "description": "Verwalte deine verknüpften Konten",
+      "subcommands": {
+        "accounts": {
+          "name": "verwaltung",
+          "description": "Verwalte deine verknüpften Konten"
+        }
+      }
+    },
     "premium": {
       "name": "premium",
-      "description": "temp"
+      "description": "Zeige deinen Premium-Status"
     },
     "profile": {
       "name": "profil",
@@ -81,5 +81,27 @@
         }
       }
     }
+  },
+  "error": {
+    "generic": "Etwas ist schiefgelaufen. Bitte versuche es später erneut.",
+    "requireSetup": "Du hast den Bot noch nicht eingerichtet. Nutze `/add account`, um loszulegen.",
+    "commandFailed": "Dieser Befehl konnte nicht ausgeführt werden.",
+    "cooldown": "`{{command}}` ist im Cooldown. Versuche es erneut <t:{{time}}:R>.",
+    "notLinked": "Du hast noch kein verknüpftes Konto. Nutze `/add account`, um loszulegen.",
+    "isBanned": "Dieses Konto wurde gesperrt. Bitte kontaktiere den Support.",
+    "invalidCode": "Dieser Belohnungscode scheint ungültig zu sein.",
+    "invalidCookies": "Die angegebenen Cookies sind ungültig. Bitte stelle sicher, dass du sie korrekt kopiert hast.",
+    "alreadyLinked": {
+      "owner": "Dieses Konto ist bereits mit deinem Discord verknüpft.",
+      "other": "Dieses Konto ist bereits mit einem anderen Discord-Benutzer verknüpft."
+    },
+    "settingsFailed": "Beim Speichern deiner Einstellungen ist ein Fehler aufgetreten. Bitte versuche es erneut."
+  },
+  "success": {
+    "accountsLinked": "Deine Konten wurden erfolgreich verknüpft!",
+    "loginSuccessful": "Anmeldung erfolgreich! Deine Kontoinformationen werden geladen...",
+    "accountRemoved": "Das Konto wurde entfernt.",
+    "accountUpdated": "Deine Kontoeinstellungen wurden aktualisiert.",
+    "settingsSaved": "Deine Einstellungen wurden gespeichert."
   }
 }

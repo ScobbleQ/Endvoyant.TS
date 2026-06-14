@@ -6,9 +6,10 @@ import {
   MessageFlags,
 } from "discord.js";
 import { and, eq } from "drizzle-orm";
+import { errorContainer } from "#/components/container.ts";
 import { UsersDB, db, AccountsDB } from "#/drizzle/index.ts";
 import { efAttemptedCodes, efCodes } from "#/drizzle/schema.ts";
-import { localizations } from "#/i18n/index.ts";
+import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export default {
@@ -38,9 +39,14 @@ export default {
     await interaction.respond(filtered);
   },
   execute: async (interaction: ChatInputCommandInteraction) => {
+    const locale = fromDiscordLocale(interaction.locale);
     const user = await UsersDB.findAccess(interaction.user.id);
+
     if (!user) {
-      await interaction.followUp("Please link an account first using /add account.");
+      await interaction.reply({
+        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
       return;
     }
 
@@ -49,8 +55,8 @@ export default {
     if (inputCode) {
       if (inputCode.length < 6 || inputCode.length > 16) {
         await interaction.reply({
-          content: "Invalid code format.",
-          flags: [MessageFlags.Ephemeral],
+          components: [errorContainer({ desc: t(locale, "error.invalidCode") })],
+          flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
         });
         return;
       }

@@ -144,8 +144,7 @@ export default {
           components: [
             warnContainer({
               title: "Unable to Send DM",
-              description:
-                "We were unable to send you a DM. Please enable permissions for notifications.",
+              desc: "We were unable to send you a DM. Please enable permissions for notifications.",
             }),
           ],
           flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],

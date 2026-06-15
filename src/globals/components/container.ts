@@ -11,10 +11,10 @@ export function errorContainer({ title, desc }: { title?: string; desc: string }
   return container;
 }
 
-export function warnContainer({ title, description }: { title?: string; description: string }) {
+export function warnContainer({ title, desc }: { title?: string; desc: string }) {
   const container = new ContainerBuilder().setAccentColor(0xffff00);
   if (title) container.addTextDisplayComponents((t) => t.setContent(`## ${title}`));
-  container.addTextDisplayComponents((t) => t.setContent(description));
+  container.addTextDisplayComponents((t) => t.setContent(desc));
   return container;
 }
 

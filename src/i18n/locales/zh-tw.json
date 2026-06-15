@@ -63,6 +63,16 @@
       "name": "檔案",
       "description": "查看你的檔案"
     },
+    "list": {
+      "name": "列表",
+      "description": "查看有效的兌換碼（英語）",
+      "subcommands": {
+        "codes": {
+          "name": "兌換碼",
+          "description": "查看有效的兌換碼（英語）"
+        }
+      }
+    },
     "redeem": {
       "name": "兌換",
       "description": "兌換獎勵碼"
@@ -103,5 +113,8 @@
     "accountRemoved": "帳號已刪除。",
     "accountUpdated": "帳號設定已更新。",
     "settingsSaved": "設定已儲存。"
+  },
+  "info": {
+    "noActiveCodes": "目前沒有有效的兌換碼。"
   }
 }

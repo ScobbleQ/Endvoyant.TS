@@ -63,6 +63,16 @@
       "name": "profil",
       "description": "Lihat profil kamu"
     },
+    "list": {
+      "name": "daftar",
+      "description": "Lihat kode penukaran aktif (Inggris)",
+      "subcommands": {
+        "codes": {
+          "name": "kode",
+          "description": "Lihat kode penukaran aktif (Inggris)"
+        }
+      }
+    },
     "redeem": {
       "name": "tukar",
       "description": "Tukarkan kode hadiah"
@@ -103,5 +113,8 @@
     "accountRemoved": "Akun telah dihapus.",
     "accountUpdated": "Pengaturan akun kamu telah diperbarui.",
     "settingsSaved": "Pengaturan kamu berhasil disimpan."
+  },
+  "info": {
+    "noActiveCodes": "Saat ini tidak ada kode penukaran aktif."
   }
 }

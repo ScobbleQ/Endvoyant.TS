@@ -63,6 +63,16 @@
       "name": "ho-so",
       "description": "Xem hồ sơ của bạn"
     },
+    "list": {
+      "name": "danh-sach",
+      "description": "Xem mã đổi thưởng đang hoạt động (Tiếng Anh)",
+      "subcommands": {
+        "codes": {
+          "name": "ma",
+          "description": "Xem mã đổi thưởng đang hoạt động (Tiếng Anh)"
+        }
+      }
+    },
     "redeem": {
       "name": "doi",
       "description": "Đổi mã phần thưởng"
@@ -103,5 +113,8 @@
     "accountRemoved": "Tài khoản đã được xóa.",
     "accountUpdated": "Cài đặt tài khoản đã được cập nhật.",
     "settingsSaved": "Cài đặt của bạn đã được lưu."
+  },
+  "info": {
+    "noActiveCodes": "Hiện tại không có mã đổi thưởng nào đang hoạt động."
   }
 }

@@ -63,6 +63,16 @@
       "name": "프로필",
       "description": "내 프로필 보기"
     },
+    "list": {
+      "name": "목록",
+      "description": "유효한 리딤 코드 보기 (영어)",
+      "subcommands": {
+        "codes": {
+          "name": "코드",
+          "description": "유효한 리딤 코드 보기 (영어)"
+        }
+      }
+    },
     "redeem": {
       "name": "교환",
       "description": "보상 코드 교환하기"
@@ -103,5 +113,8 @@
     "accountRemoved": "계정이 삭제되었습니다.",
     "accountUpdated": "계정 설정이 업데이트되었습니다.",
     "settingsSaved": "설정이 저장되었습니다."
+  },
+  "info": {
+    "noActiveCodes": "현재 유효한 리딤 코드가 없습니다."
   }
 }

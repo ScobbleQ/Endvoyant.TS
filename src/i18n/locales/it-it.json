@@ -63,6 +63,16 @@
       "name": "profilo",
       "description": "Mostra il tuo profilo"
     },
+    "list": {
+      "name": "lista",
+      "description": "Visualizza i codici riscatto attivi (Inglese)",
+      "subcommands": {
+        "codes": {
+          "name": "codici",
+          "description": "Visualizza i codici riscatto attivi (Inglese)"
+        }
+      }
+    },
     "redeem": {
       "name": "riscatta",
       "description": "Riscatta un codice ricompensa"
@@ -103,5 +113,8 @@
     "accountRemoved": "L'account è stato rimosso.",
     "accountUpdated": "Le impostazioni del tuo account sono state aggiornate.",
     "settingsSaved": "Le tue impostazioni sono state salvate."
+  },
+  "info": {
+    "noActiveCodes": "Al momento non ci sono codici riscatto attivi."
   }
 }

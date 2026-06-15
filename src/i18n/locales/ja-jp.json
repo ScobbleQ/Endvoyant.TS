@@ -63,6 +63,16 @@
       "name": "プロフィール",
       "description": "あなたのプロフィールを表示します"
     },
+    "list": {
+      "name": "一覧",
+      "description": "有効なリデンプションコードを表示します (英語)",
+      "subcommands": {
+        "codes": {
+          "name": "コード",
+          "description": "有効なリデンプションコードを表示します (英語)"
+        }
+      }
+    },
     "redeem": {
       "name": "交換",
       "description": "報酬コードを交換します"
@@ -103,5 +113,8 @@
     "accountRemoved": "アカウントが削除されました。",
     "accountUpdated": "アカウント設定が更新されました。",
     "settingsSaved": "設定が保存されました。"
+  },
+  "info": {
+    "noActiveCodes": "現在有効なリデンプションコードはありません。"
   }
 }

@@ -63,6 +63,16 @@
       "name": "perfil",
       "description": "Muestra tu perfil"
     },
+    "list": {
+      "name": "lista",
+      "description": "Ver códigos de canje activos (Inglés)",
+      "subcommands": {
+        "codes": {
+          "name": "códigos",
+          "description": "Ver códigos de canje activos (Inglés)"
+        }
+      }
+    },
     "redeem": {
       "name": "canjear",
       "description": "Canjea un código de recompensa"
@@ -103,5 +113,8 @@
     "accountRemoved": "La cuenta ha sido eliminada.",
     "accountUpdated": "La configuración de tu cuenta ha sido actualizada.",
     "settingsSaved": "Tu configuración ha sido guardada."
+  },
+  "info": {
+    "noActiveCodes": "Actualmente no hay códigos de canje activos."
   }
 }

@@ -63,6 +63,16 @@
       "name": "profil",
       "description": "Zeige dein Profil an"
     },
+    "list": {
+      "name": "liste",
+      "description": "Aktive Einlösecodes anzeigen (Englisch)",
+      "subcommands": {
+        "codes": {
+          "name": "codes",
+          "description": "Aktive Einlösecodes anzeigen (Englisch)"
+        }
+      }
+    },
     "redeem": {
       "name": "einlösen",
       "description": "Löse einen Belohnungscode ein"
@@ -103,5 +113,8 @@
     "accountRemoved": "Das Konto wurde entfernt.",
     "accountUpdated": "Deine Kontoeinstellungen wurden aktualisiert.",
     "settingsSaved": "Deine Einstellungen wurden gespeichert."
+  },
+  "info": {
+    "noActiveCodes": "Derzeit gibt es keine aktiven Einlösecodes."
   }
 }

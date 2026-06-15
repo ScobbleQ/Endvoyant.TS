@@ -63,6 +63,16 @@
       "name": "profile",
       "description": "View your profile"
     },
+    "list": {
+      "name": "list",
+      "description": "View active redemption codes",
+      "subcommands": {
+        "codes": {
+          "name": "codes",
+          "description": "View active redemption codes"
+        }
+      }
+    },
     "redeem": {
       "name": "redeem",
       "description": "Redeem a reward code"
@@ -103,5 +113,8 @@
     "accountRemoved": "The account has been removed.",
     "accountUpdated": "Your account settings have been updated.",
     "settingsSaved": "Your settings have been saved."
+  },
+  "info": {
+    "noActiveCodes": "There are currently no active redemption codes."
   }
 }

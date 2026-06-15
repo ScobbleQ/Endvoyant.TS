@@ -63,6 +63,16 @@
       "name": "profil",
       "description": "Affiche ton profil"
     },
+    "list": {
+      "name": "liste",
+      "description": "Afficher les codes de rédemption actifs (Anglais)",
+      "subcommands": {
+        "codes": {
+          "name": "codes",
+          "description": "Afficher les codes de rédemption actifs (Anglais)"
+        }
+      }
+    },
     "redeem": {
       "name": "échanger",
       "description": "Échange un code de récompense"
@@ -103,5 +113,8 @@
     "accountRemoved": "Le compte a été supprimé.",
     "accountUpdated": "Les paramètres de ton compte ont été mis à jour.",
     "settingsSaved": "Tes paramètres ont été sauvegardés."
+  },
+  "info": {
+    "noActiveCodes": "Il n'y a pas de codes de rédemption actifs pour le moment."
   }
 }

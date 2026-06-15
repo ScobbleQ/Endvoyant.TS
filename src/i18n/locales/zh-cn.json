@@ -63,6 +63,16 @@
       "name": "档案",
       "description": "查看你的档案"
     },
+    "list": {
+      "name": "列表",
+      "description": "查看有效的兑换码（英语）",
+      "subcommands": {
+        "codes": {
+          "name": "兑换码",
+          "description": "查看有效的兑换码（英语）"
+        }
+      }
+    },
     "redeem": {
       "name": "兑换",
       "description": "兑换奖励码"
@@ -103,5 +113,8 @@
     "accountRemoved": "账号已删除。",
     "accountUpdated": "账号设置已更新。",
     "settingsSaved": "设置已保存。"
+  },
+  "info": {
+    "noActiveCodes": "目前没有有效的兑换码。"
   }
 }

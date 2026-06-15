@@ -63,6 +63,16 @@
       "name": "perfil",
       "description": "Veja seu perfil"
     },
+    "list": {
+      "name": "lista",
+      "description": "Ver códigos de resgate ativos (Inglês)",
+      "subcommands": {
+        "codes": {
+          "name": "códigos",
+          "description": "Ver códigos de resgate ativos (Inglês)"
+        }
+      }
+    },
     "redeem": {
       "name": "resgatar",
       "description": "Resgate um código de recompensa"
@@ -103,5 +113,8 @@
     "accountRemoved": "A conta foi removida.",
     "accountUpdated": "As configurações da sua conta foram atualizadas.",
     "settingsSaved": "Suas configurações foram salvas."
+  },
+  "info": {
+    "noActiveCodes": "Atualmente não há códigos de resgate ativos."
   }
 }

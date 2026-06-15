@@ -19,7 +19,7 @@ export default {
       .join("\n");
 
     const disclaimer = [
-      "\*AI chat feature is in early development and may not work as expected. It is also subject to change based on user feedback and performance.",
+      "\*AI chat(experimental) feature is in early development and may not work as expected. It is also subject to change based on user feedback and performance.",
       "\*\*Automatic code redemption uses our in-house detection system, accuracy may vary. It is in early testing currently.",
     ]
       .map((f) => `-# ${f}`)

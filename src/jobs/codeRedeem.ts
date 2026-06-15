@@ -1,3 +1,1 @@
-export async function codeRedeem() {
-  
-}
+export async function codeRedeem() {}

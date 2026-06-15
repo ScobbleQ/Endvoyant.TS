@@ -15,7 +15,7 @@ Commands:
 - [x] List Codes
 - [x] Manage Accounts
 - [ ] Premium
-- [ ] Profile
+- [x] Profile
 - [x] Redeem
 - [x] Settings
 - [ ] Umbral Monument

@@ -12,6 +12,7 @@ Commands:
 - [x] Daily Signin
 - [x] Export Data
 - [ ] Full Profile
+- [x] List Codes
 - [x] Manage Accounts
 - [ ] Premium
 - [ ] Profile

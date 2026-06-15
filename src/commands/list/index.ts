@@ -5,7 +5,8 @@ import {
   MessageFlags,
   codeBlock,
 } from "discord.js";
-import { db } from "#/drizzle/index.ts";
+import { config } from "#/config.ts";
+import { db, EventsDB } from "#/drizzle/index.ts";
 import { warnContainer } from "#/globals/components/container.ts";
 import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
 
@@ -24,7 +25,24 @@ export default {
         .setDescriptionLocalizations(localizations("command.list.subcommands.codes.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
+    const user = await db.query.users.findFirst({
+      columns: {
+        allowData: true,
+      },
+      where: {
+        dcid: interaction.user.id,
+      },
+    });
+
     const locale = fromDiscordLocale(interaction.locale);
+
+    if (config.env === "production" && user?.allowData) {
+      void EventsDB.record(interaction.user.id, {
+        source: "slash",
+        action: "list codes",
+      });
+    }
+
     const codes = await db.query.efCodes.findMany({
       columns: {
         code: true,

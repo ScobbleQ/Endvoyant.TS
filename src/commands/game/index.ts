@@ -13,9 +13,7 @@ export default {
         .setName("news")
         .setNameLocalizations(localizations("command.game.subcommands.news.name"))
         .setDescription("View recent game news, events, and updates")
-        .setDescriptionLocalizations(
-          localizations("command.game.subcommands.news.description"),
-        ),
+        .setDescriptionLocalizations(localizations("command.game.subcommands.news.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.reply("About the bot!");

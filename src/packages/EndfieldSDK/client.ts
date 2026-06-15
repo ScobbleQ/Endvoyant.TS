@@ -9,6 +9,7 @@ import type {
   RefreshAccountTokenResponse,
   ChannelTokenAuthResponse,
   SigninResponse,
+  CardDetailResponse,
 } from "./types/auth.ts";
 import { type Locale } from "./types/language.ts";
 import { toWebLocale } from "./utils/convert.ts";
@@ -321,6 +322,37 @@ export class EndfieldSDK {
       });
 
       return (await body.json()) as { code: number; msg: string; data: {} };
+    } catch (error) {
+      throw new Error("", { cause: error });
+    }
+  }
+
+  async fetchCardDetail({
+    cred,
+    token,
+    serverId,
+    roleId,
+    lang,
+  }: {
+    cred: string;
+    token: string;
+    serverId: string;
+    roleId: string;
+    lang?: Locale;
+  }) {
+    try {
+      const { body } = await this._request({
+        origin: "https://zonai.skport.com",
+        path: "/api/v1/game/endfield/card/detail",
+        method: "GET",
+        headers: {
+          cred,
+          "sk-game-role": `3_${roleId}_${serverId}`,
+          ...this._skportHeaders(token, "/api/v1/game/endfield/card/detail", "", lang),
+        },
+      });
+
+      return (await body.json()) as CardDetailResponse | SkportZonaiErrorResponse;
     } catch (error) {
       throw new Error("", { cause: error });
     }

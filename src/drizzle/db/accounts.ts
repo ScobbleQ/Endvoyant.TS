@@ -142,6 +142,7 @@ export class AccountsDB {
         serverId: true,
         accountToken: true,
         channelId: true,
+        isPrivate: true,
       },
       where: {
         id: aid,
@@ -159,6 +160,7 @@ export class AccountsDB {
         serverId: true,
         accountToken: true,
         channelId: true,
+        isPrivate: true,
       },
       where: {
         dcid,

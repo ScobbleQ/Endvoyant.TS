@@ -81,6 +81,16 @@
       "name": "einstellungen",
       "description": "Ändere deine persönlichen Endvoyant-Einstellungen"
     },
+    "game": {
+      "name": "game",
+      "description": "Zeige aktuelle Spiel-News, Events und Updates an",
+      "subcommands": {
+        "news": {
+          "name": "news",
+          "description": "Zeige aktuelle Spiel-News, Events und Updates an"
+        }
+      }
+    },
     "umbral": {
       "name": "umbral",
       "description": "Temporär",

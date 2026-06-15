@@ -81,6 +81,16 @@
       "name": "configurações",
       "description": "Altere suas configurações pessoais do Endvoyant"
     },
+    "game": {
+      "name": "game",
+      "description": "Veja as notícias, eventos e atualizações recentes do jogo",
+      "subcommands": {
+        "news": {
+          "name": "notícias",
+          "description": "Veja as notícias, eventos e atualizações recentes do jogo"
+        }
+      }
+    },
     "umbral": {
       "name": "umbral",
       "description": "temp",

@@ -81,6 +81,16 @@
       "name": "paramètres",
       "description": "Modifie tes paramètres personnels Endvoyant"
     },
+    "game": {
+      "name": "game",
+      "description": "Consulte les actualités, événements et mises à jour récentes du jeu",
+      "subcommands": {
+        "news": {
+          "name": "news",
+          "description": "Consulte les actualités, événements et mises à jour récentes du jeu"
+        }
+      }
+    },
     "umbral": {
       "name": "umbral",
       "description": "temp",

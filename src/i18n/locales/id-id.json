@@ -81,6 +81,16 @@
       "name": "pengaturan",
       "description": "Ubah pengaturan pribadi Endvoyant kamu"
     },
+    "game": {
+      "name": "game",
+      "description": "Lihat berita, event, dan update game terbaru",
+      "subcommands": {
+        "news": {
+          "name": "berita",
+          "description": "Lihat berita, event, dan update game terbaru"
+        }
+      }
+    },
     "umbral": {
       "name": "umbral",
       "description": "temp",

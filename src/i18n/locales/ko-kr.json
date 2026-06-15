@@ -81,6 +81,16 @@
       "name": "설정",
       "description": "Endvoyant 개인 설정 변경"
     },
+    "game": {
+      "name": "game",
+      "description": "게임 최신 뉴스, 이벤트, 업데이트 보기",
+      "subcommands": {
+        "news": {
+          "name": "뉴스",
+          "description": "게임 최신 뉴스, 이벤트, 업데이트 보기"
+        }
+      }
+    },
     "umbral": {
       "name": "움브랄",
       "description": "임시",

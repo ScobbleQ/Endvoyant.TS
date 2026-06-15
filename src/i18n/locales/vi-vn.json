@@ -81,6 +81,16 @@
       "name": "cai-dat",
       "description": "Thay đổi cài đặt cá nhân Endvoyant"
     },
+    "game": {
+      "name": "game",
+      "description": "Xem tin tức, sự kiện và cập nhật game gần đây",
+      "subcommands": {
+        "news": {
+          "name": "tin-tuc",
+          "description": "Xem tin tức, sự kiện và cập nhật game gần đây"
+        }
+      }
+    },
     "umbral": {
       "name": "umbral",
       "description": "tạm thời",

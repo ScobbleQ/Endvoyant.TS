@@ -81,6 +81,16 @@
       "name": "設定",
       "description": "Endvoyantの個人設定を変更します"
     },
+    "game": {
+      "name": "game",
+      "description": "ゲームの最新ニュース、イベント、アップデートを表示します",
+      "subcommands": {
+        "news": {
+          "name": "ニュース",
+          "description": "ゲームの最新ニュース、イベント、アップデートを表示します"
+        }
+      }
+    },
     "umbral": {
       "name": "アンブラル",
       "description": "仮設定",

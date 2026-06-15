@@ -81,6 +81,16 @@
       "name": "设置",
       "description": "更改你的 Endvoyant 个人设置"
     },
+    "game": {
+      "name": "game",
+      "description": "查看最新的游戏新闻、活动和更新",
+      "subcommands": {
+        "news": {
+          "name": "新闻",
+          "description": "查看最新的游戏新闻、活动和更新"
+        }
+      }
+    },
     "umbral": {
       "name": "umbral",
       "description": "临时",

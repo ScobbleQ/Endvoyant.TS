@@ -29,6 +29,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^1.0.0",
     "bufferutil": "^4.1.0",
     "cron": "^4.4.0",
     "discord.js": "^14.26.4",

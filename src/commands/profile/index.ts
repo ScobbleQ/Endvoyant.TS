@@ -74,6 +74,10 @@ export default {
         });
 
     if (!account) {
+      await interaction.reply({
+        components: [errorContainer({ desc: t(user.lang, "error.notLinked") })],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
       return;
     }
 

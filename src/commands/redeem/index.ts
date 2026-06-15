@@ -50,6 +50,19 @@ export default {
       return;
     }
 
+    const selectedAccountId = interaction.options.getString("for");
+    const accounts = selectedAccountId
+      ? [await AccountsDB.findAccount(user.dcid, selectedAccountId)]
+      : await AccountsDB.listByDcid(user.dcid);
+
+    if (accounts.length === 0) {
+      await interaction.reply({
+        components: [errorContainer({ desc: t(user.lang, "error.notLinked") })],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
+      return;
+    }
+
     const codes: string[] = [];
     const inputCode = interaction.options.getString("code")?.trim();
     if (inputCode) {
@@ -77,11 +90,6 @@ export default {
         codes.push(dbCode.code);
       }
     }
-
-    const selectedAccountId = interaction.options.getString("for");
-    const accounts = selectedAccountId
-      ? [await AccountsDB.findAccount(user.dcid, selectedAccountId)]
-      : await AccountsDB.listByDcid(user.dcid);
 
     await interaction.deferReply();
 

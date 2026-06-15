@@ -67,6 +67,14 @@ export default {
       ? [await AccountsDB.findAccount(user.dcid, selectedAccountId)]
       : await AccountsDB.listByDcid(user.dcid);
 
+    if (accounts.length === 0) {
+      await interaction.reply({
+        components: [errorContainer({ desc: t(user.lang, "error.notLinked") })],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
+      return;
+    }
+
     await interaction.deferReply();
 
     const queue = new pQueue({ concurrency: 5 });

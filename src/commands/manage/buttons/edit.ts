@@ -1,5 +1,5 @@
 import { ButtonBuilder, ButtonStyle, type ButtonInteraction } from "discord.js";
-import { AccountsDB } from "#/drizzle/index.ts";
+import { db } from "#/drizzle/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import EditModal from "../modals/edit.ts";
 
@@ -12,7 +12,18 @@ export default {
   execute: async (interaction: ButtonInteraction, args: string[]) => {
     const shortId = parseInt(args[0]!, 10);
 
-    const account = await AccountsDB.findEditSettings(interaction.user.id, shortId);
+    const account = await db.query.accounts.findFirst({
+      columns: {
+        isPrivate: true,
+        enableRedeem: true,
+        enableSignin: true,
+      },
+      where: {
+        dcid: interaction.user.id,
+        shortId,
+      },
+    });
+
     if (!account) return;
 
     await interaction.showModal(

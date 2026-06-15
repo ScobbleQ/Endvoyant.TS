@@ -1,5 +1,5 @@
 import pQueue from "p-queue";
-import { AccountsDB } from "#/drizzle/index.ts";
+import { AccountsDB, db } from "#/drizzle/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export async function refreshTokens() {
@@ -7,7 +7,15 @@ export async function refreshTokens() {
   const delay = Math.floor(Math.random() * 56) * 60 * 1000;
   await new Promise((resolve) => setTimeout(resolve, delay));
 
-  const accounts = await AccountsDB.listForTokenRefresh();
+  const accounts = await db.query.accounts.findMany({
+    columns: {
+      id: true,
+      dcid: true,
+      accountToken: true,
+      hgId: true,
+    },
+  });
+
   const queue = new pQueue({ concurrency: 10 });
 
   accounts.forEach((account) => {

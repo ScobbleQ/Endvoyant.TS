@@ -58,20 +58,19 @@ export default {
     }
 
     const selectedAccountId = interaction.options.getString("for");
-    const account = selectedAccountId
-      ? await AccountsDB.findAccount(interaction.user.id, selectedAccountId)
-      : await db.query.accounts.findFirst({
-          columns: {
-            accountToken: true,
-            serverId: true,
-            roleId: true,
-            isPrivate: true,
-          },
-          where: {
-            dcid: user.dcid,
-            isPrimary: true,
-          },
-        });
+    const account = await db.query.accounts.findFirst({
+      columns: {
+        accountToken: true,
+        serverId: true,
+        roleId: true,
+        isPrivate: true,
+      },
+      where: {
+        dcid: user.dcid,
+        isPrimary: selectedAccountId ? undefined : true,
+        id: selectedAccountId ? selectedAccountId : undefined,
+      },
+    });
 
     if (!account) {
       await interaction.reply({

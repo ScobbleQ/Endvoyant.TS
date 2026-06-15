@@ -56,17 +56,6 @@ export class AccountsDB {
     });
   }
 
-  static async listForTokenRefresh() {
-    return await db.query.accounts.findMany({
-      columns: {
-        dcid: true,
-        id: true,
-        accountToken: true,
-        hgId: true,
-      },
-    });
-  }
-
   static async updateByAccountId(id: Account["id"], patch: AccountPatch) {
     if (Object.keys(patch).length === 0) return;
     await db.update(accounts).set(patch).where(eq(accounts.id, id));
@@ -95,20 +84,6 @@ export class AccountsDB {
     return { exists: res !== undefined, dcid: res?.dcid };
   }
 
-  static async findEditSettings(dcid: string, shortId: number) {
-    return await db.query.accounts.findFirst({
-      columns: {
-        enableRedeem: true,
-        enableSignin: true,
-        isPrivate: true,
-      },
-      where: {
-        dcid,
-        shortId,
-      },
-    });
-  }
-
   static async setPrimary(dcid: string, shortId: number) {
     await db.transaction(async (tx) => {
       await tx.update(accounts).set({ isPrimary: false }).where(eq(accounts.dcid, dcid));
@@ -133,33 +108,14 @@ export class AccountsDB {
     return await db.$count(accounts, eq(accounts.dcid, dcid));
   }
 
-  static async findAccount(dcid: string, aid: string) {
-    return await db.query.accounts.findFirst({
-      columns: {
-        id: true,
-        nickname: true,
-        roleId: true,
-        serverId: true,
-        accountToken: true,
-        channelId: true,
-        isPrivate: true,
-      },
-      where: {
-        id: aid,
-        dcid,
-      },
-    });
-  }
-
   static async listByDcid(dcid: string) {
     return await db.query.accounts.findMany({
       columns: {
         id: true,
+        dcid: true,
         nickname: true,
         roleId: true,
         serverId: true,
-        accountToken: true,
-        channelId: true,
         isPrivate: true,
       },
       where: {
@@ -168,35 +124,6 @@ export class AccountsDB {
       orderBy: {
         isPrimary: "desc",
         shortId: "asc",
-      },
-    });
-  }
-
-  static async listForDailySignin() {
-    return db.query.users.findMany({
-      columns: {
-        dcid: true,
-        lang: true,
-        allowData: true,
-        enableNotif: true,
-      },
-      with: {
-        accounts: {
-          columns: {
-            id: true,
-            nickname: true,
-            accountToken: true,
-            roleId: true,
-            serverId: true,
-          },
-          where: {
-            enableSignin: true,
-          },
-          orderBy: {
-            isPrimary: "desc",
-            addedOn: "asc",
-          },
-        },
       },
     });
   }

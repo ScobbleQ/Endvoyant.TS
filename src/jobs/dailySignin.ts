@@ -1,7 +1,7 @@
 import { type Client, DiscordAPIError, ContainerBuilder, MessageFlags } from "discord.js";
 import pQueue from "p-queue";
 import { config } from "#/config.ts";
-import { AccountsDB, EventsDB } from "#/drizzle/index.ts";
+import { EventsDB, db } from "#/drizzle/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export async function dailySignin(client: Client) {
@@ -9,7 +9,33 @@ export async function dailySignin(client: Client) {
   const delay = Math.floor(Math.random() * 56) * 60 * 1000;
   await new Promise((resolve) => setTimeout(resolve, delay));
 
-  const users = (await AccountsDB.listForDailySignin()).filter((u) => u.accounts.length > 0);
+  const users = await db.query.users.findMany({
+    columns: {
+      dcid: true,
+      lang: true,
+      allowData: true,
+      enableNotif: true,
+    },
+    with: {
+      accounts: {
+        columns: {
+          id: true,
+          nickname: true,
+          accountToken: true,
+          roleId: true,
+          serverId: true,
+        },
+        where: {
+          enableSignin: true,
+        },
+        orderBy: {
+          isPrimary: "desc",
+          shortId: "asc",
+        },
+      },
+    },
+  });
+
   const userQueue = new pQueue({ concurrency: 10 });
   const accountQueue = new pQueue({ concurrency: 5 });
 

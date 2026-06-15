@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 import pQueue from "p-queue";
 import { config } from "#/config.ts";
-import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
+import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
 import { errorContainer } from "#/globals/components/container.ts";
 import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
@@ -63,9 +63,23 @@ export default {
     }
 
     const selectedAccountId = interaction.options.getString("for");
-    const accounts = selectedAccountId
-      ? [await AccountsDB.findAccount(user.dcid, selectedAccountId)]
-      : await AccountsDB.listByDcid(user.dcid);
+    const accounts = await db.query.accounts.findMany({
+      columns: {
+        nickname: true,
+        roleId: true,
+        accountToken: true,
+        channelId: true,
+        serverId: true,
+      },
+      where: {
+        dcid: user.dcid,
+        id: selectedAccountId ? selectedAccountId : undefined,
+      },
+      orderBy: {
+        isPrimary: "desc",
+        shortId: "asc",
+      },
+    });
 
     if (accounts.length === 0) {
       await interaction.reply({

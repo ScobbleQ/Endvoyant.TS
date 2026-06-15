@@ -51,9 +51,20 @@ export default {
     }
 
     const selectedAccountId = interaction.options.getString("for");
-    const accounts = selectedAccountId
-      ? [await AccountsDB.findAccount(user.dcid, selectedAccountId)]
-      : await AccountsDB.listByDcid(user.dcid);
+    const accounts = await db.query.accounts.findMany({
+      columns: {
+        id: true,
+        nickname: true,
+        roleId: true,
+        accountToken: true,
+        channelId: true,
+        serverId: true,
+      },
+      where: {
+        dcid: user.dcid,
+        id: selectedAccountId ? selectedAccountId : undefined,
+      },
+    });
 
     if (accounts.length === 0) {
       await interaction.reply({

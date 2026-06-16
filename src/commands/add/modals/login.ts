@@ -14,7 +14,7 @@ import {
   container,
   warnContainer,
 } from "#/globals/components/container.ts";
-import { t } from "#/i18n/index.ts";
+import { tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { maxAccountContainer } from "../components/maxAccount.ts";
@@ -68,7 +68,7 @@ export default {
     }
 
     await interaction.editReply({
-      components: [successContainer({ desc: t(user.lang, "success.loginSuccessful") })],
+      components: [successContainer({ desc: tx(user.lang, "success.loginSuccessful") })],
       flags: [MessageFlags.IsComponentsV2],
     });
 
@@ -102,8 +102,8 @@ export default {
           components: [
             errorContainer({
               desc: isOwner
-                ? t(user.lang, "error.alreadyLinked.owner")
-                : t(user.lang, "error.alreadyLinked.other"),
+                ? tx(user.lang, "error.alreadyLinked.owner")
+                : tx(user.lang, "error.alreadyLinked.other"),
             }),
           ],
           flags: [MessageFlags.IsComponentsV2],
@@ -136,7 +136,7 @@ export default {
     }
 
     await interaction.editReply({
-      components: [successContainer({ desc: t(user.lang, "success.accountsLinked") })],
+      components: [successContainer({ desc: tx(user.lang, "success.accountsLinked") })],
       flags: [MessageFlags.IsComponentsV2],
     });
 

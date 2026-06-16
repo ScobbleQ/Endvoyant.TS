@@ -1,22 +1,22 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import { UsersDB } from "#/drizzle/index.ts";
 import { errorContainer } from "#/globals/components/container.ts";
-import { t, localizations, fromDiscordLocale } from "#/i18n/index.ts";
+import { tx, dtx, fromDiscordLocale } from "#/i18n/index.ts";
 import SettingModal from "./modals/setting.ts";
 
 export default {
   cooldown: 5,
   data: new SlashCommandBuilder()
     .setName("settings")
-    .setNameLocalizations(localizations("command.settings.name"))
+    .setNameLocalizations(dtx("command.settings.name"))
     .setDescription("Adjust your bot settings")
-    .setDescriptionLocalizations(localizations("command.settings.description")),
+    .setDescriptionLocalizations(dtx("command.settings.description")),
   execute: async (interaction: ChatInputCommandInteraction) => {
     const user = await UsersDB.findUser(interaction.user.id);
     if (!user) {
       const locale = fromDiscordLocale(interaction.locale);
       await interaction.reply({
-        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        components: [errorContainer({ desc: tx(locale, "error.requireSetup") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;

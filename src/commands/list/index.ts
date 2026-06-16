@@ -8,21 +8,21 @@ import {
 import { config } from "#/config.ts";
 import { db, EventsDB } from "#/drizzle/index.ts";
 import { warnContainer } from "#/globals/components/container.ts";
-import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
+import { dtx, tx, fromDiscordLocale } from "#/i18n/index.ts";
 
 export default {
   cooldown: 60,
   data: new SlashCommandBuilder()
     .setName("list")
-    .setNameLocalizations(localizations("command.list.name"))
+    .setNameLocalizations(dtx("command.list.name"))
     .setDescription("View active redemption codes")
-    .setDescriptionLocalizations(localizations("command.list.description"))
+    .setDescriptionLocalizations(dtx("command.list.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("codes")
-        .setNameLocalizations(localizations("command.list.subcommands.codes.name"))
+        .setNameLocalizations(dtx("command.list.subcommands.codes.name"))
         .setDescription("View active redemption codes")
-        .setDescriptionLocalizations(localizations("command.list.subcommands.codes.description")),
+        .setDescriptionLocalizations(dtx("command.list.subcommands.codes.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     const user = await db.query.users.findFirst({
@@ -56,7 +56,7 @@ export default {
 
     if (codes.length === 0) {
       await interaction.reply({
-        components: [warnContainer({ desc: t(locale, "info.noActiveCodes") })],
+        components: [warnContainer({ desc: tx(locale, "info.noActiveCodes") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -77,8 +77,8 @@ export default {
       }
 
       container.addTextDisplayComponents(
-        (ct) => ct.setContent(codeBlock(code.code)),
-        (ct) => ct.setContent(lines.join("\n")),
+        (t) => t.setContent(codeBlock(code.code)),
+        (t) => t.setContent(lines.join("\n")),
       );
     }
 

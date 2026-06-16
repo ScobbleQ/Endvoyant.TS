@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { UsersDB } from "#/drizzle/index.ts";
 import { successContainer, errorContainer } from "#/globals/components/container.ts";
-import { t, Language, type Locale } from "#/i18n/index.ts";
+import { tx, Language, type Locale } from "#/i18n/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 
 type settingParams = {
@@ -31,7 +31,7 @@ export default {
           .setStringSelectMenuComponent(
             new StringSelectMenuBuilder().setCustomId("language").addOptions(
               Object.values(Language).map((lang) => ({
-                label: t(lang, "lang") as string,
+                label: tx(lang, "lang") as string,
                 value: lang,
                 default: lang === curLang,
               })),
@@ -87,12 +87,12 @@ export default {
       });
 
       await interaction.reply({
-        components: [successContainer({ desc: t(selectedLang, "success.settingsSaved") })],
+        components: [successContainer({ desc: tx(selectedLang, "success.settingsSaved") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
     } catch {
       await interaction.reply({
-        components: [errorContainer({ desc: t(selectedLang, "error.settingsFailed") })],
+        components: [errorContainer({ desc: tx(selectedLang, "error.settingsFailed") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
     }

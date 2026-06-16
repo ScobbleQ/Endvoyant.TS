@@ -1,5 +1,5 @@
 import { Collection, ContainerBuilder, Events, MessageFlags, type Interaction } from "discord.js";
-import { fromDiscordLocale, t } from "#/i18n/index.ts";
+import { fromDiscordLocale, tx } from "#/i18n/index.ts";
 import { parseComponentId } from "#/utils/componentId.ts";
 
 export default {
@@ -30,7 +30,7 @@ export default {
             command.data.name_localizations?.[interaction.locale] ?? command.data.name;
           return interactionReply(
             interaction,
-            t(locale, "error.cooldown", { command: commandName, time: expiredTimestamp }),
+            tx(locale, "error.cooldown", { command: commandName, time: expiredTimestamp }),
           );
         }
       }
@@ -42,7 +42,7 @@ export default {
         await command.execute(interaction);
       } catch (error) {
         console.error(error);
-        await interactionReply(interaction, t(locale, "error.commandFailed"));
+        await interactionReply(interaction, tx(locale, "error.commandFailed"));
       }
     } else if (interaction.isAutocomplete()) {
       const command = interaction.client.commands.get(interaction.commandName);
@@ -60,7 +60,7 @@ export default {
     ) {
       const parsed = parseComponentId(interaction.customId);
       if (!parsed) {
-        await interactionReply(interaction, t(locale, "error.generic"));
+        await interactionReply(interaction, tx(locale, "error.generic"));
         return;
       }
 

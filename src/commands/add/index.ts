@@ -2,7 +2,7 @@ import { MessageFlags, SlashCommandBuilder, type ChatInputCommandInteraction } f
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
 import { errorContainer } from "#/globals/components/container.ts";
-import { localizations, t } from "#/i18n/index.ts";
+import { dtx, tx } from "#/i18n/index.ts";
 import { addAccountContainer } from "./components/addAccount.ts";
 import { maxAccountContainer } from "./components/maxAccount.ts";
 import { onboardingContainer } from "./components/onboarding.ts";
@@ -11,15 +11,15 @@ export default {
   cooldown: 30,
   data: new SlashCommandBuilder()
     .setName("add")
-    .setNameLocalizations(localizations("command.add.name"))
+    .setNameLocalizations(dtx("command.add.name"))
     .setDescription("Add an account to your Discord")
-    .setDescriptionLocalizations(localizations("command.add.description"))
+    .setDescriptionLocalizations(dtx("command.add.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("account")
-        .setNameLocalizations(localizations("command.add.subcommands.account.name"))
+        .setNameLocalizations(dtx("command.add.subcommands.account.name"))
         .setDescription("Add an account to your Discord")
-        .setDescriptionLocalizations(localizations("command.add.subcommands.account.description")),
+        .setDescriptionLocalizations(dtx("command.add.subcommands.account.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
@@ -42,7 +42,7 @@ export default {
 
     if (user.isBanned) {
       await interaction.editReply({
-        components: [errorContainer({ desc: t(user.lang, "error.isBanned") })],
+        components: [errorContainer({ desc: tx(user.lang, "error.isBanned") })],
         flags: [MessageFlags.IsComponentsV2],
       });
       return;

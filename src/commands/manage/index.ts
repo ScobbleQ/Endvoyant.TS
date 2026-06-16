@@ -2,24 +2,22 @@ import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } f
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
 import { errorContainer } from "#/globals/components/container.ts";
-import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
+import { dtx, tx, fromDiscordLocale } from "#/i18n/index.ts";
 import { accountContainer } from "./components/account.ts";
 
 export default {
   cooldown: 5,
   data: new SlashCommandBuilder()
     .setName("manage")
-    .setNameLocalizations(localizations("command.manage.name"))
+    .setNameLocalizations(dtx("command.manage.name"))
     .setDescription("Manage your linked accounts")
-    .setDescriptionLocalizations(localizations("command.manage.description"))
+    .setDescriptionLocalizations(dtx("command.manage.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("accounts")
-        .setNameLocalizations(localizations("command.manage.subcommands.accounts.name"))
+        .setNameLocalizations(dtx("command.manage.subcommands.accounts.name"))
         .setDescription("Manage your linked accounts")
-        .setDescriptionLocalizations(
-          localizations("command.manage.subcommands.accounts.description"),
-        ),
+        .setDescriptionLocalizations(dtx("command.manage.subcommands.accounts.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
@@ -28,7 +26,7 @@ export default {
     if (!user) {
       const locale = fromDiscordLocale(interaction.locale);
       await interaction.editReply({
-        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        components: [errorContainer({ desc: tx(locale, "error.requireSetup") })],
         flags: [MessageFlags.IsComponentsV2],
       });
       return;
@@ -44,7 +42,7 @@ export default {
     const accounts = await AccountsDB.listForManage(interaction.user.id);
     if (accounts.length === 0) {
       await interaction.editReply({
-        components: [errorContainer({ desc: t(user.lang, "error.notLinked") })],
+        components: [errorContainer({ desc: tx(user.lang, "error.notLinked") })],
         flags: [MessageFlags.IsComponentsV2],
       });
       return;

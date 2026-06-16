@@ -9,22 +9,22 @@ import pQueue from "p-queue";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
 import { errorContainer } from "#/globals/components/container.ts";
-import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
+import { dtx, tx, fromDiscordLocale } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export default {
   cooldown: 60,
   data: new SlashCommandBuilder()
     .setName("daily")
-    .setNameLocalizations(localizations("command.daily.name"))
+    .setNameLocalizations(dtx("command.daily.name"))
     .setDescription("Claim daily in-game rewards")
-    .setDescriptionLocalizations(localizations("command.daily.description"))
+    .setDescriptionLocalizations(dtx("command.daily.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("signin")
-        .setNameLocalizations(localizations("command.daily.subcommands.signin.name"))
+        .setNameLocalizations(dtx("command.daily.subcommands.signin.name"))
         .setDescription("Claim daily in-game rewards")
-        .setDescriptionLocalizations(localizations("command.daily.subcommands.signin.description"))
+        .setDescriptionLocalizations(dtx("command.daily.subcommands.signin.description"))
         .addStringOption((option) =>
           option.setName("for").setDescription("The account to signin for").setAutocomplete(true),
         ),
@@ -49,7 +49,7 @@ export default {
     if (!user) {
       const locale = fromDiscordLocale(interaction.locale);
       await interaction.reply({
-        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        components: [errorContainer({ desc: tx(locale, "error.requireSetup") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -83,7 +83,7 @@ export default {
 
     if (accounts.length === 0) {
       await interaction.reply({
-        components: [errorContainer({ desc: t(user.lang, "error.notLinked") })],
+        components: [errorContainer({ desc: tx(user.lang, "error.notLinked") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -118,7 +118,7 @@ export default {
     );
 
     const container = new ContainerBuilder().addTextDisplayComponents(
-      (txt) => txt.setContent(`## ▼// Manual Signin Summary`),
+      (t) => t.setContent(`## ▼// Manual Signin Summary`),
       (t) => t.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
     );
 

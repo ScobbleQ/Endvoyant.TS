@@ -11,30 +11,33 @@ import { join } from "path";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
 import { errorContainer } from "#/globals/components/container.ts";
-import { fromDiscordLocale, localizations, t } from "#/i18n/index.ts";
+import { fromDiscordLocale, dtx, tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export default {
   cooldown: 5,
   data: new SlashCommandBuilder()
     .setName("profile")
-    .setNameLocalizations(localizations("command.profile.name"))
+    .setNameLocalizations(dtx("command.profile.name"))
     .setDescription("View your profile")
-    .setDescriptionLocalizations(localizations("command.profile.description"))
+    .setDescriptionLocalizations(dtx("command.profile.description"))
     .addUserOption((option) =>
-      option.setName("user").setDescription("The user to view profile for"),
+      option.setName("user").setDescription("The user to view (defaults to yourself)"),
     )
     .addStringOption((option) =>
-      option.setName("for").setDescription("The account to view profile for").setAutocomplete(true),
+      option
+        .setName("account")
+        .setDescription("The account to view (defaults to primary)")
+        .setAutocomplete(true),
     ),
   autocomplete: async (interaction: AutocompleteInteraction) => {
-    const target = interaction.options.get("user");
+    const target = interaction.options.get("account");
     const targetDcid = target ? (target.value as string) : interaction.user.id;
     const accounts = await AccountsDB.listByDcid(targetDcid);
 
     if (accounts.length === 0) {
       const locale = fromDiscordLocale(interaction.locale);
-      await interaction.respond([{ name: t(locale, "error.noAccounts"), value: "NO_ACCOUNTS" }]);
+      await interaction.respond([{ name: tx(locale, "error.noAccounts"), value: "NO_ACCOUNTS" }]);
       return;
     }
 
@@ -45,7 +48,7 @@ export default {
 
     if (visibleAccounts.length === 0) {
       const locale = fromDiscordLocale(interaction.locale);
-      await interaction.respond([{ name: t(locale, "error.privateAccounts"), value: "PRIVATE" }]);
+      await interaction.respond([{ name: tx(locale, "error.privateAccounts"), value: "PRIVATE" }]);
       return;
     }
 
@@ -63,7 +66,7 @@ export default {
   },
   execute: async (interaction: ChatInputCommandInteraction) => {
     const target = interaction.options.getUser("user");
-    const selectedAccountId = interaction.options.getString("for");
+    const selectedAccountId = interaction.options.getString("account");
 
     const targetDcid = target?.id ?? interaction.user.id;
     const isOwnProfile = targetDcid === interaction.user.id;
@@ -73,7 +76,7 @@ export default {
 
     if (selectedAccountId === "NO_ACCOUNTS") {
       await interaction.reply({
-        components: [errorContainer({ desc: t(lang, "error.noAccounts") })],
+        components: [errorContainer({ desc: tx(lang, "error.noAccounts") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -81,7 +84,7 @@ export default {
 
     if (selectedAccountId === "PRIVATE") {
       await interaction.reply({
-        components: [errorContainer({ desc: t(lang, "error.privateAccounts") })],
+        components: [errorContainer({ desc: tx(lang, "error.privateAccounts") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -89,7 +92,7 @@ export default {
 
     if (isOwnProfile && !viewer) {
       await interaction.reply({
-        components: [errorContainer({ desc: t(lang, "error.requireSetup") })],
+        components: [errorContainer({ desc: tx(lang, "error.requireSetup") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -120,7 +123,7 @@ export default {
       await interaction.reply({
         components: [
           errorContainer({
-            desc: t(lang, isOwnProfile ? "error.notLinked" : "error.notLinked"),
+            desc: tx(lang, isOwnProfile ? "error.notLinked" : "error.notLinked"),
           }),
         ],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
@@ -130,7 +133,7 @@ export default {
 
     if (!isOwnProfile && account.isPrivate) {
       await interaction.reply({
-        components: [errorContainer({ desc: t(lang, "error.privateAccount") })],
+        components: [errorContainer({ desc: tx(lang, "error.privateAccount") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -151,7 +154,7 @@ export default {
 
     if (data.code !== 0) {
       await interaction.editReply({
-        components: [errorContainer({ desc: t(lang, "error.fetchFailed") })],
+        components: [errorContainer({ desc: tx(lang, "error.fetchFailed") })],
         flags: [MessageFlags.IsComponentsV2],
       });
       return;
@@ -205,9 +208,9 @@ export default {
     ctx.fillText(`Authority Lvl ${base.level}  ·  Exploration Lvl ${base.worldLevel}`, 20, 88);
 
     const stats = [
-      { value: base.charNum, label: t(lang, "command.profile.ui.operators") },
-      { value: base.weaponNum, label: t(lang, "command.profile.ui.weapons") },
-      { value: base.docNum, label: t(lang, "command.profile.ui.files") },
+      { value: base.charNum, label: tx(lang, "command.profile.ui.operators") },
+      { value: base.weaponNum, label: tx(lang, "command.profile.ui.weapons") },
+      { value: base.docNum, label: tx(lang, "command.profile.ui.files") },
     ];
 
     const boxY = 124;
@@ -240,10 +243,10 @@ export default {
     const container = new ContainerBuilder()
       .addTextDisplayComponents(
         (t) => t.setContent(`## ▼// ${base.name} [\`${base.roleId}\`]`),
-        (txt) =>
-          txt.setContent(`${t(lang, "command.profile.ui.awakeningDay")}: <t:${base.createTime}:D>`),
-        (txt) =>
-          txt.setContent(`${t(lang, "command.profile.ui.lastLogin")}: <t:${base.lastLoginTime}:R>`),
+        (t) =>
+          t.setContent(`${tx(lang, "command.profile.ui.awakeningDay")}: <t:${base.createTime}:D>`),
+        (t) =>
+          t.setContent(`${tx(lang, "command.profile.ui.lastLogin")}: <t:${base.lastLoginTime}:R>`),
       )
       .addMediaGalleryComponents((m) =>
         m.addItems((a) => a.setURL(`attachment://${account.roleId}.jpg`)),

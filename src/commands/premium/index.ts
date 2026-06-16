@@ -1,13 +1,13 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
-import { localizations } from "#/i18n/index.ts";
+import { dtx } from "#/i18n/index.ts";
 
 export default {
   cooldown: 5,
   data: new SlashCommandBuilder()
     .setName("premium")
-    .setNameLocalizations(localizations("command.premium.name"))
+    .setNameLocalizations(dtx("command.premium.name"))
     .setDescription("View your premium status")
-    .setDescriptionLocalizations(localizations("command.premium.description")),
+    .setDescriptionLocalizations(dtx("command.premium.description")),
   execute: async (interaction: ChatInputCommandInteraction) => {
     const premiumFeatures = [
       "Infinite account links",

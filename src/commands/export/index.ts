@@ -2,21 +2,21 @@ import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } f
 import { zipSync, strToU8, type Zippable } from "fflate";
 import { db } from "#/drizzle/index.ts";
 import { errorContainer } from "#/globals/components/container.ts";
-import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
+import { dtx, tx, fromDiscordLocale } from "#/i18n/index.ts";
 
 export default {
   cooldown: 86400,
   data: new SlashCommandBuilder()
     .setName("export")
-    .setNameLocalizations(localizations("command.export.name"))
+    .setNameLocalizations(dtx("command.export.name"))
     .setDescription("Export your Endvoyant data")
-    .setDescriptionLocalizations(localizations("command.export.description"))
+    .setDescriptionLocalizations(dtx("command.export.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("data")
-        .setNameLocalizations(localizations("command.export.subcommands.data.name"))
+        .setNameLocalizations(dtx("command.export.subcommands.data.name"))
         .setDescription("Export your Endvoyant data")
-        .setDescriptionLocalizations(localizations("command.export.subcommands.data.description")),
+        .setDescriptionLocalizations(dtx("command.export.subcommands.data.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
@@ -29,7 +29,7 @@ export default {
     if (!user) {
       const locale = fromDiscordLocale(interaction.locale);
       await interaction.editReply({
-        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        components: [errorContainer({ desc: tx(locale, "error.requireSetup") })],
         flags: [MessageFlags.IsComponentsV2],
       });
       return;

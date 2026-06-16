@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
 import { successContainer } from "#/globals/components/container.ts";
-import { t } from "#/i18n/index.ts";
+import { tx } from "#/i18n/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { accountContainer } from "../components/account.ts";
 
@@ -80,7 +80,7 @@ export default {
     });
 
     await interaction.followUp({
-      components: [successContainer({ desc: t(user.lang, "success.accountUpdated") })],
+      components: [successContainer({ desc: tx(user.lang, "success.accountUpdated") })],
       flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
     });
   },

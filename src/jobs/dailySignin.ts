@@ -103,8 +103,8 @@ export async function dailySignin(client: Client) {
         if (settled.length === 0) return;
 
         const container = new ContainerBuilder().addTextDisplayComponents(
-          (txt) => txt.setContent(`## ▼// Daily Signin`),
-          (txt) => txt.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
+          (t) => t.setContent(`## ▼// Daily Signin`),
+          (t) => t.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
         );
 
         for (const { account, result } of settled) {

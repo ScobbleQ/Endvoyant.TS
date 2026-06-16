@@ -9,16 +9,16 @@ import { and, eq } from "drizzle-orm";
 import { UsersDB, db, AccountsDB } from "#/drizzle/index.ts";
 import { efAttemptedCodes, efCodes } from "#/drizzle/schema.ts";
 import { errorContainer } from "#/globals/components/container.ts";
-import { localizations, t, fromDiscordLocale } from "#/i18n/index.ts";
+import { dtx, tx, fromDiscordLocale } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export default {
   cooldown: 30,
   data: new SlashCommandBuilder()
     .setName("redeem")
-    .setNameLocalizations(localizations("command.redeem.name"))
+    .setNameLocalizations(dtx("command.redeem.name"))
     .setDescription("Redeem a reward code")
-    .setDescriptionLocalizations(localizations("command.redeem.description"))
+    .setDescriptionLocalizations(dtx("command.redeem.description"))
     .addStringOption((option) => option.setName("code").setDescription("The reward code to redeem"))
     .addStringOption((option) =>
       option.setName("for").setDescription("The account to redeem for").setAutocomplete(true),
@@ -44,7 +44,7 @@ export default {
 
     if (!user) {
       await interaction.reply({
-        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        components: [errorContainer({ desc: tx(locale, "error.requireSetup") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -68,7 +68,7 @@ export default {
 
     if (accounts.length === 0) {
       await interaction.reply({
-        components: [errorContainer({ desc: t(user.lang, "error.notLinked") })],
+        components: [errorContainer({ desc: tx(user.lang, "error.notLinked") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -79,7 +79,7 @@ export default {
     if (inputCode) {
       if (inputCode.length < 6 || inputCode.length > 16) {
         await interaction.reply({
-          components: [errorContainer({ desc: t(locale, "error.invalidCode") })],
+          components: [errorContainer({ desc: tx(locale, "error.invalidCode") })],
           flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
         });
         return;

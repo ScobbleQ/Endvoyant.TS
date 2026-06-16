@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
 import { errorContainer, successContainer, warnContainer } from "#/globals/components/container.ts";
-import { t } from "#/i18n/index.ts";
+import { tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { maxAccountContainer } from "../components/maxAccount.ts";
@@ -50,7 +50,7 @@ export default {
 
     if (!cookies["ACCOUNT_TOKEN"] || !cookies["SK_OAUTH_CRED_KEY"] || !cookies["HG_INFO_KEY"]) {
       await interaction.editReply({
-        components: [errorContainer({ desc: t(user.lang, "error.invalidCookies") })],
+        components: [errorContainer({ desc: tx(user.lang, "error.invalidCookies") })],
         flags: [MessageFlags.IsComponentsV2],
       });
       return;
@@ -94,8 +94,8 @@ export default {
         components: [
           errorContainer({
             desc: isOwner
-              ? t(user.lang, "error.alreadyLinked.owner")
-              : t(user.lang, "error.alreadyLinked.other"),
+              ? tx(user.lang, "error.alreadyLinked.owner")
+              : tx(user.lang, "error.alreadyLinked.other"),
           }),
         ],
         flags: [MessageFlags.IsComponentsV2],
@@ -126,7 +126,7 @@ export default {
     });
 
     await interaction.editReply({
-      components: [successContainer({ desc: t(user.lang, "success.accountsLinked") })],
+      components: [successContainer({ desc: tx(user.lang, "success.accountsLinked") })],
       flags: [MessageFlags.IsComponentsV2],
     });
 

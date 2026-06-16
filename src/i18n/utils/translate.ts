@@ -18,9 +18,9 @@ const LOCALE_TOKEN_RE = /\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g;
  * Translate a dotted key for a locale and optionally replace `{{placeholders}}`.
  * @example
  * // locales/en-us.json -> { "test": { "1": "Test 1 {{name}}" } }
- * t(Language.EN_US, "test.1", { name: "BOB" }) // "Test 1 BOB"
+ * tx(Language.EN_US, "test.1", { name: "BOB" }) // "Test 1 BOB"
  */
-export function t<K extends TranslationKey>(
+export function tx<K extends TranslationKey>(
   lang: Locale,
   key: K,
   args?: TemplateArgs,
@@ -39,12 +39,12 @@ export function t<K extends TranslationKey>(
  * Returns a Discord LocalizationMap for the given command key across all supported languages.
  * Restricted to command.* paths only.
  * @example
- * localizations("command.about.name") // { "en-US": "about", "zh-CN": "关于", ... }
+ * dtx("command.about.name") // { "en-US": "about", "zh-CN": "关于", ... }
  */
-export function localizations<K extends CommandKey>(key: K, args?: TemplateArgs): LocalizationMap {
+export function dtx<K extends CommandKey>(key: K, args?: TemplateArgs): LocalizationMap {
   const out: LocalizationMap = {};
   for (const lang of Object.values(Language)) {
-    const value = t(lang, key, args);
+    const value = tx(lang, key, args);
     if (typeof value !== "string" || !value) continue;
     out[toDiscordLocale(lang)] = value;
   }

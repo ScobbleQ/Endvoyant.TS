@@ -7,9 +7,20 @@ export default {
   execute: async (interaction: Interaction) => {
     const locale = fromDiscordLocale(interaction.locale);
 
-    if (interaction.isChatInputCommand()) {
-      const { commands, cooldowns } = interaction.client;
-      const command = commands.get(interaction.commandName);
+    if (interaction.isContextMenuCommand()) {
+      const { contextMenuCommands } = interaction.client;
+      const command = contextMenuCommands.get(interaction.commandName);
+      if (!command || typeof command.execute !== "function") return;
+
+      try {
+        await command.execute(interaction);
+      } catch (error) {
+        console.error(error);
+        await interactionReply(interaction, tx(locale, "error.commandFailed"));
+      }
+    } else if (interaction.isChatInputCommand()) {
+      const { slashCommands, cooldowns } = interaction.client;
+      const command = slashCommands.get(interaction.commandName);
       if (!command || typeof command.execute !== "function") return;
 
       let timestamps = cooldowns.get(command.data.name);
@@ -45,7 +56,7 @@ export default {
         await interactionReply(interaction, tx(locale, "error.commandFailed"));
       }
     } else if (interaction.isAutocomplete()) {
-      const command = interaction.client.commands.get(interaction.commandName);
+      const command = interaction.client.slashCommands.get(interaction.commandName);
       if (!command || typeof command.autocomplete !== "function") return;
 
       try {

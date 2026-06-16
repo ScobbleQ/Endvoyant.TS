@@ -8,12 +8,20 @@ import {
   type StringSelectMenuInteraction,
 } from "discord.js";
 
-export interface Command {
-  cooldown?: number;
+interface SlashCommand {
+  cooldown: number;
   data: SlashCommandBuilder;
   autocomplete?: (interaction: AutocompleteInteraction) => Promise<void>;
   execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 }
+
+interface ContextMenuCommand {
+  cooldown: number;
+  data: ContextMenuCommandBuilder;
+  execute: (interaction: ContextMenuCommandInteraction) => Promise<void>;
+}
+
+export type Command = SlashCommand | ContextMenuCommand;
 
 export interface InteractionHandler {
   execute: (
@@ -24,7 +32,8 @@ export interface InteractionHandler {
 
 declare module "discord.js" {
   interface Client {
-    commands: Collection<string, Command>;
+    slashCommands: Collection<string, SlashCommand>;
+    contextMenuCommands: Collection<string, ContextMenuCommand>;
     cooldowns: Collection<string, Collection<string, number>>;
     interactions: Collection<string, InteractionHandler>;
   }

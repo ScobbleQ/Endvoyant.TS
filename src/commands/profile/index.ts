@@ -37,7 +37,7 @@ export default {
         .setAutocomplete(true),
     ),
   autocomplete: async (interaction: AutocompleteInteraction) => {
-    const target = interaction.options.get("account");
+    const target = interaction.options.get("user");
     const targetDcid = target ? (target.value as string) : interaction.user.id;
     const accounts = await AccountsDB.listByDcid(targetDcid);
 

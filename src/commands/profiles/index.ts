@@ -1,11 +1,10 @@
-import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
+import { createCanvas, loadImage } from "@napi-rs/canvas";
 import {
   ContextMenuCommandBuilder,
   ApplicationCommandType,
   type ContextMenuCommandInteraction,
   AttachmentBuilder,
 } from "discord.js";
-import { join } from "path";
 import { UsersDB, db } from "#/drizzle/index.ts";
 import { fromDiscordLocale, tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
@@ -61,19 +60,6 @@ export default {
     const canvas = createCanvas(600, 200);
     const ctx = canvas.getContext("2d");
     ctx.textRendering = "optimizeLegibility";
-
-    GlobalFonts.registerFromPath(
-      join(
-        import.meta.dirname,
-        "..",
-        "..",
-        "assets",
-        "geist-font",
-        "Geist",
-        "variable",
-        "Geist[wght].ttf",
-      ),
-    );
 
     const bg = ctx.createLinearGradient(0, 0, 0, canvas.height);
     bg.addColorStop(0, "#1a1f2e");

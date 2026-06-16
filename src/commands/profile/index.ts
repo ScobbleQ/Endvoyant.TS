@@ -1,4 +1,4 @@
-import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
+import { createCanvas, loadImage } from "@napi-rs/canvas";
 import {
   type AutocompleteInteraction,
   MessageFlags,
@@ -7,7 +7,6 @@ import {
   AttachmentBuilder,
   type ChatInputCommandInteraction,
 } from "discord.js";
-import { join } from "path";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
 import { errorContainer } from "#/globals/components/container.ts";
@@ -170,19 +169,6 @@ export default {
     const canvas = createCanvas(600, 200);
     const ctx = canvas.getContext("2d");
     ctx.textRendering = "optimizeLegibility";
-
-    GlobalFonts.registerFromPath(
-      join(
-        import.meta.dirname,
-        "..",
-        "..",
-        "assets",
-        "geist-font",
-        "Geist",
-        "variable",
-        "Geist[wght].ttf",
-      ),
-    );
 
     const bg = ctx.createLinearGradient(0, 0, 0, canvas.height);
     bg.addColorStop(0, "#1a1f2e");

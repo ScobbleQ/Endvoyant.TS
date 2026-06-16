@@ -1,10 +1,9 @@
-import { GlobalFonts } from "@napi-rs/canvas";
 import { CronJob } from "cron";
 import { Events, type Client } from "discord.js";
-import { join } from "path";
 import { codeRedeem } from "#/jobs/codeRedeem.ts";
 import { dailySignin } from "#/jobs/dailySignin.ts";
 import { refreshTokens } from "#/jobs/refreshToken.ts";
+import { initFonts } from "#/utils/fonts.ts";
 
 export default {
   name: Events.ClientReady,
@@ -12,17 +11,7 @@ export default {
   execute: async (client: Client) => {
     console.log(`Logged in as ${client.user?.tag}`);
 
-    GlobalFonts.registerFromPath(
-      join(
-        import.meta.dirname,
-        "..",
-        "assets",
-        "geist-font",
-        "Geist",
-        "variable",
-        "Geist[wght].ttf",
-      ),
-    );
+    initFonts();
 
     new CronJob(
       "5 12 * * *",

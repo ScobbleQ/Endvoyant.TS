@@ -12,6 +12,7 @@ import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
 import { errorContainer } from "#/globals/components/container.ts";
 import { fromDiscordLocale, dtx, tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
+import { getFontStack } from "#/utils/fonts.ts";
 
 export default {
   cooldown: 5,
@@ -177,7 +178,7 @@ export default {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
-    ctx.font = '144px "Geist"';
+    ctx.font = getFontStack("144px", lang);
     ctx.fontVariationSettings = '"wght" 900';
     ctx.fillStyle = "rgba(255, 255, 255, 0.03)";
     ctx.textAlign = "left";
@@ -188,12 +189,12 @@ export default {
     const avatar = await loadImage(base.avatarUrl);
     ctx.drawImage(avatar, 400, -10, 210, 220);
 
-    ctx.font = '40px "Geist"';
+    ctx.font = getFontStack("40px", lang);
     ctx.fontVariationSettings = '"wght" 700';
     ctx.fillStyle = "#ffffff";
     ctx.fillText(base.name, 20, 46);
 
-    ctx.font = '18px "Geist"';
+    ctx.font = getFontStack("18px", lang);
     ctx.fontVariationSettings = '"wght" 400';
     ctx.fillStyle = "#667788";
     ctx.fillText(`${base.serverName}  ·  ${base.roleId}`, 20, 68);
@@ -220,13 +221,13 @@ export default {
       ctx.roundRect(x, boxY, boxWidth, boxHeight, 8);
       ctx.fill();
 
-      ctx.font = '28px "Geist"';
+      ctx.font = getFontStack("28px", lang);
       ctx.fontVariationSettings = '"wght" 700';
       ctx.fillStyle = "#ffffff";
       ctx.textAlign = "left";
       ctx.fillText(String(stat.value), x + boxPadding, boxY + 32);
 
-      ctx.font = '12px "Geist"';
+      ctx.font = getFontStack("12px", lang);
       ctx.fontVariationSettings = '"wght" 400';
       ctx.fillStyle = "#667788";
       ctx.fillText(stat.label, x + boxPadding, boxY + 46);

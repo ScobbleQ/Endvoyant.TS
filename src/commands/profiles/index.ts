@@ -12,16 +12,13 @@ import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 
 export default {
   cooldown: 60,
-  data: new ContextMenuCommandBuilder()
-    .setName("View Profile")
-    .setType(ApplicationCommandType.User),
+  data: new ContextMenuCommandBuilder().setName("Profile").setType(ApplicationCommandType.User),
   execute: async (interaction: ContextMenuCommandInteraction) => {
     const viewer = await UsersDB.findAccess(interaction.user.id);
     const lang = viewer?.lang || fromDiscordLocale(interaction.locale) || "en-us";
 
     const account = await db.query.accounts.findFirst({
       columns: {
-        dcid: true,
         accountToken: true,
         serverId: true,
         roleId: true,
@@ -37,7 +34,7 @@ export default {
       return;
     }
 
-    if (interaction.user.id !== account.dcid) {
+    if (interaction.user.id !== interaction.targetId) {
       if (account.isPrivate) {
         return;
       }

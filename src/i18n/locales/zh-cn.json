@@ -61,7 +61,14 @@
     },
     "profile": {
       "name": "档案",
-      "description": "查看你的档案"
+      "description": "查看你的档案",
+      "ui": {
+        "awakeningDay": "觉醒日",
+        "lastLogin": "最后登录",
+        "operators": "干员",
+        "weapons": "武器",
+        "files": "档案"
+      }
     },
     "list": {
       "name": "列表",
@@ -115,7 +122,11 @@
       "owner": "此账号已绑定到你的 Discord。",
       "other": "此账号已绑定到其他 Discord 用户。"
     },
-    "settingsFailed": "保存设置时出了点问题，请重试。"
+    "settingsFailed": "保存设置时出了点问题，请重试。",
+    "noAccounts": "无法找到该用户的账号",
+    "privateAccounts": "该用户没有公开账号",
+    "privateAccount": "此账号为私密账号",
+    "fetchFailed": "获取个人资料数据失败"
   },
   "success": {
     "accountsLinked": "你的账号已成功绑定！",

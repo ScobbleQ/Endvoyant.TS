@@ -61,7 +61,14 @@
     },
     "profile": {
       "name": "檔案",
-      "description": "查看你的檔案"
+      "description": "查看你的檔案",
+      "ui": {
+        "awakeningDay": "覺醒日",
+        "lastLogin": "最後登入",
+        "operators": "幹員",
+        "weapons": "武器",
+        "files": "檔案"
+      }
     },
     "list": {
       "name": "列表",
@@ -115,7 +122,11 @@
       "owner": "此帳號已連結到你的 Discord。",
       "other": "此帳號已連結到其他 Discord 用戶。"
     },
-    "settingsFailed": "儲存設定時出了點問題，請重試。"
+    "settingsFailed": "儲存設定時出了點問題，請重試。",
+    "noAccounts": "無法找到該用戶的帳號",
+    "privateAccounts": "該用戶沒有公開帳號",
+    "privateAccount": "此帳號為私人帳號",
+    "fetchFailed": "獲取個人資料資料失敗"
   },
   "success": {
     "accountsLinked": "你的帳號已成功連結！",

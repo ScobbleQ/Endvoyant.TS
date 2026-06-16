@@ -61,7 +61,14 @@
     },
     "profile": {
       "name": "profil",
-      "description": "Affiche ton profil"
+      "description": "Affiche ton profil",
+      "ui": {
+        "awakeningDay": "Jour de l'Éveil",
+        "lastLogin": "Dernière connexion",
+        "operators": "Opérateurs",
+        "weapons": "Armes",
+        "files": "Fichiers"
+      }
     },
     "list": {
       "name": "liste",
@@ -115,7 +122,11 @@
       "owner": "Ce compte est déjà lié à ton Discord.",
       "other": "Ce compte est déjà lié à un autre utilisateur Discord."
     },
-    "settingsFailed": "Une erreur est survenue lors de la sauvegarde de tes paramètres. Veuillez réessayer."
+    "settingsFailed": "Une erreur est survenue lors de la sauvegarde de tes paramètres. Veuillez réessayer.",
+    "noAccounts": "Aucun compte trouvé pour cet utilisateur",
+    "privateAccounts": "Cet utilisateur n'a pas de comptes publics",
+    "privateAccount": "Ce compte est privé",
+    "fetchFailed": "Échec de la récupération des données du profil"
   },
   "success": {
     "accountsLinked": "Tes comptes ont été liés avec succès !",

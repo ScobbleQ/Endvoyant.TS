@@ -61,7 +61,14 @@
     },
     "profile": {
       "name": "ho-so",
-      "description": "Xem hồ sơ của bạn"
+      "description": "Xem hồ sơ của bạn",
+      "ui": {
+        "awakeningDay": "Ngày Thức Tỉnh",
+        "lastLogin": "Lần Đăng Nhập Gần Nhất",
+        "operators": "Nhân Viên",
+        "weapons": "Vũ Khí",
+        "files": "Tập Tin"
+      }
     },
     "list": {
       "name": "danh-sach",
@@ -115,7 +122,11 @@
       "owner": "Tài khoản này đã được liên kết với Discord của bạn.",
       "other": "Tài khoản này đã được liên kết với người dùng Discord khác."
     },
-    "settingsFailed": "Đã xảy ra lỗi khi lưu cài đặt. Vui lòng thử lại."
+    "settingsFailed": "Đã xảy ra lỗi khi lưu cài đặt. Vui lòng thử lại.",
+    "noAccounts": "Không tìm thấy tài khoản cho người dùng này",
+    "privateAccounts": "Người dùng này không có tài khoản công khai",
+    "privateAccount": "Tài khoản này là riêng tư",
+    "fetchFailed": "Không thể lấy dữ liệu hồ sơ"
   },
   "success": {
     "accountsLinked": "Tài khoản của bạn đã được liên kết thành công!",

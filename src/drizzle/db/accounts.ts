@@ -108,7 +108,7 @@ export class AccountsDB {
     return await db.$count(accounts, eq(accounts.dcid, dcid));
   }
 
-  static async listByDcid(dcid: string) {
+  static async listByDcid(targetId: string | undefined) {
     return await db.query.accounts.findMany({
       columns: {
         id: true,
@@ -119,7 +119,7 @@ export class AccountsDB {
         isPrivate: true,
       },
       where: {
-        dcid,
+        dcid: targetId,
       },
       orderBy: {
         isPrimary: "desc",

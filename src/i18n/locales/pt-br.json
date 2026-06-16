@@ -61,7 +61,14 @@
     },
     "profile": {
       "name": "perfil",
-      "description": "Veja seu perfil"
+      "description": "Veja seu perfil",
+      "ui": {
+        "awakeningDay": "Dia do Despertar",
+        "lastLogin": "Último login",
+        "operators": "Operadores",
+        "weapons": "Armas",
+        "files": "Arquivos"
+      }
     },
     "list": {
       "name": "lista",
@@ -115,7 +122,11 @@
       "owner": "Esta conta já está vinculada ao seu Discord.",
       "other": "Esta conta já está vinculada a outro usuário do Discord."
     },
-    "settingsFailed": "Algo deu errado ao salvar suas configurações. Por favor, tente novamente."
+    "settingsFailed": "Algo deu errado ao salvar suas configurações. Por favor, tente novamente.",
+    "noAccounts": "Nenhuma conta encontrada para este usuário",
+    "privateAccounts": "Este usuário não tem contas públicas",
+    "privateAccount": "Esta conta é privada",
+    "fetchFailed": "Falha ao buscar dados do perfil"
   },
   "success": {
     "accountsLinked": "Suas contas foram vinculadas com sucesso!",

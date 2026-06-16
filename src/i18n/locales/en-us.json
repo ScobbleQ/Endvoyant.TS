@@ -61,7 +61,14 @@
     },
     "profile": {
       "name": "profile",
-      "description": "View your profile"
+      "description": "View your profile",
+      "ui": {
+        "awakeningDay": "Awakening Day",
+        "lastLogin": "Last Login",
+        "operators": "Operators",
+        "weapons": "Weapons",
+        "files": "Files"
+      }
     },
     "list": {
       "name": "list",
@@ -115,7 +122,11 @@
       "owner": "This account is already linked to your Discord.",
       "other": "This account is already linked to another Discord user."
     },
-    "settingsFailed": "Something went wrong while saving your settings. Please try again."
+    "settingsFailed": "Something went wrong while saving your settings. Please try again.",
+    "noAccounts": "Unable to find accounts for user",
+    "privateAccounts": "The user has no public accounts",
+    "privateAccount": "This account is private",
+    "fetchFailed": "Failed to fetch profile data"
   },
   "success": {
     "accountsLinked": "Your accounts have been linked successfully!",

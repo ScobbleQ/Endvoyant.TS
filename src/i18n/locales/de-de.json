@@ -61,7 +61,14 @@
     },
     "profile": {
       "name": "profil",
-      "description": "Zeige dein Profil an"
+      "description": "Zeige dein Profil an",
+      "ui": {
+        "awakeningDay": "Erwachens-Tag",
+        "lastLogin": "Letzter Login",
+        "operators": "Operatoren",
+        "weapons": "Waffen",
+        "files": "Dateien"
+      }
     },
     "list": {
       "name": "liste",
@@ -115,7 +122,11 @@
       "owner": "Dieses Konto ist bereits mit deinem Discord verknüpft.",
       "other": "Dieses Konto ist bereits mit einem anderen Discord-Benutzer verknüpft."
     },
-    "settingsFailed": "Beim Speichern deiner Einstellungen ist ein Fehler aufgetreten. Bitte versuche es erneut."
+    "settingsFailed": "Beim Speichern deiner Einstellungen ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "noAccounts": "Keine Konten für diesen Benutzer gefunden",
+    "privateAccounts": "Dieser Benutzer hat keine öffentlichen Konten",
+    "privateAccount": "Dieses Konto ist privat",
+    "fetchFailed": "Profil-Daten konnten nicht geladen werden"
   },
   "success": {
     "accountsLinked": "Deine Konten wurden erfolgreich verknüpft!",

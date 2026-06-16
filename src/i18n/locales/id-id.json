@@ -61,7 +61,14 @@
     },
     "profile": {
       "name": "profil",
-      "description": "Lihat profil kamu"
+      "description": "Lihat profil kamu",
+      "ui": {
+        "awakeningDay": "Hari Kebangkitan",
+        "lastLogin": "Login Terakhir",
+        "operators": "Operator",
+        "weapons": "Senjata",
+        "files": "File"
+      }
     },
     "list": {
       "name": "daftar",
@@ -115,7 +122,11 @@
       "owner": "Akun ini sudah terhubung ke Discord kamu.",
       "other": "Akun ini sudah terhubung ke pengguna Discord lain."
     },
-    "settingsFailed": "Terjadi kesalahan saat menyimpan pengaturan kamu. Silakan coba lagi."
+    "settingsFailed": "Terjadi kesalahan saat menyimpan pengaturan kamu. Silakan coba lagi.",
+    "noAccounts": "Tidak dapat menemukan akun untuk pengguna ini",
+    "privateAccounts": "Pengguna ini tidak memiliki akun publik",
+    "privateAccount": "Akun ini bersifat privat",
+    "fetchFailed": "Gagal mengambil data profil"
   },
   "success": {
     "accountsLinked": "Akun kamu berhasil terhubung!",

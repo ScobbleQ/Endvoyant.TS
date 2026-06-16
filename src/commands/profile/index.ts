@@ -21,14 +21,36 @@ export default {
     .setNameLocalizations(localizations("command.profile.name"))
     .setDescription("View your profile")
     .setDescriptionLocalizations(localizations("command.profile.description"))
+    .addUserOption((option) =>
+      option.setName("user").setDescription("The user to view profile for"),
+    )
     .addStringOption((option) =>
       option.setName("for").setDescription("The account to view profile for").setAutocomplete(true),
     ),
   autocomplete: async (interaction: AutocompleteInteraction) => {
-    const accounts = await AccountsDB.listByDcid(interaction.user.id);
+    const target = interaction.options.get("user");
+    const targetDcid = target ? (target.value as string) : interaction.user.id;
+    const accounts = await AccountsDB.listByDcid(targetDcid);
+
+    if (accounts.length === 0) {
+      const locale = fromDiscordLocale(interaction.locale);
+      await interaction.respond([{ name: t(locale, "error.noAccounts"), value: "NO_ACCOUNTS" }]);
+      return;
+    }
+
+    const isOwnProfile = targetDcid === interaction.user.id;
+    const visibleAccounts = isOwnProfile
+      ? accounts
+      : accounts.filter((account) => !account.isPrivate);
+
+    if (visibleAccounts.length === 0) {
+      const locale = fromDiscordLocale(interaction.locale);
+      await interaction.respond([{ name: t(locale, "error.privateAccounts"), value: "PRIVATE" }]);
+      return;
+    }
 
     const focusedValue = interaction.options.getFocused();
-    const choices = accounts.map((account) => ({
+    const choices = visibleAccounts.map((account) => ({
       name: `${account.nickname} (${account.roleId})`,
       value: account.id,
     }));
@@ -40,24 +62,46 @@ export default {
     await interaction.respond(filtered);
   },
   execute: async (interaction: ChatInputCommandInteraction) => {
-    const user = await UsersDB.findAccess(interaction.user.id);
-    if (!user) {
-      const locale = fromDiscordLocale(interaction.locale);
+    const target = interaction.options.getUser("user");
+    const selectedAccountId = interaction.options.getString("for");
+
+    const targetDcid = target?.id ?? interaction.user.id;
+    const isOwnProfile = targetDcid === interaction.user.id;
+
+    const viewer = await UsersDB.findAccess(interaction.user.id);
+    const lang = viewer?.lang || fromDiscordLocale(interaction.locale) || "en-us";
+
+    if (selectedAccountId === "NO_ACCOUNTS") {
       await interaction.reply({
-        components: [errorContainer({ desc: t(locale, "error.requireSetup") })],
+        components: [errorContainer({ desc: t(lang, "error.noAccounts") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
     }
 
-    if (config.env === "production" && user.allowData) {
-      void EventsDB.record(user.dcid, {
+    if (selectedAccountId === "PRIVATE") {
+      await interaction.reply({
+        components: [errorContainer({ desc: t(lang, "error.privateAccounts") })],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
+      return;
+    }
+
+    if (isOwnProfile && !viewer) {
+      await interaction.reply({
+        components: [errorContainer({ desc: t(lang, "error.requireSetup") })],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
+      return;
+    }
+
+    if (config.env === "production" && viewer?.allowData) {
+      void EventsDB.record(viewer.dcid, {
         source: "slash",
         action: "profile",
       });
     }
 
-    const selectedAccountId = interaction.options.getString("for");
     const account = await db.query.accounts.findFirst({
       columns: {
         accountToken: true,
@@ -66,15 +110,27 @@ export default {
         isPrivate: true,
       },
       where: {
-        dcid: user.dcid,
+        dcid: targetDcid,
         isPrimary: selectedAccountId ? undefined : true,
-        id: selectedAccountId ? selectedAccountId : undefined,
+        id: selectedAccountId ?? undefined,
       },
     });
 
     if (!account) {
       await interaction.reply({
-        components: [errorContainer({ desc: t(user.lang, "error.notLinked") })],
+        components: [
+          errorContainer({
+            desc: t(lang, isOwnProfile ? "error.notLinked" : "error.notLinked"),
+          }),
+        ],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
+      return;
+    }
+
+    if (!isOwnProfile && account.isPrivate) {
+      await interaction.reply({
+        components: [errorContainer({ desc: t(lang, "error.privateAccount") })],
         flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
@@ -90,12 +146,12 @@ export default {
       token: session.token,
       serverId: account.serverId,
       roleId: account.roleId,
-      lang: user.lang,
+      lang,
     });
 
     if (data.code !== 0) {
       await interaction.editReply({
-        components: [errorContainer({ desc: "Failed to fetch profile data" })],
+        components: [errorContainer({ desc: t(lang, "error.fetchFailed") })],
         flags: [MessageFlags.IsComponentsV2],
       });
       return;
@@ -149,9 +205,9 @@ export default {
     ctx.fillText(`Authority Lvl ${base.level}  ·  Exploration Lvl ${base.worldLevel}`, 20, 88);
 
     const stats = [
-      { value: base.charNum, label: "Operators" },
-      { value: base.weaponNum, label: "Weapons" },
-      { value: base.docNum, label: "Files" },
+      { value: base.charNum, label: t(lang, "command.profile.ui.operators") },
+      { value: base.weaponNum, label: t(lang, "command.profile.ui.weapons") },
+      { value: base.docNum, label: t(lang, "command.profile.ui.files") },
     ];
 
     const boxY = 124;
@@ -184,8 +240,10 @@ export default {
     const container = new ContainerBuilder()
       .addTextDisplayComponents(
         (t) => t.setContent(`## ▼// ${base.name} [\`${base.roleId}\`]`),
-        (t) => t.setContent(`Awakening Day: <t:${base.createTime}:D>`),
-        (t) => t.setContent(`Last Login: <t:${base.lastLoginTime}:R>`),
+        (txt) =>
+          txt.setContent(`${t(lang, "command.profile.ui.awakeningDay")}: <t:${base.createTime}:D>`),
+        (txt) =>
+          txt.setContent(`${t(lang, "command.profile.ui.lastLogin")}: <t:${base.lastLoginTime}:R>`),
       )
       .addMediaGalleryComponents((m) =>
         m.addItems((a) => a.setURL(`attachment://${account.roleId}.jpg`)),

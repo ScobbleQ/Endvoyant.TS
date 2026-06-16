@@ -19,15 +19,21 @@ export default {
   data: new SlashCommandBuilder()
     .setName("profile")
     .setNameLocalizations(dtx("command.profile.name"))
-    .setDescription("View your profile")
+    .setDescription("View a player's profile")
     .setDescriptionLocalizations(dtx("command.profile.description"))
     .addUserOption((option) =>
-      option.setName("user").setDescription("The user to view (defaults to yourself)"),
+      option
+        .setName("user")
+        .setNameLocalizations(dtx("command.profile.user.name"))
+        .setDescription("User to view (defaults to you)")
+        .setDescriptionLocalizations(dtx("command.profile.user.description")),
     )
     .addStringOption((option) =>
       option
         .setName("account")
-        .setDescription("The account to view (defaults to primary)")
+        .setNameLocalizations(dtx("command.profile.account.name"))
+        .setDescription("Account to view (defaults to primary)")
+        .setDescriptionLocalizations(dtx("command.profile.account.description"))
         .setAutocomplete(true),
     ),
   autocomplete: async (interaction: AutocompleteInteraction) => {

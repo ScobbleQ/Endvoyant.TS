@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "檔案",
-      "description": "查看你的檔案",
+      "description": "查看玩家檔案",
+      "user": {
+        "name": "user",
+        "description": "要查看的用戶（預設為自己）"
+      },
+      "account": {
+        "name": "account",
+        "description": "要查看的帳號（預設為主帳號）"
+      },
       "ui": {
         "awakeningDay": "覺醒日",
         "lastLogin": "最後登入",

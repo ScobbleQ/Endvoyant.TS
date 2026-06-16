@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "档案",
-      "description": "查看你的档案",
+      "description": "查看玩家档案",
+      "user": {
+        "name": "user",
+        "description": "要查看的用户（默认为自己）"
+      },
+      "account": {
+        "name": "account",
+        "description": "要查看的账号（默认为主账号）"
+      },
       "ui": {
         "awakeningDay": "觉醒日",
         "lastLogin": "最后登录",

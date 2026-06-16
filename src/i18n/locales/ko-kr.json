@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "프로필",
-      "description": "내 프로필 보기",
+      "description": "플레이어 프로필 보기",
+      "user": {
+        "name": "user",
+        "description": "볼 사용자 (기본값: 본인)"
+      },
+      "account": {
+        "name": "account",
+        "description": "볼 계정 (기본값: 기본 계정)"
+      },
       "ui": {
         "awakeningDay": "각성일",
         "lastLogin": "마지막 로그인",

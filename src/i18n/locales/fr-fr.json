@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "profil",
-      "description": "Affiche ton profil",
+      "description": "Voir le profil d'un joueur",
+      "user": {
+        "name": "user",
+        "description": "Utilisateur à voir (par défaut : toi)"
+      },
+      "account": {
+        "name": "account",
+        "description": "Compte à voir (par défaut : principal)"
+      },
       "ui": {
         "awakeningDay": "Jour de l'Éveil",
         "lastLogin": "Dernière connexion",

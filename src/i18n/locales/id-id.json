@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "profil",
-      "description": "Lihat profil kamu",
+      "description": "Lihat profil pemain",
+      "user": {
+        "name": "user",
+        "description": "Pengguna yang ingin dilihat (default: kamu)"
+      },
+      "account": {
+        "name": "account",
+        "description": "Akun yang ingin dilihat (default: utama)"
+      },
       "ui": {
         "awakeningDay": "Hari Kebangkitan",
         "lastLogin": "Login Terakhir",

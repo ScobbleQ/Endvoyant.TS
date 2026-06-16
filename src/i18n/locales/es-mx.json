@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "perfil",
-      "description": "Muestra tu perfil",
+      "description": "Ver perfil de un jugador",
+      "user": {
+        "name": "user",
+        "description": "Usuario a ver (predeterminado: tú)"
+      },
+      "account": {
+        "name": "account",
+        "description": "Cuenta a ver (predeterminado: principal)"
+      },
       "ui": {
         "awakeningDay": "Día de Despertar",
         "lastLogin": "Último inicio de sesión",

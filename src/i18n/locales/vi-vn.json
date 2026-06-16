@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "ho-so",
-      "description": "Xem hồ sơ của bạn",
+      "description": "Xem hồ sơ người chơi",
+      "user": {
+        "name": "user",
+        "description": "Người dùng cần xem (mặc định: bạn)"
+      },
+      "account": {
+        "name": "account",
+        "description": "Tài khoản cần xem (mặc định: chính)"
+      },
       "ui": {
         "awakeningDay": "Ngày Thức Tỉnh",
         "lastLogin": "Lần Đăng Nhập Gần Nhất",

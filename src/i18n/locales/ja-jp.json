@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "プロフィール",
-      "description": "あなたのプロフィールを表示します",
+      "description": "プレイヤープロフィールを表示します",
+      "user": {
+        "name": "user",
+        "description": "表示するユーザー（デフォルトは自分）"
+      },
+      "account": {
+        "name": "account",
+        "description": "表示するアカウント（デフォルトはプライマリ）"
+      },
       "ui": {
         "awakeningDay": "覚醒の日",
         "lastLogin": "最終ログイン",

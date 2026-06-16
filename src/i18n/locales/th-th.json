@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "โปรไฟล์",
-      "description": "ดูโปรไฟล์ของคุณ",
+      "description": "ดูโปรไฟล์ผู้เล่น",
+      "user": {
+        "name": "user",
+        "description": "ผู้ใช้ที่ต้องการดู (ค่าเริ่มต้น: คุณ)"
+      },
+      "account": {
+        "name": "account",
+        "description": "บัญชีที่ต้องการดู (ค่าเริ่มต้น: บัญชีหลัก)"
+      },
       "ui": {
         "awakeningDay": "วันตื่นรู้",
         "lastLogin": "เข้าสู่ระบบล่าสุด",

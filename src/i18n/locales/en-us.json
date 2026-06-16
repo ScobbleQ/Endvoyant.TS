@@ -61,7 +61,15 @@
     },
     "profile": {
       "name": "profile",
-      "description": "View your profile",
+      "description": "View a player's profile",
+      "user": {
+        "name": "user",
+        "description": "User to view (defaults to you)"
+      },
+      "account": {
+        "name": "account",
+        "description": "Account to view (defaults to primary)"
+      },
       "ui": {
         "awakeningDay": "Awakening Day",
         "lastLogin": "Last Login",

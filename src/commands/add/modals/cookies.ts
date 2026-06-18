@@ -8,9 +8,9 @@ import {
   MessageFlags,
 } from "discord.js";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
-import { errorContainer, successContainer, warnContainer } from "#/globals/components/container.ts";
 import { tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
+import { errorContainer, successContainer, warnContainer } from "#/ui/container.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { maxAccountContainer } from "../components/maxAccount.ts";
 

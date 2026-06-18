@@ -1,5 +1,7 @@
 import {
   Collection,
+  type Events,
+  type ClientEvents,
   type SlashCommandBuilder,
   type AutocompleteInteraction,
   type ChatInputCommandInteraction,
@@ -7,6 +9,12 @@ import {
   type ModalSubmitInteraction,
   type StringSelectMenuInteraction,
 } from "discord.js";
+
+export interface BotEvent<E extends Events = Events> {
+  name: E;
+  once?: boolean;
+  execute: (...args: ClientEvents[E]) => Promise<void> | void;
+}
 
 interface SlashCommand {
   cooldown: number;

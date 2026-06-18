@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import { zipSync, strToU8, type Zippable } from "fflate";
 import { db } from "#/drizzle/index.ts";
-import { errorContainer } from "#/globals/components/container.ts";
 import { dtx, tx, fromDiscordLocale } from "#/i18n/index.ts";
+import { errorContainer } from "#/ui/container.ts";
 
 export default {
   cooldown: 86400,

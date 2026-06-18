@@ -8,11 +8,7 @@ export function parseComponentId(customId: string) {
   const parts = customId.split(SEPARATOR);
   if (parts.length < 2) return null;
 
-  try {
-    const [commandName, interactionName, ...args] = parts;
-    if (!commandName || !interactionName) return null;
-    return { commandName, interactionName, args };
-  } catch {
-    return null;
-  }
+  const [commandName, interactionName, ...args] = parts;
+  if (!commandName || !interactionName) return null;
+  return { commandName, interactionName, args };
 }

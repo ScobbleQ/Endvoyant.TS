@@ -7,8 +7,8 @@ import {
   MessageFlags,
 } from "discord.js";
 import { UsersDB } from "#/drizzle/index.ts";
-import { successContainer, errorContainer } from "#/globals/components/container.ts";
 import { tx, Language, type Locale } from "#/i18n/index.ts";
+import { successContainer, errorContainer } from "#/ui/container.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 
 type settingParams = {

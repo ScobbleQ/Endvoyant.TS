@@ -1,5 +1,6 @@
 import { CronJob } from "cron";
 import { Events, type Client } from "discord.js";
+import type { BotEvent } from "#/types/discord.ts";
 import { codeRedeem } from "#/jobs/codeRedeem.ts";
 import { dailySignin } from "#/jobs/dailySignin.ts";
 import { refreshTokens } from "#/jobs/refreshToken.ts";
@@ -27,4 +28,4 @@ export default {
 
     new CronJob("0 0 * * *", () => refreshTokens(), null, true, "America/New_York", null, false);
   },
-};
+} satisfies BotEvent<Events.ClientReady>;

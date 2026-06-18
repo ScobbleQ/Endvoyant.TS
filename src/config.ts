@@ -1,6 +1,12 @@
 import { loadEnvFile } from "node:process";
 loadEnvFile();
 
+function requireEnv(key: string): string {
+  const value = process.env[key];
+  if (!value) throw new Error(`${key} is not set`);
+  return value;
+}
+
 if (!process.env["DISCORD_TOKEN"]) {
   throw new Error("DISCORD_TOKEN is not set");
 }
@@ -19,13 +25,13 @@ if (!process.env["DATABASE_URL"]) {
 
 export const config = {
   discord: {
-    token: process.env["DISCORD_TOKEN"] || "",
-    clientId: process.env["CLIENT_ID"] || "",
-    clientSecret: process.env["CLIENT_SECRET"] || "",
-    premiumSkuId: process.env["PREMIUM_SKU_ID"] || "",
+    token: requireEnv("DISCORD_TOKEN"),
+    clientId: requireEnv("CLIENT_ID"),
+    clientSecret: requireEnv("CLIENT_SECRET"),
+    premiumSkuId: requireEnv("PREMIUM_SKU_ID"),
   },
   database: {
-    url: process.env["DATABASE_URL"] || "",
+    url: requireEnv("DATABASE_URL"),
   },
   env: process.env["NODE_ENV"] || "development",
-};
+} as const;

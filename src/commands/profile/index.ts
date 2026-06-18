@@ -9,9 +9,9 @@ import {
 } from "discord.js";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
-import { errorContainer } from "#/globals/components/container.ts";
 import { fromDiscordLocale, dtx, tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
+import { errorContainer } from "#/ui/container.ts";
 import { getFontStack } from "#/utils/fonts.ts";
 
 export default {

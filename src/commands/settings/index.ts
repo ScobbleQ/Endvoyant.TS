@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 import { UsersDB } from "#/drizzle/index.ts";
-import { errorContainer } from "#/globals/components/container.ts";
 import { tx, dtx, fromDiscordLocale } from "#/i18n/index.ts";
+import { errorContainer } from "#/ui/container.ts";
 import SettingModal from "./modals/setting.ts";
 
 export default {

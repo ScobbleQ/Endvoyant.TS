@@ -8,9 +8,9 @@ import {
 import { and, eq } from "drizzle-orm";
 import { UsersDB, db, AccountsDB } from "#/drizzle/index.ts";
 import { efAttemptedCodes, efCodes } from "#/drizzle/schema.ts";
-import { errorContainer } from "#/globals/components/container.ts";
 import { dtx, tx, fromDiscordLocale } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
+import { errorContainer } from "#/ui/container.ts";
 
 export default {
   cooldown: 30,

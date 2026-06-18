@@ -1,4 +1,5 @@
 import { Events, type Entitlement } from "discord.js";
+import type { BotEvent } from "#/types/discord.ts";
 import { config } from "#/config.ts";
 import { UsersDB } from "#/drizzle/index.ts";
 
@@ -11,4 +12,4 @@ export default {
       isPremium: true,
     });
   },
-};
+} satisfies BotEvent<Events.EntitlementCreate>;

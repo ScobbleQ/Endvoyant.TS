@@ -21,6 +21,8 @@ function isInteractionHandler(handler: unknown) {
   );
 }
 
+const COMMAND_ENTRY_FILES = ["slash.ts", "context.ts"] as const;
+
 export async function loadCommands() {
   const commands: Command[] = [];
   const commandsPath = join(import.meta.dirname, "..", "commands");
@@ -29,17 +31,16 @@ export async function loadCommands() {
   for (const folder of commandFolders) {
     if (folder.startsWith("_")) continue;
 
-    const filePath = join(commandsPath, folder, "index.ts");
-    if (!existsSync(filePath)) {
-      console.warn(`Command folder ${folder} is missing an index.ts file.`);
-      continue;
-    }
+    for (const entry of COMMAND_ENTRY_FILES) {
+      const filePath = join(commandsPath, folder, entry);
+      if (!existsSync(filePath)) continue;
 
-    const command = (await import(filePath)).default;
-    if (isCommand(command)) {
-      commands.push(command);
-    } else {
-      console.warn(`Command at ${filePath} is missing a required property.`);
+      const command = (await import(filePath)).default;
+      if (isCommand(command)) {
+        commands.push(command);
+      } else {
+        console.warn(`Command at ${filePath} is missing a required property.`);
+      }
     }
   }
 

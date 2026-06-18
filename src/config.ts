@@ -7,22 +7,6 @@ function requireEnv(key: string): string {
   return value;
 }
 
-if (!process.env["DISCORD_TOKEN"]) {
-  throw new Error("DISCORD_TOKEN is not set");
-}
-
-if (!process.env["CLIENT_ID"]) {
-  throw new Error("CLIENT_ID is not set");
-}
-
-if (!process.env["CLIENT_SECRET"]) {
-  throw new Error("CLIENT_SECRET is not set");
-}
-
-if (!process.env["DATABASE_URL"]) {
-  throw new Error("DATABASE_URL is not set");
-}
-
 export const config = {
   discord: {
     token: requireEnv("DISCORD_TOKEN"),

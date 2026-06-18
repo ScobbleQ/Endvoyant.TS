@@ -27,7 +27,7 @@ export function getFontStack(size: string, userLanguage: Locale) {
   if (userLanguage === Language.ZH_TW) {
     fallbacks.unshift('"NotoSansTC"');
     fallbacks.push('"NotoSansSC"');
-  } else {
+  } else if (userLanguage === Language.ZH_CN) {
     fallbacks.unshift('"NotoSansSC"');
     fallbacks.push('"NotoSansTC"');
   }

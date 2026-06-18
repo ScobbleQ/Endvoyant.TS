@@ -1,6 +1,6 @@
 import { CronJob } from "cron";
 import { Events, type Client } from "discord.js";
-import type { BotEvent } from "#/types/discord.ts";
+import type { BotEvent } from "#/discord.js";
 import { codeRedeem } from "#/jobs/codeRedeem.ts";
 import { dailySignin } from "#/jobs/dailySignin.ts";
 import { refreshTokens } from "#/jobs/refreshToken.ts";

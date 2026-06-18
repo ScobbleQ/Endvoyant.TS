@@ -1,5 +1,5 @@
 import { Events, type Entitlement } from "discord.js";
-import type { BotEvent } from "#/types/discord.ts";
+import type { BotEvent } from "#/discord.js";
 import { config } from "#/config.ts";
 import { UsersDB } from "#/drizzle/index.ts";
 

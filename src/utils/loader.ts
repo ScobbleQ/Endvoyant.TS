@@ -1,6 +1,6 @@
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import type { Command, InteractionHandler } from "#/types/discord.js";
+import type { Command, InteractionHandler } from "#/discord.js";
 
 function isCommand(command: unknown) {
   return (

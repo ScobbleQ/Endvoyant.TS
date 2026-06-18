@@ -12,7 +12,7 @@ export const config = {
     token: requireEnv("DISCORD_TOKEN"),
     clientId: requireEnv("CLIENT_ID"),
     clientSecret: requireEnv("CLIENT_SECRET"),
-    premiumSkuId: requireEnv("PREMIUM_SKU_ID"),
+    premiumSkuId: process.env["PREMIUM_SKU_ID"] || "",
   },
   database: {
     url: requireEnv("DATABASE_URL"),

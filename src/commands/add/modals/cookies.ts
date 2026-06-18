@@ -139,12 +139,23 @@ export default {
       if (msg) await msg.pin();
     } catch (error) {
       if (!interaction.inGuild()) return; // theres nothing we can do
-      if (error instanceof DiscordAPIError && error.code === 50007) {
+      if (!(error instanceof DiscordAPIError)) return; // unknown error, just ignore
+      if (error.code === 50007) {
         await interaction.followUp({
           components: [
             warnContainer({
               title: "Unable to Send DM",
-              desc: "We were unable to send you a DM. Please enable permissions for notifications.",
+              desc: "We were unable to send you a DM. Please check your DM settings if you want to receive notifications in the future.",
+            }),
+          ],
+          flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+        });
+      } else if (error.code === 50278) {
+        await interaction.followUp({
+          components: [
+            warnContainer({
+              title: "Unable to Send DM",
+              desc: "We were unable to send you a DM. Your settings require a mutual server to send you DMs, but you don't share a server with the bot. Please change your DM settings or join a server with the bot.",
             }),
           ],
           flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],

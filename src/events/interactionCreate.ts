@@ -1,6 +1,7 @@
-import { Collection, ContainerBuilder, Events, MessageFlags, type Interaction } from "discord.js";
+import { Collection, Events, MessageFlags, type Interaction } from "discord.js";
 import type { BotEvent } from "#/discord.js";
 import { fromDiscordLocale, tx } from "#/i18n/index.ts";
+import { errorContainer } from "#/ui/container.ts";
 import { parseComponentId } from "#/utils/componentId.ts";
 
 export default {
@@ -99,9 +100,7 @@ export default {
 const interactionReply = async (interaction: Interaction, content: string) => {
   if (interaction.isAutocomplete()) return;
 
-  const container = new ContainerBuilder()
-    .setAccentColor(0xff0000)
-    .addTextDisplayComponents((t) => t.setContent(content));
+  const container = errorContainer({ desc: content });
 
   if (interaction.deferred || interaction.replied) {
     await interaction.followUp({

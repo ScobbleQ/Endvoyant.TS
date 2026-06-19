@@ -1,7 +1,7 @@
-import { SlashCommandBuilder, MessageFlags, type ChatInputCommandInteraction } from "discord.js";
+import { MessageFlags, SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB } from "#/drizzle/index.ts";
-import { dtx, tx, fromDiscordLocale } from "#/i18n/index.ts";
+import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
 import { errorContainer } from "#/ui/container.ts";
 import { accountContainer } from "./components/account.ts";
 

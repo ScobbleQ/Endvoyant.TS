@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { tx, dtx, Language } from "./index.ts";
+import { describe, expect, it } from "vitest";
+import { dtx, Language, tx } from "./index.ts";
 
 describe("i18n", () => {
   it("should get a locale", () => {

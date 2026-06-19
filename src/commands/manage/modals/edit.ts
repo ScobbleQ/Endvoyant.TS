@@ -1,11 +1,11 @@
 import {
+  CheckboxBuilder,
   LabelBuilder,
+  MessageFlags,
   ModalBuilder,
   ModalSubmitInteraction,
-  TextDisplayBuilder,
-  MessageFlags,
-  CheckboxBuilder,
   RadioGroupBuilder,
+  TextDisplayBuilder,
 } from "discord.js";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
 import { tx } from "#/i18n/index.ts";

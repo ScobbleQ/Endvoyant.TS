@@ -1,4 +1,4 @@
-import { type Client, DiscordAPIError, ContainerBuilder, MessageFlags } from "discord.js";
+import { type Client, ContainerBuilder, DiscordAPIError, MessageFlags } from "discord.js";
 import pQueue from "p-queue";
 import { config } from "#/config.ts";
 import { EventsDB, db } from "#/drizzle/index.ts";

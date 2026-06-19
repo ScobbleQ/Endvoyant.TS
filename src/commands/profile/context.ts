@@ -1,9 +1,9 @@
 import {
-  ContextMenuCommandBuilder,
   ApplicationCommandType,
-  type ContextMenuCommandInteraction,
   AttachmentBuilder,
+  ContextMenuCommandBuilder,
   MessageFlags,
+  type ContextMenuCommandInteraction,
 } from "discord.js";
 import { UsersDB, db } from "#/drizzle/index.ts";
 import { fromDiscordLocale, tx } from "#/i18n/index.ts";

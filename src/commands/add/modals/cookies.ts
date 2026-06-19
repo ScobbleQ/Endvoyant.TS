@@ -1,11 +1,11 @@
 import {
+  DiscordAPIError,
   LabelBuilder,
+  MessageFlags,
   ModalBuilder,
   ModalSubmitInteraction,
   TextInputBuilder,
   TextInputStyle,
-  DiscordAPIError,
-  MessageFlags,
 } from "discord.js";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
 import { tx } from "#/i18n/index.ts";

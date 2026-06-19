@@ -1,12 +1,12 @@
 import {
   Collection,
-  type Events,
-  type ClientEvents,
-  type SlashCommandBuilder,
   type AutocompleteInteraction,
-  type ChatInputCommandInteraction,
   type ButtonInteraction,
+  type ChatInputCommandInteraction,
+  type ClientEvents,
+  type Events,
   type ModalSubmitInteraction,
+  type SlashCommandBuilder,
   type StringSelectMenuInteraction,
 } from "discord.js";
 

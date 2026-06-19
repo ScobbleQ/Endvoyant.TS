@@ -1,14 +1,14 @@
 import {
-  SlashCommandBuilder,
-  MessageFlags,
-  type ChatInputCommandInteraction,
-  type AutocompleteInteraction,
   ContainerBuilder,
+  MessageFlags,
+  SlashCommandBuilder,
+  type AutocompleteInteraction,
+  type ChatInputCommandInteraction,
 } from "discord.js";
 import pQueue from "p-queue";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
-import { dtx, tx, fromDiscordLocale } from "#/i18n/index.ts";
+import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { errorContainer } from "#/ui/container.ts";
 

@@ -10,7 +10,7 @@ import {
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
 import { tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
-import { errorContainer, successContainer, container, warnContainer } from "#/ui/container.ts";
+import { container, errorContainer, successContainer, warnContainer } from "#/ui/container.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { maxAccountContainer } from "../components/maxAccount.ts";
 

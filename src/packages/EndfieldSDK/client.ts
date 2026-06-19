@@ -1,15 +1,15 @@
 import { Agent, type Dispatcher } from "undici";
 import type {
-  GryphlineErrorResponse,
-  EmailPasswordLoginResponse,
-  OAuth2GrantByKind,
+  CardDetailResponse,
+  ChannelTokenAuthResponse,
   CredentialsFromCodeResponse,
-  SkportZonaiErrorResponse,
+  EmailPasswordLoginResponse,
+  GryphlineErrorResponse,
+  OAuth2GrantByKind,
   PlayerBindingsResponse,
   RefreshAccountTokenResponse,
-  ChannelTokenAuthResponse,
   SigninResponse,
-  CardDetailResponse,
+  SkportZonaiErrorResponse,
 } from "./types/auth.ts";
 import { type Locale } from "./types/language.ts";
 import { toWebLocale } from "./utils/convert.ts";

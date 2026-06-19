@@ -1,14 +1,14 @@
 import {
+  AttachmentBuilder,
   type AutocompleteInteraction,
+  type ChatInputCommandInteraction,
+  ContainerBuilder,
   MessageFlags,
   SlashCommandBuilder,
-  ContainerBuilder,
-  AttachmentBuilder,
-  type ChatInputCommandInteraction,
 } from "discord.js";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
-import { fromDiscordLocale, dtx, tx } from "#/i18n/index.ts";
+import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { errorContainer } from "#/ui/container.ts";
 import { renderProfile } from "./render.ts";

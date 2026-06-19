@@ -7,8 +7,8 @@ export type {
   GryphlineErrorResponse,
   OAuth2GrantByKind,
   PlayerBindingsResponse,
-  SkportZonaiErrorResponse,
   SigninResponse,
+  SkportZonaiErrorResponse,
 } from "./types/auth.ts";
 
 const sdk = new EndfieldSDK();

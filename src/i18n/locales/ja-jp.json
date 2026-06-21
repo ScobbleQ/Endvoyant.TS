@@ -71,6 +71,7 @@
     },
     "profile": {
       "name": "プロフィール",
+      "contextName": "プロフィールを表示",
       "description": "プレイヤープロフィールを表示します",
       "user": {
         "name": "user",

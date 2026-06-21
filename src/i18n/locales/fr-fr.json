@@ -71,6 +71,7 @@
     },
     "profile": {
       "name": "profil",
+      "contextName": "Afficher le profil",
       "description": "Voir le profil d'un joueur",
       "user": {
         "name": "user",

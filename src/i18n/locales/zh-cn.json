@@ -71,6 +71,7 @@
     },
     "profile": {
       "name": "档案",
+      "contextName": "查看档案",
       "description": "查看玩家档案",
       "user": {
         "name": "user",

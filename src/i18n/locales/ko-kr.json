@@ -71,6 +71,7 @@
     },
     "profile": {
       "name": "프로필",
+      "contextName": "프로필 보기",
       "description": "플레이어 프로필 보기",
       "user": {
         "name": "user",

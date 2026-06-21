@@ -71,6 +71,7 @@
     },
     "profile": {
       "name": "โปรไฟล์",
+      "contextName": "ดูโปรไฟล์",
       "description": "ดูโปรไฟล์ผู้เล่น",
       "user": {
         "name": "user",

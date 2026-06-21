@@ -71,6 +71,7 @@
     },
     "profile": {
       "name": "profile",
+      "contextName": "View Profile",
       "description": "View a player's profile",
       "user": {
         "name": "user",

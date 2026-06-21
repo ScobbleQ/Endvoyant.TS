@@ -71,6 +71,7 @@
     },
     "profile": {
       "name": "profil",
+      "contextName": "Lihat Profil",
       "description": "Lihat profil pemain",
       "user": {
         "name": "user",

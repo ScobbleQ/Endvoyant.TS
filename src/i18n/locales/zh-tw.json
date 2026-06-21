@@ -71,6 +71,7 @@
     },
     "profile": {
       "name": "檔案",
+      "contextName": "查看檔案",
       "description": "查看玩家檔案",
       "user": {
         "name": "user",

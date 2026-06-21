@@ -71,6 +71,7 @@
     },
     "profile": {
       "name": "ho-so",
+      "contextName": "Xem hồ sơ",
       "description": "Xem hồ sơ người chơi",
       "user": {
         "name": "user",

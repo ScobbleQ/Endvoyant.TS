@@ -7,14 +7,17 @@ import {
 } from "discord.js";
 import { config } from "#/config.ts";
 import { db, EventsDB, UsersDB } from "#/drizzle/index.ts";
-import { fromDiscordLocale, tx } from "#/i18n/index.ts";
+import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { errorContainer } from "#/ui/container.ts";
 import { renderProfile } from "./render.ts";
 
 export default {
   cooldown: 60,
-  data: new ContextMenuCommandBuilder().setName("Profile").setType(ApplicationCommandType.User),
+  data: new ContextMenuCommandBuilder()
+    .setName("View Profile")
+    .setNameLocalizations(dtx("command.profile.contextName"))
+    .setType(ApplicationCommandType.User),
   execute: async (interaction: ContextMenuCommandInteraction) => {
     const viewer = await UsersDB.findAccess(interaction.user.id);
     const lang = viewer?.lang || fromDiscordLocale(interaction.locale) || "en-us";

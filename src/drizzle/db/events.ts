@@ -10,7 +10,7 @@ export class EventsDB {
       metadata,
       aid,
     }: {
-      source: "slash" | "button" | "modal" | "select" | "cron";
+      source: "slash" | "context" | "button" | "modal" | "select" | "cron";
       action: string;
       metadata?: Record<string, unknown>;
       aid?: string | null;

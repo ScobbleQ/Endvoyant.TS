@@ -2,10 +2,12 @@
   "lang": "日本語",
   "command": {
     "about": {
+      "full": "bot情報",
       "name": "bot情報",
       "description": "Botの情報を表示します"
     },
     "add": {
+      "full": "追加 アカウント",
       "name": "追加",
       "description": "アカウントをDiscordに連携します",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "危機 契約",
       "name": "危機",
       "description": "危機契約の記録を表示",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "デイリー ログイン",
       "name": "デイリー",
       "description": "ゲーム内のデイリー報酬を受け取ります",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "エクスポート データ",
       "name": "エクスポート",
       "description": "Endvoyantのデータを書き出します",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "詳細 プロフィール",
       "name": "詳細",
       "description": "あなたの詳細なプレイヤープロフィールを表示します",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "アカウント 管理",
       "name": "アカウント",
       "description": "連携済みアカウントを管理します",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "premium",
       "name": "premium",
       "description": "プレミアムステータスを表示します"
     },
     "profile": {
+      "full": "プロフィール",
       "name": "プロフィール",
       "contextName": "プロフィールを表示",
       "description": "プレイヤープロフィールを表示します",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "一覧 コード",
       "name": "一覧",
       "description": "有効なリデンプションコードを表示します (英語)",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "交換",
       "name": "交換",
       "description": "報酬コードを交換します"
     },
     "settings": {
+      "full": "設定",
       "name": "設定",
       "description": "Endvoyantの個人設定を変更します"
     },
     "game": {
+      "full": "game ニュース",
       "name": "game",
       "description": "ゲームの最新ニュース、イベント、アップデートを表示します",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "ヘルプ",
+      "name": "ヘルプ",
+      "description": "ボットのヘルプとサポートを表示します"
+    },
     "umbral": {
+      "full": "映像の 記念碑",
       "name": "映像の",
       "description": "映像の記念碑の記録を表示",
       "subcommands": {

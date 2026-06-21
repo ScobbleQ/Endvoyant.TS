@@ -2,10 +2,12 @@
   "lang": "Tiếng Việt",
   "command": {
     "about": {
+      "full": "thong-tin",
       "name": "thong-tin",
       "description": "Thông tin về bot"
     },
     "add": {
+      "full": "them tai-khoan",
       "name": "them",
       "description": "Liên kết tài khoản với Discord của bạn",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "điều-kiện hợp-đồng",
       "name": "điều-kiện",
       "description": "Xem hồ sơ hợp đồng điều kiện",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "hang-ngay diem-danh",
       "name": "hang-ngay",
       "description": "Nhận phần thưởng hàng ngày trong game",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "xuat du-lieu",
       "name": "xuat",
       "description": "Xuất dữ liệu Endvoyant của bạn",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "day-du ho-so",
       "name": "day-du",
       "description": "Xem hồ sơ người chơi đầy đủ",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "quan-ly danh-sach",
       "name": "quan-ly",
       "description": "Quản lý các tài khoản đã liên kết",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "premium",
       "name": "premium",
       "description": "Xem trạng thái premium của bạn"
     },
     "profile": {
+      "full": "ho-so",
       "name": "ho-so",
       "contextName": "Xem hồ sơ",
       "description": "Xem hồ sơ người chơi",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "danh-sach ma",
       "name": "danh-sach",
       "description": "Xem mã đổi thưởng đang hoạt động (Tiếng Anh)",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "doi",
       "name": "doi",
       "description": "Đổi mã phần thưởng"
     },
     "settings": {
+      "full": "cai-dat",
       "name": "cai-dat",
       "description": "Thay đổi cài đặt cá nhân Endvoyant"
     },
     "game": {
+      "full": "game tin-tuc",
       "name": "game",
       "description": "Xem tin tức, sự kiện và cập nhật game gần đây",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "trợ-giúp",
+      "name": "trợ-giúp",
+      "description": "Nhận trợ giúp và hỗ trợ cho bot"
+    },
     "umbral": {
+      "full": "bóng-tối đài",
       "name": "bóng-tối",
       "description": "Xem hồ sơ đài bóng tối",
       "subcommands": {

@@ -2,10 +2,12 @@
   "lang": "Français",
   "command": {
     "about": {
+      "full": "info",
       "name": "info",
       "description": "Informations sur le bot"
     },
     "add": {
+      "full": "ajouter compte",
       "name": "ajouter",
       "description": "Lier un compte à ton Discord",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "crise contrat",
       "name": "crise",
       "description": "Afficher les enregistrements du contrat de crise",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "quotidien connexion",
       "name": "quotidien",
       "description": "Récupère tes récompenses quotidiennes en jeu",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "exporter données",
       "name": "exporter",
       "description": "Exporte tes données Endvoyant",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "complet profil",
       "name": "complet",
       "description": "Affiche ton profil joueur complet",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "compte gérer",
       "name": "compte",
       "description": "Gère tes comptes liés",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "premium",
       "name": "premium",
       "description": "Consulte ton statut premium"
     },
     "profile": {
+      "full": "profil",
       "name": "profil",
       "contextName": "Afficher le profil",
       "description": "Voir le profil d'un joueur",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "liste codes",
       "name": "liste",
       "description": "Afficher les codes de rédemption actifs (Anglais)",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "échanger",
       "name": "échanger",
       "description": "Échange un code de récompense"
     },
     "settings": {
+      "full": "paramètres",
       "name": "paramètres",
       "description": "Modifie tes paramètres personnels Endvoyant"
     },
     "game": {
+      "full": "game news",
       "name": "game",
       "description": "Consulte les actualités, événements et mises à jour récentes du jeu",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "aide",
+      "name": "aide",
+      "description": "Obtenir de l'aide et du support pour le bot"
+    },
     "umbral": {
+      "full": "lombre monument",
       "name": "lombre",
       "description": "Afficher les enregistrements du monument de l'ombre",
       "subcommands": {

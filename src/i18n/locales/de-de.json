@@ -2,10 +2,12 @@
   "lang": "Deutsch",
   "command": {
     "about": {
+      "full": "info",
       "name": "info",
       "description": "Informationen zum Bot"
     },
     "add": {
+      "full": "hinzufügen konto",
       "name": "hinzufügen",
       "description": "Verknüpfe ein Konto mit Discord",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "krisenschutz vertrag",
       "name": "krisenschutz",
       "description": "Aufzeichnungen des Krisenschutzvertrags anzeigen",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "täglich einchecken",
       "name": "täglich",
       "description": "Hole deine täglichen Belohnungen im Spiel ab",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "export daten",
       "name": "export",
       "description": "Exportiere deine Endvoyant-Daten",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "vollständig profil",
       "name": "vollständig",
       "description": "Zeige dein vollständiges Spielerprofil an",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "konto verwaltung",
       "name": "konto",
       "description": "Verwalte deine verknüpften Konten",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "premium",
       "name": "premium",
       "description": "Zeige deinen Premium-Status"
     },
     "profile": {
+      "full": "profil",
       "name": "profil",
       "contextName": "Profil anzeigen",
       "description": "Spielprofil anzeigen",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "liste codes",
       "name": "liste",
       "description": "Aktive Einlösecodes anzeigen (Englisch)",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "einlösen",
       "name": "einlösen",
       "description": "Löse einen Belohnungscode ein"
     },
     "settings": {
+      "full": "einstellungen",
       "name": "einstellungen",
       "description": "Ändere deine persönlichen Endvoyant-Einstellungen"
     },
     "game": {
+      "full": "game news",
       "name": "game",
       "description": "Zeige aktuelle Spiel-News, Events und Updates an",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "hilfe",
+      "name": "hilfe",
+      "description": "Erhalte Hilfe und Support für den Bot"
+    },
     "umbral": {
+      "full": "schatten monument",
       "name": "schatten",
       "description": "Aufzeichnungen des Schattenmonuments anzeigen",
       "subcommands": {

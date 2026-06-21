@@ -2,10 +2,12 @@
   "lang": "Bahasa Indonesia",
   "command": {
     "about": {
+      "full": "info",
       "name": "info",
       "description": "Informasi tentang bot"
     },
     "add": {
+      "full": "tambah akun",
       "name": "tambah",
       "description": "Hubungkan akun ke Discord kamu",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "kontingensi kontrak",
       "name": "kontingensi",
       "description": "Lihat catatan kontrak kontingensi",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "harian checkin",
       "name": "harian",
       "description": "Klaim hadiah harian kamu dalam game",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "ekspor data",
       "name": "ekspor",
       "description": "Ekspor data Endvoyant kamu",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "lengkap profil",
       "name": "lengkap",
       "description": "Lihat profil pemain kamu secara lengkap",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "akun kelola",
       "name": "akun",
       "description": "Kelola akun yang sudah terhubung",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "premium",
       "name": "premium",
       "description": "Lihat status premium kamu"
     },
     "profile": {
+      "full": "profil",
       "name": "profil",
       "contextName": "Lihat Profil",
       "description": "Lihat profil pemain",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "daftar kode",
       "name": "daftar",
       "description": "Lihat kode penukaran aktif (Inggris)",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "tukar",
       "name": "tukar",
       "description": "Tukarkan kode hadiah"
     },
     "settings": {
+      "full": "pengaturan",
       "name": "pengaturan",
       "description": "Ubah pengaturan pribadi Endvoyant kamu"
     },
     "game": {
+      "full": "game berita",
       "name": "game",
       "description": "Lihat berita, event, dan update game terbaru",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "bantuan",
+      "name": "bantuan",
+      "description": "Dapatkan bantuan dan dukungan untuk bot"
+    },
     "umbral": {
+      "full": "umbra monumen",
       "name": "umbra",
       "description": "Lihat catatan monumen umbra",
       "subcommands": {

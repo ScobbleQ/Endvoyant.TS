@@ -2,10 +2,12 @@
   "lang": "Português (BR)",
   "command": {
     "about": {
+      "full": "info",
       "name": "info",
       "description": "Informações sobre o bot"
     },
     "add": {
+      "full": "adicionar conta",
       "name": "adicionar",
       "description": "Vincule uma conta ao seu Discord",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "contingência contrato",
       "name": "contingência",
       "description": "Visualizar registros do contrato de contingência",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "diário checkin",
       "name": "diário",
       "description": "Resgate suas recompensas diárias no jogo",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "exportar dados",
       "name": "exportar",
       "description": "Exporte seus dados do Endvoyant",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "completo perfil",
       "name": "completo",
       "description": "Veja seu perfil completo de jogador",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "conta gerenciar",
       "name": "conta",
       "description": "Gerencie suas contas vinculadas",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "premium",
       "name": "premium",
       "description": "Veja seu status de premium"
     },
     "profile": {
+      "full": "perfil",
       "name": "perfil",
       "contextName": "Ver perfil",
       "description": "Ver perfil de um jogador",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "lista códigos",
       "name": "lista",
       "description": "Ver códigos de resgate ativos (Inglês)",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "resgatar",
       "name": "resgatar",
       "description": "Resgate um código de recompensa"
     },
     "settings": {
+      "full": "configurações",
       "name": "configurações",
       "description": "Altere suas configurações pessoais do Endvoyant"
     },
     "game": {
+      "full": "game notícias",
       "name": "game",
       "description": "Veja as notícias, eventos e atualizações recentes do jogo",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "ajuda",
+      "name": "ajuda",
+      "description": "Obtenha ajuda e suporte para o bot"
+    },
     "umbral": {
+      "full": "umbral monumento",
       "name": "umbral",
       "description": "Visualizar registros do monumento umbral",
       "subcommands": {

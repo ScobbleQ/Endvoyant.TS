@@ -2,10 +2,12 @@
   "lang": "ไทย",
   "command": {
     "about": {
+      "full": "ข้อมูล",
       "name": "ข้อมูล",
       "description": "ข้อมูลเกี่ยวกับบอท"
     },
     "add": {
+      "full": "เพิ่ม บัญชี",
       "name": "เพิ่ม",
       "description": "เชื่อมต่อบัญชีกับ Discord ของคุณ",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "ฉุกเฉิน สัญญา",
       "name": "ฉุกเฉิน",
       "description": "ดูบันทึกสัญญาฉุกเฉิน",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "รายวัน เช็คอิน",
       "name": "รายวัน",
       "description": "รับรางวัลประจำวันในเกม",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "ส่งออก ข้อมูล",
       "name": "ส่งออก",
       "description": "ส่งออกข้อมูล Endvoyant ของคุณ",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "เต็ม โปรไฟล์",
       "name": "เต็ม",
       "description": "ดูโปรไฟล์ผู้เล่นแบบเต็ม",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "บัญชี จัดการ",
       "name": "บัญชี",
       "description": "จัดการบัญชีที่เชื่อมต่อแล้ว",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "พรีเมียม",
       "name": "พรีเมียม",
       "description": "ดูสถานะพรีเมียมของคุณ"
     },
     "profile": {
+      "full": "โปรไฟล์",
       "name": "โปรไฟล์",
       "contextName": "ดูโปรไฟล์",
       "description": "ดูโปรไฟล์ผู้เล่น",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "รายการ รหัส",
       "name": "รายการ",
       "description": "ดูรหัสแลกของรางวัลที่ใช้งานอยู่ (อังกฤษ)",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "แลก",
       "name": "แลก",
       "description": "แลกรหัสรางวัล"
     },
     "settings": {
+      "full": "ตั้งค่า",
       "name": "ตั้งค่า",
       "description": "เปลี่ยนการตั้งค่าส่วนตัว Endvoyant ของคุณ"
     },
     "game": {
+      "full": "game ข่าว",
       "name": "game",
       "description": "ดูข่าว เหตุการณ์ และอัปเดตล่าสุดของเกม",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "ช่วยเหลือ",
+      "name": "ช่วยเหลือ",
+      "description": "รับความช่วยเหลือและบริการสนับสนุนสำหรับบอต"
+    },
     "umbral": {
+      "full": "แห่งเงามืด อนุสาวรีย์",
       "name": "แห่งเงามืด",
       "description": "ดูบันทึกอนุสาวรีย์แห่งเงามืด",
       "subcommands": {

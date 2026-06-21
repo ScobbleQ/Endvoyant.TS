@@ -2,10 +2,12 @@
   "lang": "简体中文",
   "command": {
     "about": {
+      "full": "关于",
       "name": "关于",
       "description": "查看机器人信息"
     },
     "add": {
+      "full": "添加 账号",
       "name": "添加",
       "description": "将账号绑定到你的 Discord",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "危机 合约",
       "name": "危机",
       "description": "查看危机合约记录",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "每日 签到",
       "name": "每日",
       "description": "领取游戏内每日奖励",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "导出 数据",
       "name": "导出",
       "description": "导出你的 Endvoyant 数据",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "完整 档案",
       "name": "完整",
       "description": "查看你的完整玩家档案",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "账号 管理",
       "name": "账号",
       "description": "管理已绑定的账号",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "premium",
       "name": "premium",
       "description": "查看你的高级会员状态"
     },
     "profile": {
+      "full": "档案",
       "name": "档案",
       "contextName": "查看档案",
       "description": "查看玩家档案",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "列表 兑换码",
       "name": "列表",
       "description": "查看有效的兑换码（英语）",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "兑换",
       "name": "兑换",
       "description": "兑换奖励码"
     },
     "settings": {
+      "full": "设置",
       "name": "设置",
       "description": "更改你的 Endvoyant 个人设置"
     },
     "game": {
+      "full": "game 新闻",
       "name": "game",
       "description": "查看最新的游戏新闻、活动和更新",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "帮助",
+      "name": "帮助",
+      "description": "获取有关机器人的帮助和支持"
+    },
     "umbral": {
+      "full": "影拓 丰碑",
       "name": "影拓",
       "description": "查看影拓丰碑记录",
       "subcommands": {

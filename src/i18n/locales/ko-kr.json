@@ -2,10 +2,12 @@
   "lang": "한국어",
   "command": {
     "about": {
+      "full": "정보",
       "name": "정보",
       "description": "봇 정보 보기"
     },
     "add": {
+      "full": "추가 계정",
       "name": "추가",
       "description": "Discord에 계정 연결하기",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "위기 협약",
       "name": "위기",
       "description": "위기 협약 기록 보기",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "일일 출석",
       "name": "일일",
       "description": "게임 내 일일 보상 받기",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "내보내기 데이터",
       "name": "내보내기",
       "description": "Endvoyant 데이터 내보내기",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "상세 프로필",
       "name": "상세",
       "description": "플레이어 상세 프로필 보기",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "계정 관리",
       "name": "계정",
       "description": "연결된 계정 관리",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "프리미엄",
       "name": "프리미엄",
       "description": "프리미엄 상태 보기"
     },
     "profile": {
+      "full": "프로필",
       "name": "프로필",
       "contextName": "프로필 보기",
       "description": "플레이어 프로필 보기",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "목록 코드",
       "name": "목록",
       "description": "유효한 리딤 코드 보기 (영어)",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "교환",
       "name": "교환",
       "description": "보상 코드 교환하기"
     },
     "settings": {
+      "full": "설정",
       "name": "설정",
       "description": "Endvoyant 개인 설정 변경"
     },
     "game": {
+      "full": "game 뉴스",
       "name": "game",
       "description": "게임 최신 뉴스, 이벤트, 업데이트 보기",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "도움말",
+      "name": "도움말",
+      "description": "봇에 대한 도움말 및 지원을 받습니다"
+    },
     "umbral": {
+      "full": "그림자 이정표",
       "name": "그림자",
       "description": "그림자 이정표 기록 보기",
       "subcommands": {

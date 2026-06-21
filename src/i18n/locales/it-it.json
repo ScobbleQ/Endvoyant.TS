@@ -2,10 +2,12 @@
   "lang": "Italiano",
   "command": {
     "about": {
+      "full": "info",
       "name": "info",
       "description": "Informazioni sul bot"
     },
     "add": {
+      "full": "aggiungi account",
       "name": "aggiungi",
       "description": "Collega un account al tuo Discord",
       "subcommands": {
@@ -16,6 +18,7 @@
       }
     },
     "contingency": {
+      "full": "emergenza contratto",
       "name": "emergenza",
       "description": "Visualizza i record del contratto di emergenza",
       "subcommands": {
@@ -26,6 +29,7 @@
       }
     },
     "daily": {
+      "full": "giornaliero checkin",
       "name": "giornaliero",
       "description": "Riscuoti le tue ricompense giornaliere di gioco",
       "subcommands": {
@@ -36,6 +40,7 @@
       }
     },
     "export": {
+      "full": "esporta dati",
       "name": "esporta",
       "description": "Esporta i tuoi dati Endvoyant",
       "subcommands": {
@@ -46,6 +51,7 @@
       }
     },
     "full": {
+      "full": "completo profilo",
       "name": "completo",
       "description": "Mostra il tuo profilo giocatore completo",
       "subcommands": {
@@ -56,6 +62,7 @@
       }
     },
     "manage": {
+      "full": "account gestisci",
       "name": "account",
       "description": "Gestisci i tuoi account collegati",
       "subcommands": {
@@ -66,10 +73,12 @@
       }
     },
     "premium": {
+      "full": "premium",
       "name": "premium",
       "description": "Visualizza il tuo stato premium"
     },
     "profile": {
+      "full": "profilo",
       "name": "profilo",
       "contextName": "Visualizza profilo",
       "description": "Visualizza il profilo di un giocatore",
@@ -90,6 +99,7 @@
       }
     },
     "list": {
+      "full": "lista codici",
       "name": "lista",
       "description": "Visualizza i codici riscatto attivi (Inglese)",
       "subcommands": {
@@ -100,14 +110,17 @@
       }
     },
     "redeem": {
+      "full": "riscatta",
       "name": "riscatta",
       "description": "Riscatta un codice ricompensa"
     },
     "settings": {
+      "full": "impostazioni",
       "name": "impostazioni",
       "description": "Modifica le tue impostazioni personali Endvoyant"
     },
     "game": {
+      "full": "game news",
       "name": "game",
       "description": "Visualizza le notizie, gli eventi e gli aggiornamenti recenti del gioco",
       "subcommands": {
@@ -117,7 +130,13 @@
         }
       }
     },
+    "help": {
+      "full": "aiuto",
+      "name": "aiuto",
+      "description": "Ottieni aiuto e supporto per il bot"
+    },
     "umbral": {
+      "full": "dombra monumento",
       "name": "dombra",
       "description": "Visualizza i record del monumento d'ombra",
       "subcommands": {

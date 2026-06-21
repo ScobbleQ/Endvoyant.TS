@@ -117,7 +117,7 @@
       }
     },
     "umbral": {
-      "name": "умбрал",
+      "name": "сумрачный",
       "description": "временный",
       "subcommands": {
         "monument": {

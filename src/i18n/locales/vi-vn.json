@@ -117,11 +117,11 @@
       }
     },
     "umbral": {
-      "name": "umbral",
+      "name": "bóng-tối",
       "description": "tạm thời",
       "subcommands": {
         "monument": {
-          "name": "tuong-dai",
+          "name": "đài",
           "description": "tạm thời"
         }
       }

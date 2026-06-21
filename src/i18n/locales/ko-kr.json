@@ -117,11 +117,11 @@
       }
     },
     "umbral": {
-      "name": "움브랄",
+      "name": "그림자",
       "description": "임시",
       "subcommands": {
         "monument": {
-          "name": "기념비",
+          "name": "이정표",
           "description": "임시"
         }
       }

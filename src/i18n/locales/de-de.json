@@ -117,7 +117,7 @@
       }
     },
     "umbral": {
-      "name": "umbral",
+      "name": "schatten",
       "description": "Temporär",
       "subcommands": {
         "monument": {

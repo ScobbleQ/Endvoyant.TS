@@ -117,7 +117,7 @@
       }
     },
     "umbral": {
-      "name": "umbral",
+      "name": "lombre",
       "description": "temp",
       "subcommands": {
         "monument": {

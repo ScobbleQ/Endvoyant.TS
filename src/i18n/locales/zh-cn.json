@@ -117,7 +117,7 @@
       }
     },
     "umbral": {
-      "name": "umbral",
+      "name": "影拓",
       "description": "临时",
       "subcommands": {
         "monument": {

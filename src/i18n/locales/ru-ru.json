@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "чрезвычайный",
-      "description": "temp",
+      "description": "Просмотр записей чрезвычайного контракта",
       "subcommands": {
         "contract": {
           "name": "контракт",
-          "description": "temp"
+          "description": "Просмотр записей чрезвычайного контракта"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "сумрачный",
-      "description": "временный",
+      "description": "Просмотр записей сумрачного монумента",
       "subcommands": {
         "monument": {
           "name": "монумент",
-          "description": "временный"
+          "description": "Просмотр записей сумрачного монумента"
         }
       }
     }

@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "krisenschutz",
-      "description": "temp",
+      "description": "Aufzeichnungen des Krisenschutzvertrags anzeigen",
       "subcommands": {
         "contract": {
           "name": "vertrag",
-          "description": "temp"
+          "description": "Aufzeichnungen des Krisenschutzvertrags anzeigen"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "schatten",
-      "description": "Temporär",
+      "description": "Aufzeichnungen des Schattenmonuments anzeigen",
       "subcommands": {
         "monument": {
           "name": "monument",
-          "description": "Temporär"
+          "description": "Aufzeichnungen des Schattenmonuments anzeigen"
         }
       }
     }

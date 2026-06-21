@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "위기",
-      "description": "temp",
+      "description": "위기 협약 기록 보기",
       "subcommands": {
         "contract": {
           "name": "협약",
-          "description": "temp"
+          "description": "위기 협약 기록 보기"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "그림자",
-      "description": "임시",
+      "description": "그림자 이정표 기록 보기",
       "subcommands": {
         "monument": {
           "name": "이정표",
-          "description": "임시"
+          "description": "그림자 이정표 기록 보기"
         }
       }
     }

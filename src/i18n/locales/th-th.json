@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "ฉุกเฉิน",
-      "description": "temp",
+      "description": "ดูบันทึกสัญญาฉุกเฉิน",
       "subcommands": {
         "contract": {
           "name": "สัญญา",
-          "description": "temp"
+          "description": "ดูบันทึกสัญญาฉุกเฉิน"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "แห่งเงามืด",
-      "description": "ชั่วคราว",
+      "description": "ดูบันทึกอนุสาวรีย์แห่งเงามืด",
       "subcommands": {
         "monument": {
           "name": "อนุสาวรีย์",
-          "description": "ชั่วคราว"
+          "description": "ดูบันทึกอนุสาวรีย์แห่งเงามืด"
         }
       }
     }

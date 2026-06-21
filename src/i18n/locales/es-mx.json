@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "contingencia",
-      "description": "temp",
+      "description": "Ver registros del contrato de contingencia",
       "subcommands": {
         "contract": {
           "name": "contrato",
-          "description": "temp"
+          "description": "Ver registros del contrato de contingencia"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "umbral",
-      "description": "temp",
+      "description": "Ver registros del monumento umbral",
       "subcommands": {
         "monument": {
           "name": "monumento",
-          "description": "temp"
+          "description": "Ver registros del monumento umbral"
         }
       }
     }

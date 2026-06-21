@@ -6,13 +6,13 @@ export default {
   data: new SlashCommandBuilder()
     .setName("contingency")
     .setNameLocalizations(dtx("command.contingency.name"))
-    .setDescription("About the bot")
+    .setDescription("View Contingency Contract records")
     .setDescriptionLocalizations(dtx("command.contingency.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("contract")
         .setNameLocalizations(dtx("command.contingency.subcommands.contract.name"))
-        .setDescription("About the bot")
+        .setDescription("View Contingency Contract records")
         .setDescriptionLocalizations(dtx("command.contingency.subcommands.contract.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {

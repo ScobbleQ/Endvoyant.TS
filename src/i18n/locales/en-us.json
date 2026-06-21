@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "contingency",
-      "description": "temp",
+      "description": "View Contingency Contract records",
       "subcommands": {
         "contract": {
           "name": "contract",
-          "description": "temp"
+          "description": "View Contingency Contract records"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "umbral",
-      "description": "temp",
+      "description": "View Umbral Monument records",
       "subcommands": {
         "monument": {
           "name": "monument",
-          "description": "temp"
+          "description": "View Umbral Monument records"
         }
       }
     }

@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "kontingensi",
-      "description": "temp",
+      "description": "Lihat catatan kontrak kontingensi",
       "subcommands": {
         "contract": {
           "name": "kontrak",
-          "description": "temp"
+          "description": "Lihat catatan kontrak kontingensi"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "umbra",
-      "description": "temp",
+      "description": "Lihat catatan monumen umbra",
       "subcommands": {
         "monument": {
           "name": "monumen",
-          "description": "temp"
+          "description": "Lihat catatan monumen umbra"
         }
       }
     }

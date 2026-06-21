@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "điều-kiện",
-      "description": "temp",
+      "description": "Xem hồ sơ hợp đồng điều kiện",
       "subcommands": {
         "contract": {
           "name": "hợp-đồng",
-          "description": "temp"
+          "description": "Xem hồ sơ hợp đồng điều kiện"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "bóng-tối",
-      "description": "tạm thời",
+      "description": "Xem hồ sơ đài bóng tối",
       "subcommands": {
         "monument": {
           "name": "đài",
-          "description": "tạm thời"
+          "description": "Xem hồ sơ đài bóng tối"
         }
       }
     }

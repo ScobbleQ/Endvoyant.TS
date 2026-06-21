@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "crise",
-      "description": "temp",
+      "description": "Afficher les enregistrements du contrat de crise",
       "subcommands": {
         "contract": {
           "name": "contrat",
-          "description": "temp"
+          "description": "Afficher les enregistrements du contrat de crise"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "lombre",
-      "description": "temp",
+      "description": "Afficher les enregistrements du monument de l'ombre",
       "subcommands": {
         "monument": {
           "name": "monument",
-          "description": "temp"
+          "description": "Afficher les enregistrements du monument de l'ombre"
         }
       }
     }

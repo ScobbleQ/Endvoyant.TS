@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "emergenza",
-      "description": "temp",
+      "description": "Visualizza i record del contratto di emergenza",
       "subcommands": {
         "contract": {
           "name": "contratto",
-          "description": "temp"
+          "description": "Visualizza i record del contratto di emergenza"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "dombra",
-      "description": "temp",
+      "description": "Visualizza i record del monumento d'ombra",
       "subcommands": {
         "monument": {
           "name": "monumento",
-          "description": "temp"
+          "description": "Visualizza i record del monumento d'ombra"
         }
       }
     }

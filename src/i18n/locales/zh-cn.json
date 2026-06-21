@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "危机",
-      "description": "temp",
+      "description": "查看危机合约记录",
       "subcommands": {
         "contract": {
           "name": "合约",
-          "description": "temp"
+          "description": "查看危机合约记录"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "影拓",
-      "description": "临时",
+      "description": "查看影拓丰碑记录",
       "subcommands": {
         "monument": {
           "name": "丰碑",
-          "description": "临时"
+          "description": "查看影拓丰碑记录"
         }
       }
     }

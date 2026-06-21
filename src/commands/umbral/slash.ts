@@ -6,13 +6,13 @@ export default {
   data: new SlashCommandBuilder()
     .setName("umbral")
     .setNameLocalizations(dtx("command.umbral.name"))
-    .setDescription("View Umbral Monument rewards")
+    .setDescription("View Umbral Monument records")
     .setDescriptionLocalizations(dtx("command.umbral.description"))
     .addSubcommand((subcommand) =>
       subcommand
         .setName("monument")
         .setNameLocalizations(dtx("command.umbral.subcommands.monument.name"))
-        .setDescription("View Umbral Monument rewards")
+        .setDescription("View Umbral Monument records")
         .setDescriptionLocalizations(dtx("command.umbral.subcommands.monument.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {

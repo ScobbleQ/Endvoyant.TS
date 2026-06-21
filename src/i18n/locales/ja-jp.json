@@ -17,11 +17,11 @@
     },
     "contingency": {
       "name": "危機",
-      "description": "temp",
+      "description": "危機契約の記録を表示",
       "subcommands": {
         "contract": {
           "name": "契約",
-          "description": "temp"
+          "description": "危機契約の記録を表示"
         }
       }
     },
@@ -118,11 +118,11 @@
     },
     "umbral": {
       "name": "映像の",
-      "description": "仮設定",
+      "description": "映像の記念碑の記録を表示",
       "subcommands": {
         "monument": {
           "name": "記念碑",
-          "description": "仮設定"
+          "description": "映像の記念碑の記録を表示"
         }
       }
     }

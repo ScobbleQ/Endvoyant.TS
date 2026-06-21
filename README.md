@@ -33,4 +33,4 @@ Tasks:
 
 ### Credits
 
-- Translations — MiMo by Xiaomi and GPT-5.5 by OpenAI
+- Translations — MiMo by Xiaomi, GPT-5.5 by OpenAI, and Gemini 3.5 by Google

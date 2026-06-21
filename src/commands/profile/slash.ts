@@ -157,8 +157,6 @@ export default {
       lang,
     });
 
-    console.dir(data, { depth: null });
-
     if (data.code !== 0) {
       await interaction.editReply({
         components: [errorContainer({ desc: tx(lang, "error.fetchFailed") })],

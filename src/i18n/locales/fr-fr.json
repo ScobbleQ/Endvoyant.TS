@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "crise",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "contrat",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "quotidien",
       "description": "Récupère tes récompenses quotidiennes en jeu",

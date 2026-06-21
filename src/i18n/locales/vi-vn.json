@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "điều-kiện",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "hợp-đồng",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "hang-ngay",
       "description": "Nhận phần thưởng hàng ngày trong game",

@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "kontingensi",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "kontrak",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "harian",
       "description": "Klaim hadiah harian kamu dalam game",

@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "contingência",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "contrato",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "diário",
       "description": "Resgate suas recompensas diárias no jogo",

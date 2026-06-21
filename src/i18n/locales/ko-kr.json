@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "위기",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "협약",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "일일",
       "description": "게임 내 일일 보상 받기",

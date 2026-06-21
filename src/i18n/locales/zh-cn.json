@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "危机",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "合约",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "每日",
       "description": "领取游戏内每日奖励",

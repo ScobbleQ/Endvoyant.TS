@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "krisenschutz",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "vertrag",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "täglich",
       "description": "Hole deine täglichen Belohnungen im Spiel ab",

@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "чрезвычайный",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "контракт",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "ежедневно",
       "description": "Получи ежедневные награды в игре",

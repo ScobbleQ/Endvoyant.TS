@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "emergenza",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "contratto",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "giornaliero",
       "description": "Riscuoti le tue ricompense giornaliere di gioco",

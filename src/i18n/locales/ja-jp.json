@@ -15,6 +15,16 @@
         }
       }
     },
+    "contingency": {
+      "name": "危機",
+      "description": "temp",
+      "subcommands": {
+        "contract": {
+          "name": "契約",
+          "description": "temp"
+        }
+      }
+    },
     "daily": {
       "name": "デイリー",
       "description": "ゲーム内のデイリー報酬を受け取ります",

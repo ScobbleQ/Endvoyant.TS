@@ -5,7 +5,8 @@ import {
   MessageFlags,
   type ContextMenuCommandInteraction,
 } from "discord.js";
-import { UsersDB, db } from "#/drizzle/index.ts";
+import { config } from "#/config.ts";
+import { db, EventsDB, UsersDB } from "#/drizzle/index.ts";
 import { fromDiscordLocale, tx } from "#/i18n/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { errorContainer } from "#/ui/container.ts";
@@ -17,6 +18,15 @@ export default {
   execute: async (interaction: ContextMenuCommandInteraction) => {
     const viewer = await UsersDB.findAccess(interaction.user.id);
     const lang = viewer?.lang || fromDiscordLocale(interaction.locale) || "en-us";
+
+    if (viewer && viewer.allowData) {
+      if (config.env === "production") {
+        void EventsDB.record(viewer.dcid, {
+          source: "context",
+          action: "view profile",
+        });
+      }
+    }
 
     const account = await db.query.accounts.findFirst({
       columns: {

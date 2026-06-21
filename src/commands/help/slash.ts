@@ -5,7 +5,8 @@ import {
   SlashCommandBuilder,
   type ChatInputCommandInteraction,
 } from "discord.js";
-import { UsersDB } from "#/drizzle/index.ts";
+import { config } from "#/config.ts";
+import { EventsDB, UsersDB } from "#/drizzle/index.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
 
 export default {
@@ -18,6 +19,15 @@ export default {
   execute: async (interaction: ChatInputCommandInteraction) => {
     const user = await UsersDB.findAccess(interaction.user.id);
     const lang = user?.lang || fromDiscordLocale(interaction.locale) || "en-us";
+
+    if (user && user.allowData) {
+      if (config.env === "production") {
+        void EventsDB.record(user.dcid, {
+          source: "slash",
+          action: "help",
+        });
+      }
+    }
 
     const container = new ContainerBuilder()
       .addTextDisplayComponents((t) => t.setContent("## Endvoyant"))

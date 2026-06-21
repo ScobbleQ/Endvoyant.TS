@@ -22,17 +22,9 @@ export default {
     const viewer = await UsersDB.findAccess(interaction.user.id);
     const lang = viewer?.lang || fromDiscordLocale(interaction.locale) || "en-us";
 
-    if (viewer && viewer.allowData) {
-      if (config.env === "production") {
-        void EventsDB.record(viewer.dcid, {
-          source: "context",
-          action: "view profile",
-        });
-      }
-    }
-
     const account = await db.query.accounts.findFirst({
       columns: {
+        id: true,
         accountToken: true,
         serverId: true,
         roleId: true,
@@ -43,6 +35,16 @@ export default {
         isPrimary: true,
       },
     });
+
+    if (viewer && viewer.allowData) {
+      if (config.env === "production") {
+        void EventsDB.record(viewer.dcid, {
+          source: "context",
+          action: "view profile",
+          aid: account?.id || null,
+        });
+      }
+    }
 
     if (!account) {
       await interaction.reply({

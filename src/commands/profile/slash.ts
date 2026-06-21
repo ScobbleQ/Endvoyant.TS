@@ -69,15 +69,9 @@ export default {
       return;
     }
 
-    if (config.env === "production" && user.allowData) {
-      void EventsDB.record(user.dcid, {
-        source: "slash",
-        action: "profile",
-      });
-    }
-
     const account = await db.query.accounts.findFirst({
       columns: {
+        id: true,
         accountToken: true,
         serverId: true,
         roleId: true,
@@ -89,6 +83,14 @@ export default {
         id: selectedAccountId ?? undefined,
       },
     });
+
+    if (config.env === "production" && user.allowData) {
+      void EventsDB.record(user.dcid, {
+        source: "slash",
+        action: "profile",
+        aid: account?.id || null,
+      });
+    }
 
     if (!account) {
       await interaction.reply({

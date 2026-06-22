@@ -1,4 +1,4 @@
-import { type Interaction, MessageFlags } from "discord.js";
+import { MessageFlags, type Interaction } from "discord.js";
 import { buildLinkedSummaryContainer } from "#/ui/linkedSummary.ts";
 
 export async function sendUpdatedLinkedPins(interaction: Interaction) {

@@ -1,5 +1,6 @@
 import { ContainerBuilder } from "discord.js";
 import type { ManageAccount } from "#/drizzle/db/accounts.ts";
+import { config } from "#/config.ts";
 import EditButton from "../buttons/edit.ts";
 import PrimaryButton from "../buttons/primary.ts";
 import RemoveButton from "../buttons/remove.ts";
@@ -19,7 +20,7 @@ export function accountContainer(isPremium: boolean, accounts: ManageAccount[]) 
         (t) => t.setContent("## ▼// Linked Accounts"),
         (t) =>
           t.setContent(
-            `You have linked **${accounts.length}** of **${isPremium ? "∞" : "3"}** accounts. Select one below to edit, set as primary, or remove.`,
+            `You have linked **${accounts.length}** of **${isPremium ? "∞" : config.settings.maxAccountLinks}** accounts. Select one below to edit, set as primary, or remove.`,
           ),
       )
       .setButtonAccessory(UnlinkButton.data),

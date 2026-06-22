@@ -17,5 +17,8 @@ export const config = {
   database: {
     url: requireEnv("DATABASE_URL"),
   },
+  settings: {
+    maxAccountLinks: 3,
+  },
   env: process.env["NODE_ENV"] || "development",
 } as const;

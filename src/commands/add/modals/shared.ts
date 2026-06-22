@@ -5,6 +5,7 @@ import {
   type ModalSubmitInteraction,
 } from "discord.js";
 import type { PlayerBindingsResponse } from "#/packages/EndfieldSDK/types/auth.ts";
+import { config } from "#/config.ts";
 import { AccountsDB, type UsersDB } from "#/drizzle/index.ts";
 import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { errorContainer, warnContainer } from "#/ui/container.ts";
@@ -124,7 +125,9 @@ export async function linkBindingAccounts({
     rolesToLink.push(role);
   }
 
-  const availableSlots = user.isPremium ? Number.MAX_SAFE_INTEGER : Math.max(0, 3 - linkedAmount);
+  const availableSlots = user.isPremium
+    ? Number.MAX_SAFE_INTEGER
+    : Math.max(0, config.settings.maxAccountLinks - linkedAmount);
   const rolesToInsert = rolesToLink.slice(0, availableSlots);
 
   for (const role of rolesToLink.slice(availableSlots)) {

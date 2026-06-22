@@ -6,6 +6,13 @@ import RemoveButton from "../buttons/remove.ts";
 import UnlinkButton from "../buttons/unlink.ts";
 
 export function accountContainer(isPremium: boolean, accounts: ManageAccount[]) {
+  if (accounts.length === 0) {
+    return new ContainerBuilder().addTextDisplayComponents(
+      (t) => t.setContent("## ▼// Linked Accounts"),
+      (t) => t.setContent("You have no accounts linked."),
+    );
+  }
+
   const container = new ContainerBuilder().addSectionComponents((s) =>
     s
       .addTextDisplayComponents(

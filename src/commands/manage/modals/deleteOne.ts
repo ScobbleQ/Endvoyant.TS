@@ -7,9 +7,8 @@ import {
   TextInputStyle,
 } from "discord.js";
 import { AccountsDB, UsersDB } from "#/drizzle/index.ts";
-import { tx } from "#/i18n/index.ts";
-import { successContainer } from "#/ui/container.ts";
 import { createComponentId } from "#/utils/componentId.ts";
+import { sendUpdatedLinkedPins } from "#/utils/updatePins.ts";
 import { accountContainer } from "../components/account.ts";
 
 export default {
@@ -51,9 +50,6 @@ export default {
       flags: [MessageFlags.IsComponentsV2],
     });
 
-    await interaction.followUp({
-      components: [successContainer({ desc: tx(user.lang, "success.accountRemoved") })],
-      flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
-    });
+    await sendUpdatedLinkedPins(interaction);
   },
 };

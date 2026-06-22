@@ -9,9 +9,11 @@ Commands:
 
 - [ ] About
 - [x] Add Account
+- [ ] Contingency Contract
 - [x] Daily Signin
 - [x] Export Data
 - [ ] Full Profile
+- [ ] Game News (will probably be renamed)
 - [x] List Codes
 - [x] Manage Accounts
 - [ ] Premium
@@ -33,4 +35,4 @@ Tasks:
 
 ### Credits
 
-- Translations — MiMo by Xiaomi, GPT-5.5 by OpenAI, and Gemini 3.5 by Google
+- Translations — MiMo by Xiaomi, GPT-5.5 by OpenAI, and Gemini 3.5 by Google (using a mix and match of whichever sounds more natural)

@@ -11,7 +11,39 @@ type AccountPatch = Partial<typeof accounts.$inferInsert>;
 
 export class AccountsDB {
   static async deleteByShortId(dcid: string, shortId: number) {
-    await db.delete(accounts).where(and(eq(accounts.dcid, dcid), eq(accounts.shortId, shortId)));
+    await db.transaction(async (tx) => {
+      // Get the account to be deleted
+      const account = await tx.query.accounts.findFirst({
+        columns: {
+          id: true,
+          isPrimary: true,
+        },
+        where: {
+          dcid,
+          shortId,
+        },
+      });
+
+      if (!account) return;
+      await tx.delete(accounts).where(eq(accounts.id, account.id));
+
+      // If deleted account was primary, get the replacement (lowest shortId)
+      if (!account.isPrimary) return;
+      const replacement = await tx.query.accounts.findFirst({
+        columns: {
+          id: true,
+        },
+        where: {
+          dcid,
+        },
+        orderBy: {
+          shortId: "asc",
+        },
+      });
+
+      if (!replacement) return;
+      await tx.update(accounts).set({ isPrimary: true }).where(eq(accounts.id, replacement.id));
+    });
   }
 
   static async createForUser(

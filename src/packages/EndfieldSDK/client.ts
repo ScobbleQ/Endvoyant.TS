@@ -216,7 +216,7 @@ export class EndfieldSDK {
     lang?: Locale;
   }): Promise<SkportZonaiErrorResponse | RefreshAccountTokenResponse> {
     try {
-      const { body } = await this._request({
+      const { body, headers } = await this._request({
         origin: "https://zonai.skport.com",
         path: "/web/v1/auth/refresh",
         method: "GET",
@@ -229,7 +229,18 @@ export class EndfieldSDK {
         },
       });
 
-      return (await body.json()) as RefreshAccountTokenResponse;
+      const setCookies = headers["set-cookie"] as string[];
+      const acwToken = setCookies
+        ?.find((c) => c.startsWith("acw_tc="))
+        ?.match(/^acw_tc=([^;]+)/)?.[1];
+
+      const data = (await body.json()) as SkportZonaiErrorResponse | RefreshAccountTokenResponse;
+      // If success (has data), inject the acw_tc into response
+      if ("data" in data && acwToken) {
+        data.data.acw_tc = acwToken;
+      }
+
+      return data;
     } catch (error) {
       throw new Error("TOKEN_REFRESH_FAILED", { cause: error });
     }
@@ -353,6 +364,24 @@ export class EndfieldSDK {
       });
 
       return (await body.json()) as CardDetailResponse | SkportZonaiErrorResponse;
+    } catch (error) {
+      throw new Error("", { cause: error });
+    }
+  }
+
+  async fetchEnums({ cred, token, lang }: { cred: string; token: string; lang?: Locale }) {
+    try {
+      const { body } = await this._request({
+        method: "GET",
+        origin: "https://zonai.skport.com",
+        path: "/web/v1/game/endfield/enums",
+        headers: {
+          cred: cred,
+          ...this._skportHeaders(token, "/web/v1/game/endfield/enums", "", lang),
+        },
+      });
+
+      return await body.json();
     } catch (error) {
       throw new Error("", { cause: error });
     }

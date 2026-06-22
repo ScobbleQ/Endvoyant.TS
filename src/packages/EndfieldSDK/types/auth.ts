@@ -83,6 +83,7 @@ export interface RefreshAccountTokenResponse extends SkportZonaiResponseBase {
   code: 0;
   data: {
     token: string;
+    acw_tc: string;
   };
 }
 

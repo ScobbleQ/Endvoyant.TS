@@ -6,6 +6,7 @@ import {
   MessageFlags,
   type Guild,
 } from "discord.js";
+import type { BotEvent } from "#/discord.js";
 import { config } from "#/config.ts";
 
 export default {
@@ -55,4 +56,4 @@ export default {
       flags: [MessageFlags.IsComponentsV2],
     });
   },
-};
+} satisfies BotEvent<Events.GuildCreate>;

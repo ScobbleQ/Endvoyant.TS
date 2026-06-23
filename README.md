@@ -36,3 +36,4 @@ Tasks:
 ### Credits
 
 - Translations — MiMo by Xiaomi, GPT-5.5 by OpenAI, and Gemini 3.5 by Google (using a mix and match of whichever sounds more natural)
+- Interim Member — Hermes Agent by Nous Research

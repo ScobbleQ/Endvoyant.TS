@@ -1,6 +1,6 @@
 {
   "dialect": "postgres",
-  "id": "62d8583b-1e04-42f1-b894-9b8e5b68cd9b",
+  "id": "1b00fa6a-4f7c-4fa8-bb58-fce79e836f1d",
   "prevIds": ["00000000-0000-0000-0000-000000000000"],
   "version": "8",
   "ddl": [

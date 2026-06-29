@@ -1,13 +1,5 @@
-import {
-  Events,
-  ContainerBuilder,
-  ButtonStyle,
-  ButtonBuilder,
-  MessageFlags,
-  type Message,
-} from "discord.js";
+import { Events, type Message } from "discord.js";
 import type { BotEvent } from "#/discord.js";
-import { config } from "#/config.ts";
 
 export default {
   name: Events.MessageCreate,

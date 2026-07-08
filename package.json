@@ -29,7 +29,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@napi-rs/canvas": "^1.0.0",
+    "@napi-rs/canvas": "^1.0.2",
     "bufferutil": "^4.1.0",
     "cron": "^4.4.0",
     "discord.js": "^14.26.4",
@@ -39,7 +39,7 @@
     "pino": "^10.3.1",
     "pino-roll": "^4.0.0",
     "postgres": "^3.4.9",
-    "undici": "^8.5.0",
+    "undici": "^8.7.0",
     "zlib-sync": "^0.1.10"
   },
   "devDependencies": {

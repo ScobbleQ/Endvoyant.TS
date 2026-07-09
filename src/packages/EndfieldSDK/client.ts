@@ -300,6 +300,7 @@ export class EndfieldSDK {
         method: "POST",
         headers: {
           "content-type": "application/json",
+          Origin: "https://game.skport.com",
           cred,
           "sk-game-role": `3_${roleId}_${serverId}`,
           ...this._skportHeaders(token, "/web/v1/game/endfield/attendance", "", lang),

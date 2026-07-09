@@ -3,5 +3,6 @@
     "source.addMissingImports.ts": "always",
     "source.removeUnusedImports": "always",
     "source.organizeImports": "always"
-  }
+  },
+  "js/ts.experimental.useTsgo": true
 }

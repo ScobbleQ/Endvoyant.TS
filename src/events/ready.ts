@@ -1,9 +1,6 @@
-import { CronJob } from "cron";
 import { Events, type Client } from "discord.js";
 import type { BotEvent } from "#/discord.js";
-import { codeRedeem } from "#/jobs/codeRedeem.ts";
-import { dailySignin } from "#/jobs/dailySignin.ts";
-import { refreshTokens } from "#/jobs/refreshToken.ts";
+import { startCronJobs } from "#/jobs/index.ts";
 import { initFonts } from "#/utils/fonts.ts";
 
 export default {
@@ -13,19 +10,6 @@ export default {
     console.log(`Logged in as ${client.user?.tag}`);
 
     initFonts();
-
-    new CronJob(
-      "5 12 * * *",
-      () => dailySignin(client),
-      null,
-      true,
-      "America/New_York",
-      null,
-      false,
-    );
-
-    new CronJob("30 * * * *", () => codeRedeem(), null, true, "America/New_York", null, false);
-
-    new CronJob("0 0 * * *", () => refreshTokens(), null, true, "America/New_York", null, false);
+    startCronJobs(client);
   },
 } satisfies BotEvent<Events.ClientReady>;

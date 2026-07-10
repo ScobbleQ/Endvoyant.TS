@@ -1,45 +1,53 @@
 import pQueue from "p-queue";
+import type { Job } from "#/jobs/type.ts";
 import { AccountsDB, db } from "#/drizzle/index.ts";
 import { sdk } from "#/globals/sdk.ts";
 
-export async function refreshTokens() {
-  // Random delay between 0 and 55 minutes
-  const delay = Math.floor(Math.random() * 56) * 60 * 1000;
-  await new Promise((resolve) => setTimeout(resolve, delay));
+export default {
+  schedule: "0 0 * * *",
+  timezone: "America/New_York",
+  productionOnly: true,
+  execute: async () => {
+    // Random delay between 0 and 55 minutes
+    const delay = Math.floor(Math.random() * 56) * 60 * 1000;
+    await new Promise((resolve) => setTimeout(resolve, delay));
 
-  const accounts = await db.query.accounts.findMany({
-    columns: {
-      id: true,
-      dcid: true,
-      accountToken: true,
-      hgId: true,
-    },
-  });
-
-  const queue = new pQueue({ concurrency: 10 });
-
-  accounts.forEach((account) => {
-    void queue.add(async () => {
-      try {
-        const session = await sdk.credentials.createSession({
-          accountToken: account.accountToken,
-        });
-
-        if (!session) return;
-
-        const refreshedToken = await sdk.credentials.rotateAccountToken(
-          account.accountToken,
-          session.token,
-          account.hgId,
-        );
-        if (refreshedToken.code !== 0) return;
-
-        await AccountsDB.updateByAccountId(account.id, { accountToken: refreshedToken.data.token });
-      } catch (error) {
-        console.error(`Failed to refresh token for account ${account.id}:`, error);
-      }
+    const accounts = await db.query.accounts.findMany({
+      columns: {
+        id: true,
+        dcid: true,
+        accountToken: true,
+        hgId: true,
+      },
     });
-  });
 
-  await queue.onIdle();
-}
+    const queue = new pQueue({ concurrency: 10 });
+
+    accounts.forEach((account) => {
+      void queue.add(async () => {
+        try {
+          const session = await sdk.credentials.createSession({
+            accountToken: account.accountToken,
+          });
+
+          if (!session) return;
+
+          const refreshedToken = await sdk.credentials.rotateAccountToken(
+            account.accountToken,
+            session.token,
+            account.hgId,
+          );
+          if (refreshedToken.code !== 0) return;
+
+          await AccountsDB.updateByAccountId(account.id, {
+            accountToken: refreshedToken.data.token,
+          });
+        } catch (error) {
+          console.error(`Failed to refresh token for account ${account.id}:`, error);
+        }
+      });
+    });
+
+    await queue.onIdle();
+  },
+} satisfies Job;

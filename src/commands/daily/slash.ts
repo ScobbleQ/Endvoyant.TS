@@ -8,8 +8,8 @@ import {
 import pQueue from "p-queue";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
+import { sdk } from "#/globals/sdk.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
-import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { errorContainer } from "#/ui/container.ts";
 
 export default {
@@ -98,13 +98,13 @@ export default {
         .filter((a): a is NonNullable<typeof a> => a != null)
         .map((account) =>
           queue.add(async () => {
-            const session = await EndfieldSDK.createSkportSession({
+            const session = await sdk.credentials.createSession({
               accountToken: account.accountToken,
             });
 
             if (!session) return null;
 
-            const res = await EndfieldSDK.completeSignIn({
+            const res = await sdk.attendance.signIn({
               cred: session.cred,
               token: session.token,
               roleId: account.roleId,

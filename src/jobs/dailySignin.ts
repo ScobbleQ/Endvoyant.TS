@@ -2,7 +2,7 @@ import { ContainerBuilder, DiscordAPIError, MessageFlags, type Client } from "di
 import pQueue from "p-queue";
 import { config } from "#/config.ts";
 import { EventsDB, db } from "#/drizzle/index.ts";
-import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
+import { sdk } from "#/globals/sdk.ts";
 
 export async function dailySignin(client: Client) {
   // Random delay between 0 and 55 minutes
@@ -48,13 +48,13 @@ export async function dailySignin(client: Client) {
         const results = await Promise.allSettled(
           user.accounts.map((account) =>
             accountQueue.add(async () => {
-              const session = await EndfieldSDK.createSkportSession({
+              const session = await sdk.credentials.createSession({
                 accountToken: account.accountToken,
               });
 
               if (!session) return null;
 
-              const result = await EndfieldSDK.completeSignIn({
+              const result = await sdk.attendance.signIn({
                 cred: session.cred,
                 token: session.token,
                 roleId: account.roleId,

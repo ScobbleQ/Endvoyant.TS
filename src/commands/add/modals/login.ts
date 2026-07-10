@@ -7,8 +7,8 @@ import {
   TextInputStyle,
 } from "discord.js";
 import { UsersDB } from "#/drizzle/index.ts";
+import { sdk } from "#/globals/sdk.ts";
 import { tx } from "#/i18n/index.ts";
-import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { container, errorContainer, successContainer } from "#/ui/container.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { getDefaultBinding, linkBindingAccounts } from "./shared.ts";
@@ -52,7 +52,7 @@ export default {
       flags: [MessageFlags.IsComponentsV2],
     });
 
-    const res = await EndfieldSDK.loginWithEmailPassword(email, password);
+    const res = await sdk.auth.loginWithEmailPassword(email, password);
     if (res.status !== 0) {
       await interaction.editReply({
         components: [errorContainer({ title: "Login Failed", desc: res.msg })],

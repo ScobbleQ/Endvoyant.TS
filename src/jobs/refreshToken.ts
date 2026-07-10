@@ -1,6 +1,6 @@
 import pQueue from "p-queue";
 import { AccountsDB, db } from "#/drizzle/index.ts";
-import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
+import { sdk } from "#/globals/sdk.ts";
 
 export async function refreshTokens() {
   // Random delay between 0 and 55 minutes
@@ -21,13 +21,13 @@ export async function refreshTokens() {
   accounts.forEach((account) => {
     void queue.add(async () => {
       try {
-        const session = await EndfieldSDK.createSkportSession({
+        const session = await sdk.credentials.createSession({
           accountToken: account.accountToken,
         });
 
         if (!session) return;
 
-        const refreshedToken = await EndfieldSDK.getAccountToken(
+        const refreshedToken = await sdk.credentials.rotateAccountToken(
           account.accountToken,
           session.token,
           account.hgId,

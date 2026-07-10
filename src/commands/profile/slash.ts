@@ -8,8 +8,8 @@ import {
 } from "discord.js";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
+import { sdk } from "#/globals/sdk.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
-import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { errorContainer } from "#/ui/container.ts";
 import { renderProfile } from "./render.ts";
 
@@ -102,10 +102,10 @@ export default {
 
     await interaction.deferReply({ flags: account.isPrivate ? [MessageFlags.Ephemeral] : [] });
 
-    const session = await EndfieldSDK.createSkportSession({ accountToken: account.accountToken });
+    const session = await sdk.credentials.createSession({ accountToken: account.accountToken });
     if (!session) return;
 
-    const data = await EndfieldSDK.fetchCardDetail({
+    const data = await sdk.player.fetchCardDetail({
       cred: session.cred,
       token: session.token,
       serverId: account.serverId,

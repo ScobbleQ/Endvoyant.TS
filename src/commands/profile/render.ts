@@ -1,5 +1,5 @@
 import { createCanvas, loadImage } from "@napi-rs/canvas";
-import type { CardDetailResponse } from "#/packages/EndfieldSDK/types/auth.ts";
+import type { CardDetailResponse } from "#/packages/EndfieldSDK/types/player.ts";
 import { tx, type Locale } from "#/i18n/index.ts";
 import { getFontStack } from "#/utils/fonts.ts";
 

@@ -4,10 +4,10 @@ import {
   MessageFlags,
   type ModalSubmitInteraction,
 } from "discord.js";
-import type { PlayerBindingsResponse } from "#/packages/EndfieldSDK/types/auth.ts";
+import type { PlayerBindingsResponse } from "#/packages/EndfieldSDK/types/player.ts";
 import { config } from "#/config.ts";
 import { AccountsDB, type UsersDB } from "#/drizzle/index.ts";
-import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
+import { sdk } from "#/globals/sdk.ts";
 import { errorContainer, warnContainer } from "#/ui/container.ts";
 import { sendUpdatedLinkedPins } from "#/utils/updatePins.ts";
 
@@ -35,10 +35,10 @@ interface LinkAccountsOptions {
 }
 
 export async function getDefaultBinding(accountToken: string) {
-  const session = await EndfieldSDK.createSkportSession({ accountToken });
+  const session = await sdk.credentials.createSession({ accountToken });
   if (!session) return null;
 
-  const bindings = await EndfieldSDK.fetchPlayerBindings({
+  const bindings = await sdk.player.fetchBindings({
     cred: session.cred,
     token: session.token,
   });

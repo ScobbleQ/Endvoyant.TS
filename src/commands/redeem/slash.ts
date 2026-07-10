@@ -8,8 +8,8 @@ import {
 import { and, eq } from "drizzle-orm";
 import { AccountsDB, UsersDB, db } from "#/drizzle/index.ts";
 import { efAttemptedCodes, efCodes } from "#/drizzle/schema.ts";
+import { sdk } from "#/globals/sdk.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
-import EndfieldSDK from "#/packages/EndfieldSDK/index.ts";
 import { errorContainer } from "#/ui/container.ts";
 
 export default {
@@ -142,14 +142,14 @@ export default {
         continue;
       }
 
-      const oauth = await EndfieldSDK.grantOAuth2({
+      const oauth = await sdk.auth.grantOAuth2({
         appCode: "d9f6dbb6bbd6bb33",
         token: account.accountToken,
       });
 
       if (oauth.status !== 0) continue;
 
-      const channelToken = await EndfieldSDK.authenticateWithChannelToken({
+      const channelToken = await sdk.auth.loginWithChannelToken({
         channelId: account.channelId,
         channelToken: oauth.data.code,
       });
@@ -157,7 +157,7 @@ export default {
       if (channelToken.status !== 0) continue;
 
       for (const code of toRedeem) {
-        const res = await EndfieldSDK.redeemCode({
+        const res = await sdk.giftcode.redeem({
           code,
           channelId: account.channelId,
           serverId: account.serverId,

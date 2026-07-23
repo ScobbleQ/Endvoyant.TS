@@ -2,7 +2,7 @@ import { MessageFlags, SlashCommandBuilder, type ChatInputCommandInteraction } f
 import { UsersDB } from "#/drizzle/index.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
 import { errorContainer } from "#/ui/container.ts";
-import SettingModal from "./modals/setting.ts";
+import { overviewContainer } from "./components/overview.ts";
 
 export default {
   cooldown: 5,
@@ -22,14 +22,9 @@ export default {
       return;
     }
 
-    await interaction.showModal(
-      SettingModal.data({
-        curLang: user.lang,
-        curPrivacy: user.isPrivate,
-        curNotif: user.enableNotif,
-        curReminder: user.enableReminder,
-        curData: user.allowData,
-      }),
-    );
+    await interaction.reply({
+      components: [await overviewContainer(interaction.user)],
+      flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+    });
   },
 };

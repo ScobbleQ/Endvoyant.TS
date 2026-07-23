@@ -3,6 +3,10 @@ import { users } from "../schema.ts";
 import { db } from "./client.ts";
 
 export class UsersDB {
+  static async delete(dcid: string) {
+    await db.delete(users).where(eq(users.dcid, dcid));
+  }
+
   static async create(dcid: string) {
     await db.insert(users).values({ dcid });
   }

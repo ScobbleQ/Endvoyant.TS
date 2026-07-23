@@ -11,7 +11,7 @@ export const config = {
   discord: {
     token: requireEnv("DISCORD_TOKEN"),
     clientId: requireEnv("CLIENT_ID"),
-    clientSecret: requireEnv("CLIENT_SECRET"),
+    clientSecret: process.env["CLIENT_SECRET"] || "",
     premiumSkuId: process.env["PREMIUM_SKU_ID"] || "",
   },
   database: {

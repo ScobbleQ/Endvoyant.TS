@@ -117,47 +117,56 @@ export default {
         ),
     );
 
-    const container = new ContainerBuilder().addTextDisplayComponents(
-      (t) => t.setContent(`## ▼// Manual Signin Summary`),
-      (t) => t.setContent(`-# <t:${Math.floor(Date.now() / 1000)}:F>`),
-    );
+    const container = new ContainerBuilder();
+    let hasContent = false;
 
     for (const result of results) {
-      if (result.status !== "fulfilled" || !result.value) continue;
+      if (!result || result.status !== "fulfilled" || !result.value) continue;
+
       const { account, res } = result.value;
 
+      if (hasContent) {
+        container.addSeparatorComponents((s) => s);
+      }
+
       if (res.code !== 0) {
-        container
-          .addSeparatorComponents((s) => s)
+        container.addTextDisplayComponents(
+          (t) => t.setContent(`### ${account.nickname} (${account.roleId})`),
+          (t) => t.setContent(res.message || "Failed to signin for unknown reason."),
+        );
+
+        hasContent = true;
+        continue;
+      }
+
+      const rewards = res.data.awardIds.map(({ id }) => res.data.resourceInfoMap[id]!);
+      const [mainReward, ...extraRewards] = rewards;
+
+      if (!mainReward) {
+        container.addTextDisplayComponents(
+          (t) => t.setContent(`### ${account.nickname} (${account.roleId})`),
+          (t) => t.setContent("No rewards received."),
+        );
+
+        hasContent = true;
+        continue;
+      }
+
+      const rewardText =
+        extraRewards.length === 0
+          ? `${mainReward.name} x${mainReward.count}`
+          : rewards.map((reward) => `- ${reward.name} x${reward.count}`).join("\n");
+
+      container.addSectionComponents((s) =>
+        s
           .addTextDisplayComponents(
             (t) => t.setContent(`### ${account.nickname} (${account.roleId})`),
-            (t) => t.setContent(res.message || "Failed to signin for unknown reason."),
-          );
-      } else {
-        const rewards = res.data.awardIds.map((a) => res.data.resourceInfoMap[a.id]!);
-        const mainReward = rewards[0]!;
-        const extraRewards = rewards.slice(1);
+            (t) => t.setContent(rewardText),
+          )
+          .setThumbnailAccessory((a) => a.setURL(mainReward.icon).setDescription(mainReward.name)),
+      );
 
-        container
-          .addSeparatorComponents((s) => s)
-          .addSectionComponents((s) =>
-            s
-              .addTextDisplayComponents(
-                (t) => t.setContent(`### ${account.nickname} (${account.roleId})`),
-                (t) => t.setContent(`${mainReward.name} x${mainReward.count}`),
-              )
-              .setThumbnailAccessory((a) =>
-                a.setURL(mainReward.icon).setDescription(mainReward.name),
-              ),
-          );
-
-        if (extraRewards.length > 0) {
-          container.addTextDisplayComponents(
-            (t) => t.setContent(`Bonus Rewards:`),
-            (t) => t.setContent(extraRewards.map((r) => `- ${r.name} x${r.count}`).join("\n")),
-          );
-        }
-      }
+      hasContent = true;
     }
 
     await interaction.editReply({

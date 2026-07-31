@@ -5,7 +5,7 @@ import {
   MessageFlags,
   SlashCommandBuilder,
 } from "discord.js";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { AccountsDB, UsersDB, db } from "#/drizzle/index.ts";
 import { efAttemptedCodes, efCodes } from "#/drizzle/schema.ts";
 import { sdk } from "#/globals/sdk.ts";
@@ -19,7 +19,13 @@ export default {
     .setNameLocalizations(dtx("command.redeem.name"))
     .setDescription("Redeem a reward code")
     .setDescriptionLocalizations(dtx("command.redeem.description"))
-    .addStringOption((option) => option.setName("code").setDescription("The reward code to redeem"))
+    .addStringOption((option) =>
+      option
+        .setName("code")
+        .setDescription("The reward code to redeem")
+        .setMinLength(6)
+        .setMaxLength(16),
+    )
     .addStringOption((option) =>
       option.setName("for").setDescription("The account to redeem for").setAutocomplete(true),
     ),
@@ -75,22 +81,13 @@ export default {
     }
 
     const codes: string[] = [];
-    const inputCode = interaction.options.getString("code")?.trim();
+    const inputCode = interaction.options.getString("code");
     if (inputCode) {
-      if (inputCode.length < 6 || inputCode.length > 16) {
-        await interaction.reply({
-          components: [errorContainer({ desc: tx(locale, "error.invalidCode") })],
-          flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
-        });
-        return;
-      }
-
-      codes.push(inputCode);
+      codes.push(inputCode.trim());
     } else {
       const dbCodes = await db.query.efCodes.findMany({
         columns: {
           code: true,
-          rewards: true,
         },
         where: {
           isActive: true,
@@ -104,17 +101,21 @@ export default {
 
     await interaction.deferReply();
 
-    const container = new ContainerBuilder().addTextDisplayComponents(
-      (t) => t.setContent("Header"),
-      (t) => t.setContent("Description"),
-    );
+    const container = new ContainerBuilder();
+    let hasContent = false;
 
     for (const account of accounts) {
       if (!account) continue;
-      container.addSeparatorComponents((s) => s);
+
+      if (hasContent) {
+        container.addSeparatorComponents((s) => s);
+      }
+
       container.addTextDisplayComponents((t) =>
         t.setContent(`### ${account.nickname} (${account.roleId})`),
       );
+
+      hasContent = true;
 
       const pastRedemptions = await db.query.efAttemptedCodes.findMany({
         columns: {
@@ -126,13 +127,12 @@ export default {
         },
       });
 
+      const codeSet = new Set(codes);
       const seen = new Set(pastRedemptions.map((r) => r.code));
 
       const toRedeem = [
-        ...pastRedemptions
-          .filter((r) => r.status === -1 && codes.includes(r.code))
-          .map((r) => r.code),
-        ...codes.filter((c) => !seen.has(c)),
+        ...pastRedemptions.filter((r) => r.status === -1 && codeSet.has(r.code)).map((r) => r.code),
+        ...codes.filter((code) => !seen.has(code)),
       ];
 
       if (toRedeem.length === 0) {
@@ -166,23 +166,26 @@ export default {
 
         if (res.code === 0) {
           container.addTextDisplayComponents((t) =>
-            t.setContent(`- ${code}\nCode redeemed successfully!`),
+            t.setContent(`${code}\n⤷ Code redeemed successfully!`),
           );
         } else {
-          container.addTextDisplayComponents((t) => t.setContent(`- ${code}\n${res.msg}`));
+          container.addTextDisplayComponents((t) => t.setContent(`${code}\n⤷ ${res.msg}`));
 
           // Inactive code
           if (res.code === 11004) {
             await db.update(efCodes).set({ isActive: false }).where(eq(efCodes.code, code));
           }
+        }
 
-          // Already redeemed
-          if (res.code === 11005) {
-            await db
-              .update(efAttemptedCodes)
-              .set({ status: 0 })
-              .where(and(eq(efAttemptedCodes.aid, account.id), eq(efAttemptedCodes.code, code)));
-          }
+        let status = -1;
+
+        // Successful redemption
+        if (res.code === 0) {
+          status = 0;
+        }
+        // Already redeemed
+        else if (res.code === 11005) {
+          status = 0;
         }
 
         await db
@@ -190,12 +193,12 @@ export default {
           .values({
             aid: account.id,
             code,
-            status: res.code === 0 ? 0 : -1,
+            status,
           })
           .onConflictDoUpdate({
             target: [efAttemptedCodes.aid, efAttemptedCodes.code],
             set: {
-              status: res.code === 0 ? 0 : -1,
+              status,
             },
           });
       }

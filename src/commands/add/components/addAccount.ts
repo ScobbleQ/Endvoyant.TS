@@ -1,4 +1,5 @@
 import { ContainerBuilder } from "discord.js";
+import { config } from "#/config.ts";
 import CookiesButton from "../buttons/cookies.ts";
 import HelpButton from "../buttons/help.ts";
 import LoginButton from "../buttons/login.ts";
@@ -13,7 +14,10 @@ export function addAccountContainer() {
             t.setContent(
               "Choose how to add your SKPort account to Discord. The source is on [GitHub](https://github.com/ScobbleQ/Endvoyant) if you want to review it.",
             ),
-          (t) => t.setContent("-# Note: Each Discord account can add up to **3** SKPORT accounts."),
+          (t) =>
+            t.setContent(
+              `-# Note: Each Discord account can add up to **${config.settings.maxAccountLinks}** SKPORT accounts.`,
+            ),
         )
         .setButtonAccessory(HelpButton.data),
     )
@@ -21,7 +25,7 @@ export function addAccountContainer() {
     .addSectionComponents((s) =>
       s
         .addTextDisplayComponents(
-          (t) => t.setContent("### • Email Login (Recommended)"),
+          (t) => t.setContent("### Email Login (Recommended)"),
           (t) =>
             t.setContent(
               "Sign in with your email and password. We never store either; they are only used once to fetch a token from SKPORT, which is then saved. This is the **simplest** and **recommended** option.",
@@ -32,7 +36,7 @@ export function addAccountContainer() {
     .addSectionComponents((s) =>
       s
         .addTextDisplayComponents(
-          (t) => t.setContent("### • Cookies"),
+          (t) => t.setContent("### Cookies"),
           (t) =>
             t.setContent(
               "Paste your SKPORT auth cookies. This avoids entering credentials, but it is more involved. Use the Help button for details.",

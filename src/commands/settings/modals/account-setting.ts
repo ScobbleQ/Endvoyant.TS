@@ -1,10 +1,4 @@
-import {
-  CheckboxBuilder,
-  LabelBuilder,
-  MessageFlags,
-  ModalBuilder,
-  ModalSubmitInteraction,
-} from "discord.js";
+import { LabelBuilder, MessageFlags, ModalBuilder, ModalSubmitInteraction } from "discord.js";
 import { AccountsDB } from "#/drizzle/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 
@@ -24,49 +18,103 @@ export default {
       .setTitle(`${params.name}'s Settings`)
       .addLabelComponents(
         new LabelBuilder()
-          .setLabel("Account Privacy")
-          .setDescription("Hide your profile and activity from other users.")
-          .setCheckboxComponent(
-            new CheckboxBuilder().setCustomId("privacy").setDefault(params.privacy),
+          .setLabel("Profile Visibility")
+          .setDescription("Choose whether your profile and activity are visible to other users.")
+          .setRadioGroupComponent((radioGroup) =>
+            radioGroup.setCustomId("privacy").addOptions([
+              {
+                label: "Private",
+                value: "on",
+                description: "Hide your profile and activity from other users.",
+                default: params.privacy,
+              },
+              {
+                label: "Public",
+                value: "off",
+                description: "Allow other users to see your profile and activity.",
+                default: !params.privacy,
+              },
+            ]),
           ),
       )
       .addLabelComponents(
         new LabelBuilder()
-          .setLabel("Notification Settings")
-          .setDescription("Control your notification preferences.")
-          .setCheckboxComponent(
-            new CheckboxBuilder().setCustomId("notifs").setDefault(params.notif),
+          .setLabel("Notification")
+          .setDescription("Choose whether you want to receive notifications.")
+          .setRadioGroupComponent((radioGroup) =>
+            radioGroup.setCustomId("notif").addOptions([
+              {
+                label: "Enabled",
+                value: "on",
+                description: "Receive notifications about relevant activity.",
+                default: params.notif,
+              },
+              {
+                label: "Disabled",
+                value: "off",
+                description: "Stop receiving notifications.",
+                default: !params.notif,
+              },
+            ]),
           ),
       )
       .addLabelComponents(
         new LabelBuilder()
-          .setLabel("Sign-in Settings")
+          .setLabel("Automatic Sign-in")
           .setDescription("Control your sign-in preferences.")
-          .setCheckboxComponent(
-            new CheckboxBuilder().setCustomId("signin").setDefault(params.signin),
+          .setRadioGroupComponent((radioGroup) =>
+            radioGroup.setCustomId("signin").addOptions([
+              {
+                label: "Enabled",
+                value: "on",
+                description: "Automatically sign in when the app is opened.",
+                default: params.signin,
+              },
+              {
+                label: "Disabled",
+                value: "off",
+                description: "Require manual sign-in each time.",
+                default: !params.signin,
+              },
+            ]),
           ),
       )
       .addLabelComponents(
         new LabelBuilder()
-          .setLabel("Redeem Settings")
+          .setLabel("Automatic Code Redeem")
           .setDescription("Control your redeem preferences.")
-          .setCheckboxComponent(
-            new CheckboxBuilder().setCustomId("redeem").setDefault(params.redeem),
+          .setRadioGroupComponent((radioGroup) =>
+            radioGroup.setCustomId("redeem").addOptions([
+              {
+                label: "Enabled",
+                value: "on",
+                description: "Automatically redeem codes when available.",
+                default: params.redeem,
+              },
+              {
+                label: "Disabled",
+                value: "off",
+                description: "Stop automatically redeeming codes.",
+                default: !params.redeem,
+              },
+            ]),
           ),
       ),
   execute: async (interaction: ModalSubmitInteraction, args: string[]) => {
-    const privacy = interaction.fields.getCheckbox("privacy");
-    const notif = interaction.fields.getCheckbox("notifs");
-    const signin = interaction.fields.getCheckbox("signin");
-    const redeem = interaction.fields.getCheckbox("redeem");
     const shortId = parseInt(args[0]!, 10);
+    const [privacy, notif, signin, redeem] = [
+      interaction.fields.getRadioGroup("privacy"),
+      interaction.fields.getRadioGroup("notif"),
+      interaction.fields.getRadioGroup("signin"),
+      interaction.fields.getRadioGroup("redeem"),
+    ];
 
     try {
       await AccountsDB.updateByShortId(interaction.user.id, shortId, {
-        isPrivate: privacy,
-        enableNotif: notif,
-        enableSignin: signin,
-        enableRedeem: redeem,
+        isPrivate: privacy === "on",
+        enableNotif: notif === "on",
+        enableSignin: signin === "on",
+        enableRedeem: redeem === "on",
       });
 
       await interaction.reply({

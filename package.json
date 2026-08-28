@@ -39,7 +39,7 @@
     "pino": "^10.3.1",
     "pino-roll": "^4.0.0",
     "postgres": "^3.4.9",
-    "undici": "^8.7.0",
+    "undici": "^8.10.0",
     "zlib-sync": "^0.1.10"
   },
   "devDependencies": {

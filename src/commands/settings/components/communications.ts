@@ -1,6 +1,6 @@
 import { ContainerBuilder } from "discord.js";
 import { db } from "#/drizzle/index.ts";
-import TestDmButton from "../buttons/test-dm.ts";
+import TestDmButton from "../buttons/mock-dm.ts";
 import ToggleButton from "../buttons/toggle.ts";
 import MenuSelector from "../selectmenus/selector.ts";
 

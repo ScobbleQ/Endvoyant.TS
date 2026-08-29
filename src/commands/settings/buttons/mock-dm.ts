@@ -9,7 +9,7 @@ import { createComponentId } from "#/utils/componentId.ts";
 
 export default {
   data: new ButtonBuilder()
-    .setCustomId(createComponentId("settings", "test-dm"))
+    .setCustomId(createComponentId("settings", "mock-dm"))
     .setLabel("Test DM")
     .setStyle(ButtonStyle.Primary),
   execute: async (interaction: ButtonInteraction) => {

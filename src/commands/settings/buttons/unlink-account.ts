@@ -3,14 +3,14 @@ import { createComponentId } from "#/utils/componentId.ts";
 import { confirmationContainer } from "../components/confirmation.ts";
 
 export default {
-  data: (shortId: string) =>
+  data: (accountKey: string) =>
     new ButtonBuilder()
-      .setCustomId(createComponentId("settings", "unlink-account", shortId))
+      .setCustomId(createComponentId("settings", "unlink-account", accountKey))
       .setLabel("Unlink")
       .setStyle(ButtonStyle.Danger),
   execute: async (interaction: ButtonInteraction, args: string[]) => {
     await interaction.update({
-      components: [await confirmationContainer("unlink", args[0]!)],
+      components: [await confirmationContainer("unlink", args[0] as string)],
       flags: [MessageFlags.IsComponentsV2],
     });
   },

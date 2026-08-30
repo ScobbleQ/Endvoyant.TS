@@ -26,12 +26,8 @@ export default {
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
     const user = await db.query.users.findFirst({
-      columns: {
-        allowData: true,
-      },
-      where: {
-        dcid: interaction.user.id,
-      },
+      columns: { allowData: true },
+      where: { dcid: interaction.user.id },
     });
 
     const locale = fromDiscordLocale(interaction.locale);
@@ -44,14 +40,8 @@ export default {
     }
 
     const codes = await db.query.efCodes.findMany({
-      columns: {
-        code: true,
-        rewards: true,
-        notes: true,
-      },
-      where: {
-        isActive: true,
-      },
+      columns: { code: true, rewards: true, notes: true },
+      where: { isActive: true },
     });
 
     if (codes.length === 0) {

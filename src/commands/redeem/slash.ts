@@ -35,7 +35,7 @@ export default {
     const focusedValue = interaction.options.getFocused();
     const choices = accounts.map((account) => ({
       name: `${account.nickname} (${account.roleId})`,
-      value: account.id,
+      value: account.accountKey,
     }));
 
     const filtered = choices
@@ -68,8 +68,9 @@ export default {
       },
       where: {
         dcid: user.dcid,
-        id: selectedAccountId ? selectedAccountId : undefined,
+        accountKey: selectedAccountId ? selectedAccountId : undefined,
       },
+      orderBy: { isPrimary: "desc", addedOn: "asc" },
     });
 
     if (accounts.length === 0) {
@@ -86,12 +87,8 @@ export default {
       codes.push(inputCode.trim());
     } else {
       const dbCodes = await db.query.efCodes.findMany({
-        columns: {
-          code: true,
-        },
-        where: {
-          isActive: true,
-        },
+        columns: { code: true },
+        where: { isActive: true },
       });
 
       for (const dbCode of dbCodes) {
@@ -118,13 +115,8 @@ export default {
       hasContent = true;
 
       const pastRedemptions = await db.query.efAttemptedCodes.findMany({
-        columns: {
-          code: true,
-          status: true,
-        },
-        where: {
-          aid: account.id,
-        },
+        columns: { code: true, status: true },
+        where: { aid: account.id },
       });
 
       const codeSet = new Set(codes);

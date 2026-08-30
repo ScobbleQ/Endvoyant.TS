@@ -3,9 +3,9 @@ import CancelActionButton from "../buttons/cancel-action.ts";
 import ConfirmDeleteButton from "../buttons/confirm-delete.ts";
 import ConfirmUnlinkButton from "../buttons/confirm-unlink.ts";
 
-type ConfirmationParams = [type: "unlink", shortId: string] | [type: "delete"];
+type ConfirmationParams = [type: "unlink", accountKey: string] | [type: "delete"];
 
-export async function confirmationContainer(...[type, shortId]: ConfirmationParams) {
+export async function confirmationContainer(...[type, accountKey]: ConfirmationParams) {
   const heading = type === "unlink" ? "Unlink Account" : "Delete Endvoyant Account";
 
   return new ContainerBuilder()
@@ -15,7 +15,7 @@ export async function confirmationContainer(...[type, shortId]: ConfirmationPara
     )
     .addActionRowComponents((a) =>
       a.addComponents(
-        type === "unlink" ? ConfirmUnlinkButton.data(shortId) : ConfirmDeleteButton.data,
+        type === "unlink" ? ConfirmUnlinkButton.data(accountKey) : ConfirmDeleteButton.data,
         CancelActionButton.data(type),
       ),
     );

@@ -40,7 +40,7 @@ export default {
     const focusedValue = interaction.options.getFocused();
     const choices = accounts.map((account) => ({
       name: `${account.nickname} (${account.roleId})`,
-      value: account.id,
+      value: account.accountKey,
     }));
 
     const filtered = choices
@@ -80,7 +80,7 @@ export default {
       where: {
         dcid: interaction.user.id,
         isPrimary: selectedAccountId ? undefined : true,
-        id: selectedAccountId ?? undefined,
+        accountKey: selectedAccountId ?? undefined,
       },
     });
 

@@ -30,13 +30,8 @@ export default {
             roleId: true,
             serverId: true,
           },
-          where: {
-            enableSignin: true,
-          },
-          orderBy: {
-            isPrimary: "desc",
-            shortId: "asc",
-          },
+          where: { enableSignin: true },
+          orderBy: { isPrimary: "desc", addedOn: "asc" },
         },
       },
     });

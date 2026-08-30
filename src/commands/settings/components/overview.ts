@@ -5,20 +5,11 @@ import MenuSelector from "../selectmenus/selector.ts";
 
 export async function overviewContainer(user: BaseInteraction<CacheType>["user"]) {
   const settings = await db.query.users.findFirst({
-    columns: {
-      createdAt: true,
-      isPremium: true,
-      lang: true,
-    },
-    where: {
-      dcid: user.id,
-    },
+    columns: { createdAt: true, isPremium: true, lang: true },
+    where: { dcid: user.id },
     with: {
       accounts: {
-        columns: {
-          enableSignin: true,
-          enableRedeem: true,
-        },
+        columns: { enableSignin: true, enableRedeem: true },
       },
     },
   });

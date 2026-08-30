@@ -30,7 +30,7 @@ export default {
     ),
   execute: async (interaction: ModalSubmitInteraction) => {
     await interaction.deferUpdate();
-    const tokens = interaction.fields.getTextInputValue("token");
+    const tokens = interaction.fields.getTextInputValue("token").trim();
 
     const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) return;

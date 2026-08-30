@@ -24,9 +24,7 @@ export class UsersDB {
         allowData: true,
         lang: true,
       },
-      where: {
-        dcid,
-      },
+      where: { dcid },
     });
   }
 
@@ -40,9 +38,7 @@ export class UsersDB {
         allowData: true,
         lang: true,
       },
-      where: {
-        dcid,
-      },
+      where: { dcid },
     });
   }
 }

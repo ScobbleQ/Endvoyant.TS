@@ -8,20 +8,15 @@ import MenuSelector from "../selectmenus/selector.ts";
 export async function accountsContainer(dcid: string) {
   const accounts = await db.query.accounts.findMany({
     columns: {
-      shortId: true,
       addedOn: true,
       isPrimary: true,
       nickname: true,
       roleId: true,
       serverName: true,
+      accountKey: true,
     },
-    where: {
-      dcid,
-    },
-    orderBy: {
-      isPrimary: "desc",
-      addedOn: "asc",
-    },
+    where: { dcid },
+    orderBy: { isPrimary: "desc", addedOn: "asc" },
   });
 
   const container = new ContainerBuilder().addActionRowComponents((a) =>
@@ -46,9 +41,9 @@ export async function accountsContainer(dcid: string) {
       )
       .addActionRowComponents((a) =>
         a.addComponents(
-          EditAccountButton.data(account.shortId.toString()),
-          SetPrimaryButton.data(account.shortId.toString(), account.isPrimary),
-          UnlinkAccountButton.data(account.shortId.toString()),
+          EditAccountButton.data(account.accountKey),
+          SetPrimaryButton.data(account.accountKey, account.isPrimary),
+          UnlinkAccountButton.data(account.accountKey),
         ),
       );
   }

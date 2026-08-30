@@ -22,7 +22,7 @@ interface RoleSummary {
 
 interface FailedRoleSummary extends RoleSummary {
   roleId: string;
-  reason: "LinkedByUser" | "LinkedByOther" | "ExceedLimit";
+  reason: "LinkedByUser" | "LinkedByOther" | "ExceedLimit" | "FailedToLink";
 }
 
 interface LinkAccountsOptions {
@@ -64,22 +64,21 @@ function addRoleSection(container: ContainerBuilder, title: string, roles: reado
   );
 }
 
-function buildLinkSummaryContainer(
-  linkedRoles: readonly RoleSummary[],
-  failedRoles: readonly FailedRoleSummary[],
-) {
-  const own = failedRoles.filter((role) => role.reason === "LinkedByUser");
-  const other = failedRoles.filter((role) => role.reason === "LinkedByOther");
-  const max = failedRoles.filter((role) => role.reason === "ExceedLimit");
+function buildLinkSummaryContainer(linkedRoles: RoleSummary[], failedRoles: FailedRoleSummary[]) {
+  const alreadyLinked = failedRoles.filter((role) => role.reason === "LinkedByUser");
+  const linkedByOther = failedRoles.filter((role) => role.reason === "LinkedByOther");
+  const limitExceeded = failedRoles.filter((role) => role.reason === "ExceedLimit");
+  const failed = failedRoles.filter((role) => role.reason === "FailedToLink");
 
   const summary = new ContainerBuilder().addTextDisplayComponents((text) =>
-    text.setContent("# Account Linking Summary"),
+    text.setContent("## Account Linking Results"),
   );
 
-  addRoleSection(summary, `✅ Linked (${linkedRoles.length})`, linkedRoles);
-  addRoleSection(summary, `⚠️ Already linked to you (${own.length})`, own);
-  addRoleSection(summary, `❌ Linked to another Discord account (${other.length})`, other);
-  addRoleSection(summary, `🚫 Skipped due to account limit (${max.length})`, max);
+  addRoleSection(summary, `✅ Successfully Linked (${linkedRoles.length})`, linkedRoles);
+  addRoleSection(summary, `⚠️ Already Linked to You (${alreadyLinked.length})`, alreadyLinked);
+  addRoleSection(summary, `🔒 Linked to Another Account (${linkedByOther.length})`, linkedByOther);
+  addRoleSection(summary, `🚫 Account Limit Reached (${limitExceeded.length})`, limitExceeded);
+  addRoleSection(summary, `❌ Failed to Link (${failed.length})`, failed);
 
   return summary;
 }
@@ -141,7 +140,7 @@ export async function linkBindingAccounts({
           title: "Failed to Link Accounts",
           desc:
             failedRoles.length > 0
-              ? "All available accounts were skipped due to already being linked or account limits. Check your pinned messages for a summary of linked accounts. Contact support if you believe this is an error."
+              ? "All available accounts were skipped due to **already being linked** or **account limits**. Contact support if you believe this is an error."
               : "No valid accounts found to link.",
         }),
       ],
@@ -151,28 +150,38 @@ export async function linkBindingAccounts({
     return;
   }
 
-  let currentCount = linkedAmount;
+  const linkedRoles: RoleSummary[] = [];
   for (const role of rolesToInsert) {
-    await AccountsDB.createForUser(interaction.user.id, {
-      nickname: role.nickname,
-      accountToken,
-      hgId,
-      userId,
-      channelId: bind.channelMasterId,
-      serverType: role.serverType,
-      serverId: role.serverId,
-      serverName: role.serverName,
-      roleId: role.roleId,
-      isPrimary: currentCount === 0,
-    });
+    try {
+      await AccountsDB.create(interaction.user.id, {
+        nickname: role.nickname,
+        accountToken,
+        hgId,
+        userId,
+        channelId: bind.channelMasterId,
+        serverType: role.serverType,
+        serverId: role.serverId,
+        serverName: role.serverName,
+        roleId: role.roleId,
+      });
 
-    currentCount++;
+      linkedRoles.push({
+        nickname: role.nickname,
+        serverName: role.serverName,
+      });
+    } catch (error) {
+      console.error("Failed to link account:", error);
+      addFailedRole(failedRoles, role, "FailedToLink");
+    }
   }
 
   await interaction.editReply({
-    components: [buildLinkSummaryContainer(rolesToInsert, failedRoles)],
+    components: [buildLinkSummaryContainer(linkedRoles, failedRoles)],
     flags: [MessageFlags.IsComponentsV2],
   });
+
+  // Dont need to update pins if no roles were successfully linked
+  if (linkedRoles.length === 0) return;
 
   try {
     await sendUpdatedLinkedPins(interaction);

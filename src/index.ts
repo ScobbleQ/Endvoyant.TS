@@ -23,3 +23,5 @@ manager.spawn().catch((error) => {
 //   await manager.broadcastEval((client) => client.destroy());
 //   process.exit(0);
 // });
+
+console.log(process.pid);

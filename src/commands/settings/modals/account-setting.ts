@@ -3,8 +3,8 @@ import { AccountsDB } from "#/drizzle/index.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 
 type settingParams = {
+  accountKey: string;
   name: string;
-  shortId: number;
   privacy: boolean;
   notif: boolean;
   signin: boolean;
@@ -14,7 +14,7 @@ type settingParams = {
 export default {
   data: (params: settingParams) =>
     new ModalBuilder()
-      .setCustomId(createComponentId("settings", "account-setting", params.shortId.toString()))
+      .setCustomId(createComponentId("settings", "account-setting", params.accountKey))
       .setTitle(`${params.name}'s Settings`)
       .addLabelComponents(
         new LabelBuilder()
@@ -101,7 +101,7 @@ export default {
           ),
       ),
   execute: async (interaction: ModalSubmitInteraction, args: string[]) => {
-    const shortId = parseInt(args[0]!, 10);
+    const accountKey = args[0] as string;
     const [privacy, notif, signin, redeem] = [
       interaction.fields.getRadioGroup("privacy"),
       interaction.fields.getRadioGroup("notif"),
@@ -110,7 +110,7 @@ export default {
     ];
 
     try {
-      await AccountsDB.updateByShortId(interaction.user.id, shortId, {
+      await AccountsDB.updateWithAccountKey(interaction.user.id, accountKey, {
         isPrivate: privacy === "on",
         enableNotif: notif === "on",
         enableSignin: signin === "on",

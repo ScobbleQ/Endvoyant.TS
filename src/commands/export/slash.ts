@@ -21,9 +21,7 @@ export default {
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
     const user = await db.query.users.findFirst({
-      where: {
-        dcid: interaction.user.id,
-      },
+      where: { dcid: interaction.user.id },
     });
 
     if (!user) {
@@ -37,21 +35,12 @@ export default {
 
     const [accounts, events] = await Promise.all([
       db.query.accounts.findMany({
-        where: {
-          dcid: interaction.user.id,
-        },
-        orderBy: {
-          isPrimary: "desc",
-          addedOn: "desc",
-        },
+        where: { dcid: interaction.user.id },
+        orderBy: { isPrimary: "desc", addedOn: "asc" },
       }),
       db.query.events.findMany({
-        where: {
-          dcid: interaction.user.id,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
+        where: { dcid: interaction.user.id },
+        orderBy: { createdAt: "desc" },
         limit: 1000,
       }),
     ]);

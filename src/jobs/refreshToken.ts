@@ -13,12 +13,7 @@ export default {
     await new Promise((resolve) => setTimeout(resolve, delay));
 
     const accounts = await db.query.accounts.findMany({
-      columns: {
-        id: true,
-        dcid: true,
-        accountToken: true,
-        hgId: true,
-      },
+      columns: { id: true, dcid: true, accountToken: true, hgId: true },
     });
 
     const queue = new pQueue({ concurrency: 10 });

@@ -5,16 +5,16 @@ import { createComponentId } from "#/utils/componentId.ts";
 import { accountsContainer } from "../components/accounts.ts";
 
 export default {
-  data: (shortId: string) =>
+  data: (accountKey: string) =>
     new ButtonBuilder()
-      .setCustomId(createComponentId("settings", "confirm-unlink", shortId))
+      .setCustomId(createComponentId("settings", "confirm-unlink", accountKey))
       .setLabel("Confirm Unlink")
       .setStyle(ButtonStyle.Danger),
   execute: async (interaction: ButtonInteraction, args: string[]) => {
-    const shortId = parseInt(args[0]!, 10);
+    const accountKey = args[0] as string;
 
     try {
-      await AccountsDB.deleteByShortId(interaction.user.id, shortId);
+      await AccountsDB.delete(interaction.user.id, accountKey);
       await interaction.update({
         components: [await accountsContainer(interaction.user.id)],
         flags: [MessageFlags.IsComponentsV2],

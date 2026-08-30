@@ -30,10 +30,7 @@ export default {
         roleId: true,
         isPrivate: true,
       },
-      where: {
-        dcid: interaction.targetId,
-        isPrimary: true,
-      },
+      where: { dcid: interaction.targetId, isPrimary: true },
     });
 
     if (viewer && viewer.allowData) {

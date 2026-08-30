@@ -35,7 +35,7 @@ export default {
     const focusedValue = interaction.options.getFocused();
     const choices = accounts.map((account) => ({
       name: `${account.nickname} (${account.roleId})`,
-      value: account.id,
+      value: account.accountKey,
     }));
 
     const filtered = choices
@@ -73,12 +73,9 @@ export default {
       },
       where: {
         dcid: user.dcid,
-        id: selectedAccountId ? selectedAccountId : undefined,
+        accountKey: selectedAccountId ? selectedAccountId : undefined,
       },
-      orderBy: {
-        isPrimary: "desc",
-        shortId: "asc",
-      },
+      orderBy: { isPrimary: "desc", addedOn: "asc" },
     });
 
     if (accounts.length === 0) {

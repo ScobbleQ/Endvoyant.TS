@@ -55,11 +55,13 @@ export const accounts = pgTable.withRLS(
     enableRedeem: boolean("enable_redeem").default(true).notNull(),
     isPrimary: boolean("is_primary").default(false).notNull(),
     shortId: smallint("short_id").default(1).notNull(),
+    accountKey: text("account_key").notNull(),
   },
   (table) => [
     uniqueIndex("accounts_one_primary_per_user")
       .using("btree", table.dcid.asc().nullsLast())
       .where(sql`is_primary`),
+    unique("accounts_dcid_account_key_key").on(table.dcid, table.accountKey),
     unique("accounts_dcid_short_id_key").on(table.dcid, table.shortId),
   ],
 );

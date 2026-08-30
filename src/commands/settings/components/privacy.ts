@@ -6,13 +6,8 @@ import MenuSelector from "../selectmenus/selector.ts";
 
 export async function privacyContainer(dcid: string) {
   const settings = await db.query.users.findFirst({
-    columns: {
-      isPrivate: true,
-      allowData: true,
-    },
-    where: {
-      dcid,
-    },
+    columns: { isPrivate: true, allowData: true },
+    where: { dcid },
   });
 
   // This should never happen, but just in case, we handle it

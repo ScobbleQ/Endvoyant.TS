@@ -1,44 +1,33 @@
-import { eq, sql, and } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
+import { generateKey } from "#/utils/generateKey.ts";
 import { accounts, users } from "../schema.ts";
 import { db } from "./client.ts";
 
-export type Account = typeof accounts.$inferSelect;
-export type ManageAccount = Pick<
-  Account,
-  "isPrimary" | "nickname" | "roleId" | "serverName" | "shortId"
->;
-type AccountPatch = Partial<typeof accounts.$inferInsert>;
+type Account = typeof accounts.$inferSelect;
 
 export class AccountsDB {
-  static async deleteByShortId(dcid: string, shortId: number) {
+  static async delete(dcid: string, accountKey: string) {
     await db.transaction(async (tx) => {
-      // Get the account to be deleted
+      await tx.execute(sql`
+        SELECT 1
+        FROM ${users}
+        WHERE ${users.dcid} = ${dcid}
+        FOR UPDATE
+      `);
+
       const account = await tx.query.accounts.findFirst({
-        columns: {
-          id: true,
-          isPrimary: true,
-        },
-        where: {
-          dcid,
-          shortId,
-        },
+        columns: { id: true, isPrimary: true },
+        where: { dcid, accountKey },
       });
 
       if (!account) return;
       await tx.delete(accounts).where(eq(accounts.id, account.id));
 
-      // If deleted account was primary, get the replacement (lowest shortId)
       if (!account.isPrimary) return;
       const replacement = await tx.query.accounts.findFirst({
-        columns: {
-          id: true,
-        },
-        where: {
-          dcid,
-        },
-        orderBy: {
-          shortId: "asc",
-        },
+        columns: { id: true },
+        where: { dcid },
+        orderBy: { addedOn: "asc" },
       });
 
       if (!replacement) return;
@@ -46,9 +35,9 @@ export class AccountsDB {
     });
   }
 
-  static async createForUser(
+  static async create(
     dcid: string,
-    data: Omit<typeof accounts.$inferInsert, "dcid" | "shortId">,
+    data: Omit<typeof accounts.$inferInsert, "dcid" | "isPrimary" | "accountKey">,
   ) {
     await db.transaction(async (tx) => {
       await tx.execute(sql`
@@ -57,82 +46,68 @@ export class AccountsDB {
         WHERE ${users.dcid} = ${dcid}
         FOR UPDATE
       `);
+
+      const existing = await tx.query.accounts.findFirst({
+        columns: { id: true },
+        where: { dcid },
+      });
+
       await tx.insert(accounts).values({
         dcid,
-        shortId: sql`(
-          SELECT COALESCE(MAX(${accounts.shortId}), 0) + 1
-          FROM ${accounts}
-          WHERE ${accounts.dcid} = ${dcid}
-        )`,
+        accountKey: generateKey(6),
+        isPrimary: !existing,
         ...data,
       });
     });
   }
 
-  static async listForManage(dcid: string): Promise<ManageAccount[]> {
+  static async listForManage(dcid: string) {
     return await db.query.accounts.findMany({
       columns: {
         isPrimary: true,
         nickname: true,
         roleId: true,
         serverName: true,
-        shortId: true,
+        accountKey: true,
       },
-      where: {
-        dcid,
-      },
-      orderBy: {
-        isPrimary: "desc",
-        shortId: "asc",
-      },
+      where: { dcid },
+      orderBy: { isPrimary: "desc", addedOn: "asc" },
     });
   }
 
-  static async updateByAccountId(id: Account["id"], patch: AccountPatch) {
+  static async updateByAccountId(id: Account["id"], patch: Partial<Account>) {
     if (Object.keys(patch).length === 0) return;
     await db.update(accounts).set(patch).where(eq(accounts.id, id));
   }
 
-  static async updateByShortId(dcid: string, shortId: number, patch: AccountPatch) {
+  static async updateWithAccountKey(dcid: string, accountKey: string, patch: Partial<Account>) {
     if (Object.keys(patch).length === 0) return;
     await db
       .update(accounts)
       .set(patch)
-      .where(and(eq(accounts.dcid, dcid), eq(accounts.shortId, shortId)));
+      .where(and(eq(accounts.dcid, dcid), eq(accounts.accountKey, accountKey)));
   }
 
   static async findBindingOwner(hgId: string, roleId: string, serverId: string) {
     const res = await db.query.accounts.findFirst({
-      columns: {
-        dcid: true,
-      },
-      where: {
-        hgId,
-        roleId,
-        serverId,
-      },
+      columns: { dcid: true },
+      where: { hgId, roleId, serverId },
     });
 
     return { exists: res !== undefined, dcid: res?.dcid };
   }
 
-  static async setPrimary(dcid: string, shortId: number) {
+  static async setPrimary(dcid: string, accountKey: string) {
     await db.transaction(async (tx) => {
       await tx.update(accounts).set({ isPrimary: false }).where(eq(accounts.dcid, dcid));
 
       const target = await tx.query.accounts.findFirst({
-        columns: {
-          id: true,
-        },
-        where: {
-          dcid,
-          shortId,
-        },
+        columns: { id: true },
+        where: { dcid, accountKey },
       });
 
-      if (target) {
-        await tx.update(accounts).set({ isPrimary: true }).where(eq(accounts.id, target.id));
-      }
+      if (!target) return;
+      await tx.update(accounts).set({ isPrimary: true }).where(eq(accounts.id, target.id));
     });
   }
 
@@ -149,14 +124,10 @@ export class AccountsDB {
         roleId: true,
         serverId: true,
         isPrivate: true,
+        accountKey: true,
       },
-      where: {
-        dcid: targetId,
-      },
-      orderBy: {
-        isPrimary: "desc",
-        shortId: "asc",
-      },
+      where: { dcid: targetId },
+      orderBy: { isPrimary: "desc", addedOn: "asc" },
     });
   }
 }

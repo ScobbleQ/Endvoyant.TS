@@ -4,13 +4,13 @@ import { createComponentId } from "#/utils/componentId.ts";
 import AccountSettingModal from "../modals/account-setting.ts";
 
 export default {
-  data: (shortId: string) =>
+  data: (accountKey: string) =>
     new ButtonBuilder()
-      .setCustomId(createComponentId("settings", "edit-account", shortId))
+      .setCustomId(createComponentId("settings", "edit-account", accountKey))
       .setLabel("Edit")
       .setStyle(ButtonStyle.Primary),
   execute: async (interaction: ButtonInteraction, args: string[]) => {
-    const shortId = parseInt(args[0]!, 10);
+    const accountKey = args[0] as string;
 
     const account = await db.query.accounts.findFirst({
       columns: {
@@ -20,18 +20,15 @@ export default {
         enableSignin: true,
         enableNotif: true,
       },
-      where: {
-        dcid: interaction.user.id,
-        shortId,
-      },
+      where: { dcid: interaction.user.id, accountKey },
     });
 
     if (!account) return;
 
     await interaction.showModal(
       AccountSettingModal.data({
+        accountKey,
         name: account.nickname,
-        shortId: shortId,
         privacy: account.isPrivate,
         notif: account.enableNotif,
         signin: account.enableSignin,

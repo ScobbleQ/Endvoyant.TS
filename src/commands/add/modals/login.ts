@@ -39,8 +39,8 @@ export default {
     ),
   execute: async (interaction: ModalSubmitInteraction) => {
     await interaction.deferUpdate();
-    const email = interaction.fields.getTextInputValue("email");
-    const password = interaction.fields.getTextInputValue("password");
+    const email = interaction.fields.getTextInputValue("email").trim();
+    const password = interaction.fields.getTextInputValue("password").trim();
 
     const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) {

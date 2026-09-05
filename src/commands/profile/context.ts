@@ -10,7 +10,8 @@ import { db, EventsDB, UsersDB } from "#/drizzle/index.ts";
 import { sdk } from "#/globals/sdk.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
 import { errorContainer } from "#/ui/container.ts";
-import { renderProfile } from "./render.ts";
+import { renderProfile } from "./utils/render.ts";
+import { profileVisibility } from "./utils/visibility.ts";
 
 export default {
   cooldown: 60,
@@ -51,17 +52,23 @@ export default {
       return;
     }
 
-    if (interaction.user.id !== interaction.targetId) {
-      if (account.isPrivate) {
-        await interaction.reply({
-          components: [errorContainer({ desc: tx(lang, "error.privateAccounts") })],
-          flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
-        });
-        return;
-      }
+    const isOwner = interaction.user.id === interaction.targetId;
+    const owner = isOwner ? viewer : await UsersDB.findAccess(interaction.targetId);
+    const visibility = profileVisibility({
+      isOwner,
+      accountPrivate: account.isPrivate,
+      ownerPrivate: owner?.isPrivate ?? true,
+      viewerPrivate: viewer?.isPrivate ?? false,
+    });
+    if (!visibility.allowed) {
+      await interaction.reply({
+        components: [errorContainer({ desc: tx(lang, "error.privateAccounts") })],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
+      });
+      return;
     }
 
-    await interaction.deferReply();
+    await interaction.deferReply({ flags: visibility.ephemeral ? [MessageFlags.Ephemeral] : [] });
 
     const session = await sdk.credentials.createSession({ accountToken: account.accountToken });
     if (!session) return;

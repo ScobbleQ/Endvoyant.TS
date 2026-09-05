@@ -11,7 +11,8 @@ import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
 import { sdk } from "#/globals/sdk.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
 import { errorContainer } from "#/ui/container.ts";
-import { renderProfile } from "./render.ts";
+import { renderProfile } from "./utils/render.ts";
+import { profileVisibility } from "./utils/visibility.ts";
 
 export default {
   cooldown: 5,
@@ -53,9 +54,9 @@ export default {
     const user = await UsersDB.findAccess(interaction.user.id);
     if (!user) {
       const locale = fromDiscordLocale(interaction.locale);
-      await interaction.editReply({
+      await interaction.reply({
         components: [errorContainer({ desc: tx(locale, "error.requireSetup") })],
-        flags: [MessageFlags.IsComponentsV2],
+        flags: [MessageFlags.Ephemeral, MessageFlags.IsComponentsV2],
       });
       return;
     }
@@ -100,7 +101,13 @@ export default {
       return;
     }
 
-    await interaction.deferReply({ flags: account.isPrivate ? [MessageFlags.Ephemeral] : [] });
+    const visibility = profileVisibility({
+      isOwner: true,
+      accountPrivate: account.isPrivate,
+      ownerPrivate: user.isPrivate,
+      viewerPrivate: user.isPrivate,
+    });
+    await interaction.deferReply({ flags: visibility.ephemeral ? [MessageFlags.Ephemeral] : [] });
 
     const session = await sdk.credentials.createSession({ accountToken: account.accountToken });
     if (!session) return;

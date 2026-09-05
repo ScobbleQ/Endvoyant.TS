@@ -1,5 +1,7 @@
 import { SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
-import { dtx } from "#/i18n/index.ts";
+import { config } from "#/config.ts";
+import { UsersDB } from "#/drizzle/db/users.ts";
+import { dtx, fromDiscordLocale } from "#/i18n/index.ts";
 
 export default {
   cooldown: 60,
@@ -16,6 +18,16 @@ export default {
         .setDescriptionLocalizations(dtx("command.game.subcommands.news.description")),
     ),
   execute: async (interaction: ChatInputCommandInteraction) => {
+    await interaction.deferReply();
+    const eventCid = interaction.options.getString("name");
+
+    const user = await UsersDB.findAccess(interaction.user.id);
+    const lang = user?.lang || fromDiscordLocale(interaction.locale) || "en-us";
+
+    if (user && user.allowData && config.env === "production") {
+      // log activity
+    }
+
     await interaction.reply("About the bot!");
   },
 };

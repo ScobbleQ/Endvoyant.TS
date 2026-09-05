@@ -2,6 +2,7 @@ import { BaseClient, type ClientOptions } from "./core/BaseClient.ts";
 import { AttendanceResource } from "./resources/AttendanceResource.ts";
 import { AuthResource } from "./resources/AuthResource.ts";
 import { CredentialsResource } from "./resources/CredentialsResource.ts";
+import { EventResource } from "./resources/EventResource.ts";
 import { GiftcodeResource } from "./resources/GiftcodeResource.ts";
 import { PlayerResource } from "./resources/PlayerResource.ts";
 
@@ -11,6 +12,7 @@ export class EndfieldSDK {
   readonly player: PlayerResource;
   readonly attendance: AttendanceResource;
   readonly giftcode: GiftcodeResource;
+  readonly event: EventResource;
 
   constructor(options: ClientOptions = {}) {
     const base = new BaseClient(options);
@@ -19,5 +21,6 @@ export class EndfieldSDK {
     this.player = new PlayerResource(base);
     this.attendance = new AttendanceResource(base);
     this.giftcode = new GiftcodeResource(base);
+    this.event = new EventResource(base);
   }
 }

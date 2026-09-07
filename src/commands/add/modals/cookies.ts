@@ -7,8 +7,8 @@ import {
   TextInputStyle,
 } from "discord.js";
 import { UsersDB } from "#/drizzle/index.ts";
+import { errorContainer } from "#/globals/ui/container.ts";
 import { tx } from "#/i18n/index.ts";
-import { errorContainer } from "#/ui/container.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 import { getDefaultBinding, linkBindingAccounts } from "./shared.ts";
 

@@ -7,8 +7,8 @@ import {
 } from "discord.js";
 import { config } from "#/config.ts";
 import { db, EventsDB } from "#/drizzle/index.ts";
+import { warnContainer } from "#/globals/ui/container.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
-import { warnContainer } from "#/ui/container.ts";
 
 export default {
   cooldown: 60,

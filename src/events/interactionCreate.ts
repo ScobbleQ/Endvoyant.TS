@@ -1,7 +1,7 @@
 import { Collection, Events, MessageFlags, type Interaction } from "discord.js";
 import type { BotEvent } from "#/discord.js";
+import { errorContainer } from "#/globals/ui/container.ts";
 import { fromDiscordLocale, tx } from "#/i18n/index.ts";
-import { errorContainer } from "#/ui/container.ts";
 import { parseComponentId } from "#/utils/componentId.ts";
 
 export default {

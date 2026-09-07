@@ -1,5 +1,5 @@
 import { ContainerBuilder } from "discord.js";
-import { PrivacyPolicyButton, TermsOfServiceButton } from "#/ui/legal.ts";
+import { PrivacyPolicyButton, TermsOfServiceButton } from "#/globals/ui/legal.ts";
 import AgreeButton from "../buttons/agree.ts";
 
 export function onboardingContainer() {

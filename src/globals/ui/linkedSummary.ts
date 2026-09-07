@@ -3,28 +3,10 @@ import { db } from "#/drizzle/index.ts";
 
 export async function buildLinkedSummaryContainer(dcid: string) {
   const accounts = await db.query.accounts.findMany({
-    columns: {
-      nickname: true,
-      roleId: true,
-      serverType: true,
-    },
-    where: {
-      dcid: dcid,
-    },
-    with: {
-      user: {
-        columns: {
-          lang: true,
-        },
-        where: {
-          dcid: dcid,
-        },
-      },
-    },
-    orderBy: {
-      isPrimary: "desc",
-      addedOn: "asc",
-    },
+    columns: { nickname: true, roleId: true, serverType: true },
+    where: { dcid: dcid },
+    with: { user: { columns: { lang: true }, where: { dcid: dcid } } },
+    orderBy: { isPrimary: "desc", addedOn: "asc" },
   });
 
   if (accounts.length === 0) return null;

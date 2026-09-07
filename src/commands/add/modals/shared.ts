@@ -8,7 +8,7 @@ import type { PlayerBindingsResponse } from "#/packages/EndfieldSDK/types/player
 import { config } from "#/config.ts";
 import { AccountsDB, type UsersDB } from "#/drizzle/index.ts";
 import { sdk } from "#/globals/sdk.ts";
-import { errorContainer, warnContainer } from "#/ui/container.ts";
+import { errorContainer, warnContainer } from "#/globals/ui/container.ts";
 import { sendUpdatedLinkedPins } from "#/utils/updatePins.ts";
 
 type UserAccess = NonNullable<Awaited<ReturnType<typeof UsersDB.findAccess>>>;

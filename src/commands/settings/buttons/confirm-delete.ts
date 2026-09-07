@@ -1,6 +1,6 @@
 import { ButtonBuilder, ButtonStyle, MessageFlags, type ButtonInteraction } from "discord.js";
 import { UsersDB } from "#/drizzle/index.ts";
-import { errorContainer, successContainer } from "#/ui/container.ts";
+import { errorContainer, successContainer } from "#/globals/ui/container.ts";
 import { createComponentId } from "#/utils/componentId.ts";
 
 export default {

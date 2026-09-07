@@ -8,9 +8,9 @@ import {
 import pQueue from "p-queue";
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
-import { sdk } from "#/globals/sdk.ts";
+import { errorContainer } from "#/globals/ui/container.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
-import { errorContainer } from "#/ui/container.ts";
+import { signInAccount } from "#/services/signIn.ts";
 
 export default {
   cooldown: 60,
@@ -65,6 +65,7 @@ export default {
     const selectedAccountId = interaction.options.getString("for");
     const accounts = await db.query.accounts.findMany({
       columns: {
+        id: true,
         nickname: true,
         roleId: true,
         accountToken: true,
@@ -95,19 +96,8 @@ export default {
         .filter((a): a is NonNullable<typeof a> => a != null)
         .map((account) =>
           queue.add(async () => {
-            const session = await sdk.credentials.createSession({
-              accountToken: account.accountToken,
-            });
-
-            if (!session) return null;
-
-            const res = await sdk.attendance.signIn({
-              cred: session.cred,
-              token: session.token,
-              roleId: account.roleId,
-              serverId: account.serverId,
-              lang: user.lang,
-            });
+            const res = await signInAccount(user, account, "slash");
+            if (!res) return null;
 
             return { account, res };
           }),
@@ -136,7 +126,7 @@ export default {
         continue;
       }
 
-      const rewards = res.data.awardIds.map(({ id }) => res.data.resourceInfoMap[id]!);
+      const rewards = res.rewards;
       const [mainReward, ...extraRewards] = rewards;
 
       if (!mainReward) {

@@ -9,8 +9,8 @@ import {
 import { config } from "#/config.ts";
 import { AccountsDB, EventsDB, UsersDB, db } from "#/drizzle/index.ts";
 import { sdk } from "#/globals/sdk.ts";
+import { errorContainer } from "#/globals/ui/container.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
-import { errorContainer } from "#/ui/container.ts";
 import { renderProfile } from "./utils/render.ts";
 import { profileVisibility } from "./utils/visibility.ts";
 

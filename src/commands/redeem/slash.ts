@@ -5,12 +5,10 @@ import {
   MessageFlags,
   SlashCommandBuilder,
 } from "discord.js";
-import { eq } from "drizzle-orm";
 import { AccountsDB, UsersDB, db } from "#/drizzle/index.ts";
-import { efAttemptedCodes, efCodes } from "#/drizzle/schema.ts";
-import { sdk } from "#/globals/sdk.ts";
+import { errorContainer } from "#/globals/ui/container.ts";
 import { dtx, fromDiscordLocale, tx } from "#/i18n/index.ts";
-import { errorContainer } from "#/ui/container.ts";
+import { createRedemptionSession, redeemCode } from "#/services/redeem.ts";
 
 export default {
   cooldown: 30,
@@ -134,27 +132,11 @@ export default {
         continue;
       }
 
-      const oauth = await sdk.auth.grantOAuth2({
-        appCode: "d9f6dbb6bbd6bb33",
-        token: account.accountToken,
-      });
-
-      if (oauth.status !== 0) continue;
-
-      const channelToken = await sdk.auth.loginWithChannelToken({
-        channelId: account.channelId,
-        channelToken: oauth.data.code,
-      });
-
-      if (channelToken.status !== 0) continue;
+      const token = await createRedemptionSession(account);
+      if (!token) continue;
 
       for (const code of toRedeem) {
-        const res = await sdk.giftcode.redeem({
-          code,
-          channelId: account.channelId,
-          serverId: account.serverId,
-          token: channelToken.data.token,
-        });
+        const res = await redeemCode(user, account, code, token, "slash");
 
         if (res.code === 0) {
           container.addTextDisplayComponents((t) =>
@@ -162,37 +144,7 @@ export default {
           );
         } else {
           container.addTextDisplayComponents((t) => t.setContent(`${code}\n⤷ ${res.msg}`));
-
-          // Inactive code
-          if (res.code === 11004) {
-            await db.update(efCodes).set({ isActive: false }).where(eq(efCodes.code, code));
-          }
         }
-
-        let status = -1;
-
-        // Successful redemption
-        if (res.code === 0) {
-          status = 0;
-        }
-        // Already redeemed
-        else if (res.code === 11005) {
-          status = 0;
-        }
-
-        await db
-          .insert(efAttemptedCodes)
-          .values({
-            aid: account.id,
-            code,
-            status,
-          })
-          .onConflictDoUpdate({
-            target: [efAttemptedCodes.aid, efAttemptedCodes.code],
-            set: {
-              status,
-            },
-          });
       }
     }
 

@@ -104,8 +104,9 @@ export class CredentialsResource {
     }
 
     const data = (await body.json()) as { code: number; msg: string };
-    const setCookies = headers["set-cookie"] as string[];
-    const newAccountToken = getCookie(setCookies);
+    if (data.code !== 0) return { code: -1, msg: "Account token rotation was rejected" };
+
+    const newAccountToken = getCookie(headers["set-cookie"]);
     if (!newAccountToken) return { code: -1, msg: "Failed to extract new account token" };
 
     return { code: 0, data: { token: newAccountToken }, msg: data.msg || "OK" };

@@ -21,7 +21,13 @@ export class BaseClient {
   }
 
   async request(options: Dispatcher.RequestOptions): Promise<Dispatcher.ResponseData> {
-    return agent.request(options);
+    return agent.request({
+      headersTimeout: 15_000,
+      bodyTimeout: 15_000,
+      ...options,
+      // Abort the transport, including body consumption, so stalled APIs release workers.
+      signal: options.signal ?? AbortSignal.timeout(30_000),
+    });
   }
 
   skportHeaders(token: string, path: string, body: string, lang?: Locale) {

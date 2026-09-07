@@ -5,5 +5,6 @@ export interface Job {
   schedule: CronJobParams<null, null>["cronTime"];
   timezone: CronJobParams<null, null>["timeZone"];
   productionOnly: boolean;
+  jitterMinutes: number;
   execute: (client: Client) => Promise<void>;
 }

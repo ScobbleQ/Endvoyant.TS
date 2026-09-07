@@ -96,23 +96,21 @@ async function redeemCodeBatch(
   )) {
     if (activeCodes.size === 0) return;
 
+    // Both successful and failed attempts are excluded from automatic redemption.
     const attempts = await db.query.efAttemptedCodes.findMany({
-      columns: { aid: true, code: true, status: true },
+      columns: { aid: true, code: true },
       where: {
         aid: { in: accounts.map((account) => account.id) },
         code: { in: [...activeCodes.keys()] },
       },
     });
 
-    const completedCodesByAccountId = new Map<string, Set<string>>();
+    const attemptedCodesByAccountId = new Map<string, Set<string>>();
     for (const attempt of attempts) {
-      // Failed attempts remain eligible for retry on the next run.
-      if (attempt.status === -1) continue;
-
-      let codes = completedCodesByAccountId.get(attempt.aid);
+      let codes = attemptedCodesByAccountId.get(attempt.aid);
       if (!codes) {
         codes = new Set();
-        completedCodesByAccountId.set(attempt.aid, codes);
+        attemptedCodesByAccountId.set(attempt.aid, codes);
       }
 
       codes.add(attempt.code);
@@ -123,19 +121,12 @@ async function redeemCodeBatch(
         queue.add(async () => {
           if (!account.user) return;
 
-          const completedCodes = completedCodesByAccountId.get(account.id);
-          const pendingCodes = [...activeCodes.values()].filter(
-            ({ code }) => !completedCodes?.has(code),
-          );
-
-          if (pendingCodes.length === 0) return;
-
           try {
             const redeemedCodes = await redeemAccountCodes(
               account.user,
               account,
               activeCodes,
-              pendingCodes,
+              attemptedCodesByAccountId.get(account.id),
             );
 
             if (!account.user.enableNotif || !account.enableNotif || redeemedCodes.length === 0)
@@ -183,8 +174,11 @@ async function redeemAccountCodes(
   user: User,
   account: Account,
   activeCodes: Map<string, RedemptionCode>,
-  pendingCodes: RedemptionCode[],
+  attemptedCodes: Set<string> | undefined,
 ): Promise<RedemptionCode[]> {
+  const pendingCodes = [...activeCodes.values()].filter(({ code }) => !attemptedCodes?.has(code));
+  if (pendingCodes.length === 0) return [];
+
   const sessionToken = await createRedemptionSession(account);
   if (!sessionToken) {
     logger.warn({ accountId: account.id }, "Unable to authenticate for redemption");
